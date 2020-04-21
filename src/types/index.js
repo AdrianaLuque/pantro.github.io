@@ -10,3 +10,7 @@ export const CERRAR_SESION = 'CERRAR_SESION';
 
 export const MOSTRAR_ALERTA = 'MOSTRAR_ALERTA';
 export const OCULTAR_ALERTA = 'OCULTAR_ALERTA';
+
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
