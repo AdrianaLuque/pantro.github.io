@@ -1,4 +1,5 @@
 - npm i react-bootstrap bootstrap (se agrega mas archivos)
 - npm install react-leaflet leaflet (se agrega mas archivos)
 - npm install leaflet.locatecontrol
-
+- npm install primereact --save
+- npm install primeicons --save //fechas

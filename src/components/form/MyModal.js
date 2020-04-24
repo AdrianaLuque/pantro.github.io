@@ -16,7 +16,7 @@ const MyModal = () => {
     return (
         <Modal show={modal} onHide={CloseModal}>
             <Modal.Header closeButton>
-            <Modal.Title>Llene sus datos</Modal.Title>
+            <Modal.Title>Nuevo registro de denuncias</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Denunciation/>
