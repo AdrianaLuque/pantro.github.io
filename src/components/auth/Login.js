@@ -1,12 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Col, Form, Button } from 'react-bootstrap';
 
 import authContext from "../../context/auth/authContext";
 import alertaContext from '../../context/alertas/alertaContext';
 
 const Login = (props) => {
-  
+        
     //Extraer los valores del context
     const alertasContext = useContext(alertaContext);
     const { alerta, MostrarAlerta } = alertasContext;

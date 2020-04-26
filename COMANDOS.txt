@@ -3,3 +3,4 @@
 - npm install leaflet.locatecontrol
 - npm install primereact --save
 - npm install primeicons --save //fechas
+- npm install --save d3 //Para leer CSV

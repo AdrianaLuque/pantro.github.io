@@ -292,10 +292,8 @@ const Denunciation = (props) => {
                     ) : null
                 }
                 {/* DEN_TIPO */}
-                <Form.Group as={Row}>
-                    <Form.Label as="legend" column sm={2}>
-                        Tipo de denuncia*
-                    </Form.Label>
+                <Form.Group>
+                    <Form.Label>Tipo de denuncia*</Form.Label>
                     <Col sm={10}>
                         <Form.Check
                             type="radio"

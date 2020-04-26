@@ -1,4 +1,67 @@
+/***********************
+/*VARIABLES*/
+/*------------*/
+:root {
+  --color-denuncias: #357ebd;
+  --color-inspecciones: #C70039;
+  --color-rociados: #1faaa5;
+}
+/************************/
+
 .leaflet-container {
   width: 100%;
   height: 100vh;
+}
+
+/*Botones principales*/
+#btn_actDenuncias, 
+#btn_actInspeccionesPasivas,
+#btn_actInspeccionesActivas,
+#btn_actRociados{
+  height: 80px;
+  display: block;
+  margin: 20px auto;
+  width: 100%;
+  padding: 10px;
+  max-width: 500px;
+}
+#btn_actInspeccionesPasivas,
+#btn_actInspeccionesActivas {
+  background-color: var(--color-inspecciones);
+}
+#btn_actRociados {
+  background-color: var(--color-rociados); 
+}
+.wrap-button {
+  border: 1px solid #357ebd;
+  padding: 0px 11px;
+  position: relative;
+  margin: 20px 0;
+}
+.title-button {
+  position: absolute;
+  top: -10px;
+  padding: 0 5px;
+  margin: 0;
+  background-color: #fff;
+  color: #357ebd;
+  font-weight: bold;
+}
+#wrap-button-den {
+  border: 1px solid var(--color-denuncias);
+}
+#title-button-den {
+  color: var(--color-denuncias);
+}
+#wrap-button-ins {
+  border: 1px solid var(--color-inspecciones);
+}
+#title-button-ins {
+  color: var(--color-inspecciones);
+}
+#wrap-button-roc {
+  border: 1px solid var(--color-rociados);
+}
+#title-button-roc {
+  color: var(--color-rociados);
 }
