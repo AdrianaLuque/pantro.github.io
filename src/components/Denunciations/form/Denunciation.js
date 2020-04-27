@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 //Fecha
 import {Calendar} from 'primereact/calendar';
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -10,7 +10,10 @@ import {FileUpload} from 'primereact/fileupload';
 
 import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../../context/alertas/alertaContext';
+import DenunciationContext from '../../../context/denunciation/DenunciationContext';
+import {provincias_aqp, distritos_aqp} from './Ubigeo';
 
+//Fecha en español
 const es = {
     firstDayOfWeek: 1,
     dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -18,145 +21,6 @@ const es = {
     dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
     monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
     monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
-};
-
-const provincias_aqp =[
-    { provinciaId:"Arequipa", provinciaName:"Arequipa"},
-    { provinciaId:"Camana", provinciaName:"Camaná"},
-    { provinciaId:"Caraveli", provinciaName:"Caravelí"},
-    { provinciaId:"Castilla", provinciaName:"Castilla"},
-    { provinciaId:"Caylloma", provinciaName:"Caylloma"},
-    { provinciaId:"Condesuyos", provinciaName:"Condesuyos"},
-    { provinciaId:"Islay", provinciaName:"Islay"},
-    { provinciaId:"La Union", provinciaName:"La Unión"}
-];
-const distritos_aqp = {
-    "":[],
-    "Arequipa":[
-        {distritoId:"Alto Selva Alegre", distritoName:"Alto Selva Alegre"},
-        {distritoId:"Cercado", distritoName:"Arequipa(Cercado)"},
-        {distritoId:"Cayma", distritoName:"Cayma"},
-        {distritoId:"Cerro Colorado", distritoName:"Cerro Colorado"},
-        {distritoId:"Characato", distritoName:"Characato"},
-        {distritoId:"Chiguata", distritoName:"Chiguata"},
-        {distritoId:"Jacobo Hunter", distritoName:"Jacobo Hunter"},
-        {distritoId:"Jose Luis Bustamante y Rivero", distritoName:"José Luis Bustamante y Rivero"},
-        {distritoId:"La Joya", distritoName:"La Joya"},
-        {distritoId:"Mariano Melgar", distritoName:"Mariano Melgar"},
-        {distritoId:"Miraflores", distritoName:"Miraflores"},
-        {distritoId:"Mollebaya", distritoName:"Mollebaya"},
-        {distritoId:"Paucarpata", distritoName:"Paucarpata"},
-        {distritoId:"Pocsi", distritoName:"Pocsi"},
-        {distritoId:"Polobaya", distritoName:"Polobaya"},
-        {distritoId:"Quequenha", distritoName:"Quequeña"},
-        {distritoId:"Sabandia", distritoName:"Sabandía"},
-        {distritoId:"Sachaca", distritoName:"Sachaca"},
-        {distritoId:"San Juan de Siguas", distritoName:"San Juan de Siguas"},
-        {distritoId:"San Juan de Tarucani", distritoName:"San Juan de Tarucani"},
-        {distritoId:"Santa Isabel de Siguas", distritoName:"Santa Isabel de Siguas"},
-        {distritoId:"Santa Rita de Siguas", distritoName:"Santa Rita de Siguas"},
-        {distritoId:"Socabaya", distritoName:"Socabaya"},
-        {distritoId:"Tiabaya", distritoName:"Tiabaya"},
-        {distritoId:"Uchumayo", distritoName:"Uchumayo"},
-        {distritoId:"Vitor", distritoName:"Vítor"},
-        {distritoId:"Yanahuara", distritoName:"Yanahuara"},
-        {distritoId:"Yarabamba", distritoName:"Yarabamba"},
-        {distritoId:"Yura", distritoName:"Yura"}
-    ],
-    "Camana":[
-        {distritoId:"Camana", distritoName:"Camaná"},
-        {distritoId:"Jose Maria Quimper", distritoName:"José María Quimper"},
-        {distritoId:"Mariano Nicolas Valcarcel", distritoName:"Mariano Nicolás Valcárcel"},
-        {distritoId:"Mariscal Caceres", distritoName:"Mariscal Cáceres"},
-        {distritoId:"Nicolas de Pierola", distritoName:"Nicolás de Piérola"},
-        {distritoId:"Oconha", distritoName:"Ocoña"},
-        {distritoId:"Quilca", distritoName:"Quilca"},
-        {distritoId:"Samuel Pastor", distritoName:"Samuel Pastor"}
-    ],
-    "Caraveli":[
-        {distritoId:"Acari", distritoName:"Acarí"},
-        {distritoId:"Atico", distritoName:"Atico"},
-        {distritoId:"Atiquipa", distritoName:"Atiquipa"},
-        {distritoId:"Bella Union", distritoName:"Bella Unión"},
-        {distritoId:"Cahuacho", distritoName:"Cahuacho"},
-        {distritoId:"Caraveli", distritoName:"Caravelí"},
-        {distritoId:"Chala", distritoName:"Chala"},
-        {distritoId:"Chaparra", distritoName:"Chaparra"},
-        {distritoId:"Huanuhuanu", distritoName:"Huanuhuanu"},
-        {distritoId:"Jaqui", distritoName:"Jaqui"},
-        {distritoId:"Lomas", distritoName:"Lomas"},
-        {distritoId:"Quicacha", distritoName:"Quicacha"},
-        {distritoId:"Yauca", distritoName:"Yauca"},
-    ],
-    "Castilla":[
-        {distritoId:"Andahua", distritoName:"Andahua"},
-        {distritoId:"Aplao", distritoName:"Aplao"},
-        {distritoId:"Ayo", distritoName:"Ayo"},
-        {distritoId:"Chachas", distritoName:"Chachas"},
-        {distritoId:"Chilcaymarca", distritoName:"Chilcaymarca"},
-        {distritoId:"Choco", distritoName:"Choco"},
-        {distritoId:"Huancarqui", distritoName:"Huancarqui"},
-        {distritoId:"Machaguay", distritoName:"Machaguay"},
-        {distritoId:"Orcopampa", distritoName:"Orcopampa"},
-        {distritoId:"Pampacolca", distritoName:"Pampacolca"},
-        {distritoId:"Tipan", distritoName:"Tipán"},
-        {distritoId:"Unhon", distritoName:"Uñón"},
-        {distritoId:"Uraca", distritoName:"Uraca"},
-        {distritoId:"Viraco", distritoName:"Viraco"}        
-    ],
-    "Caylloma":[
-        {distritoId:"Achoma", distritoName:"Achoma"},
-        {distritoId:"Cabanaconde", distritoName:"Cabanaconde"},
-        {distritoId:"Callalli", distritoName:"Callalli"},
-        {distritoId:"Caylloma", distritoName:"Caylloma"},
-        {distritoId:"Chivay", distritoName:"Chivay"},
-        {distritoId:"Coporaque", distritoName:"Coporaque"},
-        {distritoId:"Huambo", distritoName:"Huambo"},
-        {distritoId:"Huanca", distritoName:"Huanca"},
-        {distritoId:"Ichupampa", distritoName:"Ichupampa"},
-        {distritoId:"Lari", distritoName:"Lari"},
-        {distritoId:"Lluta", distritoName:"Lluta"},
-        {distritoId:"Maca", distritoName:"Maca"},
-        {distritoId:"Madrigal", distritoName:"Madrigal"},
-        {distritoId:"Majes", distritoName:"Majes"},
-        {distritoId:"San Antonio de Chuca", distritoName:"San Antonio de Chuca"},
-        {distritoId:"Sibayo", distritoName:"Sibayo"},
-        {distritoId:"Tapay", distritoName:"Tapay"},
-        {distritoId:"Tisco", distritoName:"Tisco"},
-        {distritoId:"Tuti", distritoName:"Tuti"},
-        {distritoId:"Yanque", distritoName:"Yanque"},
-    ],
-    "Condesuyos":[
-        {distritoId:"Andaray", distritoName:"Andaray"},
-        {distritoId:"Cayarani", distritoName:"Cayarani"},
-        {distritoId:"Chichas", distritoName:"Chichas"},
-        {distritoId:"Chuquibamba", distritoName:"Chuquibamba"},
-        {distritoId:"Iray", distritoName:"Iray"},
-        {distritoId:"Rio Grande", distritoName:"Río Grande"},
-        {distritoId:"Salamanca", distritoName:"Salamanca"},
-        {distritoId:"Yanaquihua", distritoName:"Yanaquihua"}
-    ],
-    "Islay":[
-        {distritoId:"Cocachacra", distritoName:"Cocachacra"},
-        {distritoId:"Dean Valdivia", distritoName:"Deán Valdivia"},
-        {distritoId:"Islay", distritoName:"Islay"},
-        {distritoId:"Mejia", distritoName:"Mejía"},
-        {distritoId:"Mollendo", distritoName:"Mollendo"},
-        {distritoId:"Punta de Bombon", distritoName:"Punta de Bombón"}
-    ],
-    "La Union":[
-        {distritoId:"Alca", distritoName:"Alca"},
-        {distritoId:"Charcana", distritoName:"Charcana"},
-        {distritoId:"Cotahuasi", distritoName:"Cotahuasi"},
-        {distritoId:"Huaynacotas", distritoName:"Huaynacotas"},
-        {distritoId:"Pampamarca", distritoName:"Pampamarca"},
-        {distritoId:"Puyca", distritoName:"Puyca"},
-        {distritoId:"Quechualla", distritoName:"Quechualla"},
-        {distritoId:"Sayla", distritoName:"Sayla"},
-        {distritoId:"Tauria", distritoName:"Tauría"},
-        {distritoId:"Tomepampa", distritoName:"Tomepampa"},
-        {distritoId:"Toro", distritoName:"Toro"}
-    ]
 };
 
 //Formulario de denuncia
@@ -169,6 +33,11 @@ const Denunciation = (props) => {
     const authsContext = useContext(authContext);
     const { mensaje } = authsContext;
 
+    //Obtener el state de Alerta
+    const DenunciationsContext = useContext(DenunciationContext);
+    const { denunciations, GetDenunciations, AddDenunciation, EditDenunciation } = DenunciationsContext;
+    
+
     //En caso de que el passwors o usuario no exista
     /*useEffect(() => {
         
@@ -180,7 +49,7 @@ const Denunciation = (props) => {
     }, [mensaje, autenticado, props.history]);*/
     
     //State para iniciar sesión
-    const [usuario, guardarUsuario] = useState({
+    const [denunciation, setDenunciation] = useState({
         den_id_custom: '',
         den_fecha_recepcion: '',dates1: null,//estos son juntos
         den_medio: '',
@@ -208,19 +77,19 @@ const Denunciation = (props) => {
         den_otro_telefono,
         den_provincia,
         den_distrito
-    } = usuario;
+    } = denunciation;
 
-    const onChange = e => {
-        guardarUsuario({
-            ...usuario,
+    const OnChange = e => {
+        setDenunciation({
+            ...denunciation,
             [e.target.name] : e.target.value
         });
         //console.log(e.target.name);
         //console.log(e.target.value);
     }
     const OnChangeCheck = e => {
-        guardarUsuario({
-            ...usuario,
+        setDenunciation({
+            ...denunciation,
             [e.target.name] : e.target.id
         });
     }
@@ -229,12 +98,15 @@ const Denunciation = (props) => {
         console.log("se subio la imagen");
     }
 
-    const onSubmit = e => {
+    const OnSubmit = e => {
         e.preventDefault();
         //Validar que no haya campos vacios
         //if (username.trim() === '' || password.trim() === '') {
         //    MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
         //}
+        //AddDenunciation(denunciation);   
+        console.log("hola");
+        console.log(denunciation);
     }
 
     
@@ -242,7 +114,7 @@ const Denunciation = (props) => {
         <>
             { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
             <Form
-                onSubmit={onSubmit}
+                onSubmit={OnSubmit}
             >
                 <Form.Group controlId="den_id_custom">
                     <Form.Label >Identificador de denuncia</Form.Label>
@@ -251,13 +123,13 @@ const Denunciation = (props) => {
                         type='text'
                         name='den_id_custom'
                         //value={den_id_custom}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_FECHA_RECEPCION */}
                 <Form.Group controlId="den_fecha_recepcion">
                     <Form.Label >Fecha de recepción</Form.Label>
-                    <Calendar showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} onChange={(e) => guardarUsuario({...usuario,dates1 : e.value})} readOnlyInput={true}/>
+                    <Calendar showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} readOnlyInput={true}/>
                 </Form.Group>
                 {/* DEN_MEDIO */}
                 <Form.Group controlId="den_medio">
@@ -266,7 +138,7 @@ const Denunciation = (props) => {
                         as="select"
                         name= 'den_medio'
                         value= {den_medio}
-                        onChange= {onChange}
+                        onChange= {OnChange}
                     >
                         <option>Seleccione...</option>
                         <option value="establecimiento">En establecimiento</option>
@@ -285,7 +157,7 @@ const Denunciation = (props) => {
                                 type="text"
                                 name= 'den_agente_nombre'
                                 //value= {den_agente_nombre}
-                                onChange= {onChange}
+                                onChange= {OnChange}
                             />
                         </Form.Group>
                     </>
@@ -414,7 +286,7 @@ const Denunciation = (props) => {
                                     name= 'den_insecto_otro'
                                     //value= {den_insecto_otro}
                                     placeholder = "Especificar ..."
-                                    onChange= {onChange}
+                                    onChange= {OnChange}
                                 />
                             </Form.Group>
                         </>
@@ -437,7 +309,7 @@ const Denunciation = (props) => {
                         type='text'
                         name='den_habitante_nombre'
                         //value={den_habitante_nombre}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_HABITANTE_TELEFONO1 */}
@@ -447,7 +319,7 @@ const Denunciation = (props) => {
                         type='number'
                         name='den_habitante_telefono1'
                         //value={den_habitante_telefono1}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
@@ -455,7 +327,7 @@ const Denunciation = (props) => {
                         type="checkbox" 
                         label="Otro teléfono adicional"
                         name="den_otro_telefono"
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {den_otro_telefono? 
@@ -466,7 +338,7 @@ const Denunciation = (props) => {
                                 type='number'
                                 name='den_habitante_telefono2'
                                 //value={den_habitante_telefono2}
-                                onChange={onChange}
+                                onChange={OnChange}
                             />
                         </Form.Group>
                     </>):null
@@ -478,7 +350,7 @@ const Denunciation = (props) => {
                         as="select"
                         name= 'den_provincia'
                         value= {den_provincia}
-                        onChange= {onChange}
+                        onChange= {OnChange}
                     >
                         <option>Seleccione Provincia</option>
                         {provincias_aqp.map((e, key) => {
@@ -493,7 +365,7 @@ const Denunciation = (props) => {
                         as="select"
                         name= 'den_distrito'
                         value= {den_distrito}
-                        onChange= {onChange}
+                        onChange= {OnChange}
                     >
                         <option>Seleccione Distrito</option>
                         {distritos_aqp[den_provincia].map((e, key) => {
@@ -508,7 +380,7 @@ const Denunciation = (props) => {
                         type='text'
                         name='den_localidad'
                         //value={den_localidad}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_DIRECCION*/}
@@ -518,7 +390,7 @@ const Denunciation = (props) => {
                         type='text'
                         name='den_direccion'
                         //value={den_direccion}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_REFERENCIA*/}
@@ -528,15 +400,15 @@ const Denunciation = (props) => {
                         type='text'
                         name='den_referencia'
                         //value={den_referencia}
-                        onChange={onChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_FECHA_PROBABLE_INSPECCION*/}
                 <Form.Group controlId="den_fecha_recepcion">
                     <Form.Label >Fecha probable de inspección</Form.Label>
-                    <Calendar minDate={new Date()} showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} onChange={(e) => guardarUsuario({...usuario,dates1 : e.value})} selectionMode="multiple" readOnlyInput={true}/>
+                    <Calendar minDate={new Date()} showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} selectionMode="multiple" readOnlyInput={true}/>
                 </Form.Group>
-                                
+                <Button type='submit'>Guardar</Button> 
             </Form>
         </>
     );

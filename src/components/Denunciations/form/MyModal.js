@@ -22,12 +22,9 @@ const MyModal = () => {
                 <Denunciation/>
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="secondary" onClick={CloseModal}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={SaveAlert}>
-                Save Changes
-            </Button>
+                <Button variant="secondary" onClick={CloseModal}>
+                    Close
+                </Button>
             </Modal.Footer>
         </Modal>
     );

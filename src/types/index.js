@@ -18,5 +18,6 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const READ_CSV = 'READ_CSV';
 
 //Denuncia
-export const GET_DENUNCIATION = 'GET_DENUNCIATION';
+export const GET_DENUNCIATIONS = 'GET_DENUNCIATIONS';
+export const ADD_DENUNCIATION = 'ADD_DENUNCIATION';
 

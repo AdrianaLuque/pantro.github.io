@@ -4,7 +4,8 @@ import ClienteAxios from "../../config/axios";
 import DenunciationContext from './DenunciationContext';
 import DenunciationReducer from './DenunciationReducer';
 import { 
-    GET_DENUNCIATION
+    GET_DENUNCIATIONS,
+    ADD_DENUNCIATION
 } from '../../types';
 
 const DenunciationState = props => {
@@ -16,7 +17,8 @@ const DenunciationState = props => {
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(DenunciationReducer, initialState);
 
-    //Funciones
+    //FUNCIONES
+    //* Obtener denuncias
     const GetDenunciations = async () => {
         
         try {
@@ -24,7 +26,41 @@ const DenunciationState = props => {
             //console.log(resultado);
 
             dispatch({
-                type: GET_DENUNCIATION,
+                type: GET_DENUNCIATIONS,
+                payload: resultado.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //* Agregar denuncias
+    const AddDenunciations = async ( denunciation ) => {
+        
+        try {
+            const resultado = await ClienteAxios.post('/api/denuncias', denunciation );
+            //console.log(resultado);
+
+            dispatch({
+                type: ADD_DENUNCIATION,
+                payload: resultado.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //* Editar denuncias
+    const EditDenunciations = async ( denunciation ) => {
+        
+        try {
+            const resultado = await ClienteAxios.post('/api/denuncias', denunciation);
+            //console.log(resultado);
+
+            dispatch({
+                type: ADD_DENUNCIATION,
                 payload: resultado.data
             });
             
@@ -37,7 +73,9 @@ const DenunciationState = props => {
         <DenunciationContext.Provider
             value={{
                 denunciations: state.denunciations,
-                GetDenunciations
+                GetDenunciations,
+                AddDenunciations,
+                EditDenunciations
             }}
         >
             {props.children}
