@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
-import Login from "./components/auth/Login";
-import MyMap from "./components/map/MyMap";
-import Activities from "./components/activities/Activities";
-import Denunciations from "./components/denunciations/Denunciations";
+import Login from "./components/Login";
+import MyMap from "./components/MyMap";
+import Activities from "./components/Activities";
+import Denunciations from "./components/Denunciations";
 import AlertaState from './context/alertas/alertaState';
 import AuthState from './context/auth/authState';
 import DenunciationState from './context/denunciation/DenunciationState';

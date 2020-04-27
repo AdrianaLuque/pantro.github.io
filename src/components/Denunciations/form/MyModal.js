@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Modal, Button } from 'react-bootstrap';
-import ModalContext from "../../context/modal/ModalContext";
+import ModalContext from "../../../context/modal/ModalContext";
 import Denunciation from "./Denunciation";
 
 const MyModal = () => {

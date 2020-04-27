@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react";
-import MyTable from "../table/MyTable";
+import MyTable from "./MyTable";
 
 import DenunciationContext from "../../context/denunciation/DenunciationContext";
 

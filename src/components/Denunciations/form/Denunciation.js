@@ -8,8 +8,8 @@ import 'primeicons/primeicons.css';
 //Imagen
 import {FileUpload} from 'primereact/fileupload';
 
-import authContext from "../../context/auth/authContext";
-import alertaContext from '../../context/alertas/alertaContext';
+import authContext from "../../../context/auth/authContext";
+import alertaContext from '../../../context/alertas/alertaContext';
 
 const es = {
     firstDayOfWeek: 1,
