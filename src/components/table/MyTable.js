@@ -67,7 +67,7 @@ const selectRowProp = {
   clickToSelect: true,  // you should enable clickToSelect, otherwise, you can't select column.
 };
 
-const MyTable = () => {//extends React.Component {
+const MyTable = ({ register }) => {//extends React.Component {
   
   /*EditDenunciation() {
     //Here is your answer
@@ -85,26 +85,26 @@ const MyTable = () => {//extends React.Component {
             <Button>Agregar</Button>
             <Button onClick={ShowModal}>Edita</Button> {/*onClick={this.EditDenunciation.bind(this)}>Editar</Button>*/}
             <BootstrapTable 
-                data={ products } 
+                data={ register } 
                 selectRow= {selectRowProp} 
                 //ref = 'table'
             >   
-                <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM' isKey={ true }>Product ID</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_FECHA_RECEPCION'>Product Name</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='USU_CUENTA'>Product Price</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_MEDIO'>Product ID</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_TIPO'>Product Name</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_AGENTE_NOMBRE'>Product Price</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_INSECTO'>Product ID</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_INSECTO_OTRO'>Product Name</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_NOMBRE'>Product Price</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO1'>Product ID</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO2'>Product Name</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_PROVINCIA'>Product Price</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_DISTRITO'>Product ID</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_LOCALIDAD'>Product Name</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_DIRECCION'>Product Price</TableHeaderColumn>
-                <TableHeaderColumn width='150' dataField='DEN_REFERENCIA'>Product ID</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM' isKey={ true }>CÓDIGO</TableHeaderColumn>
+                <TableHeaderColumn width='210' dataField='DEN_FECHA_RECEPCION'>FECHA DE RECEPCIÓN</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='USU_CUENTA'>USUARIO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_MEDIO'>MEDIO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_TIPO'>TIPO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_AGENTE_NOMBRE'>AGENTE</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_INSECTO'>INSECTO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_INSECTO_OTRO'>OTRO INSECTO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_NOMBRE'>HABITANTE</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO1'>TELEFONO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO2'>OTRO TELEFONO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_PROVINCIA'>PROVINCIA</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_DISTRITO'>DISTRITO</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_LOCALIDAD'>LOCALIDAD</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_DIRECCION'>DIRECCIÓN</TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='DEN_REFERENCIA'>REFERENCIA</TableHeaderColumn>
             </BootstrapTable>
             <MyModal/>
         </Container>

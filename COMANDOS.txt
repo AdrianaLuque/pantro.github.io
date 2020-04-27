@@ -4,3 +4,4 @@
 - npm install primereact --save
 - npm install primeicons --save //fechas
 - npm install --save d3 //Para leer CSV
+- npm install --save axios
