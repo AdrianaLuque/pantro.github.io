@@ -36,7 +36,7 @@ const MyMap = props => {
       {housesCsv.map( house => (
         <CircleMarker 
           key = {house.UNICODE}
-          center={[house.LATITUDE,house.LONGITUDE]}
+          center={[parseFloat(house.LATITUDE),parseFloat(house.LONGITUDE)]}
           color="red"
           radius={8} 
         >

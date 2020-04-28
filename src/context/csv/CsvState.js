@@ -20,7 +20,7 @@ const CsvState = props => {
     const ReadCsv = async () => {
         //d3.csv(fileCsv, function(data) { console.log(data); });
         //Obtener CSV
-        const fileCsv= "C1ASA";
+        const fileCsv= "test";
         const pathCsv = require('../../catchment-area/' + fileCsv + '.csv');
         
         try {

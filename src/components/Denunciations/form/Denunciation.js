@@ -71,6 +71,7 @@ const Denunciation = (props) => {
     //Extraer de usuario
     const {  
         dates1, 
+        den_fecha_recepcion,
         den_medio, 
         den_tipo,
         den_insecto,
@@ -84,8 +85,8 @@ const Denunciation = (props) => {
             ...denunciation,
             [e.target.name] : e.target.value
         });
-        //console.log(e.target.name);
-        //console.log(e.target.value);
+        console.log(e.target.name);
+        console.log(e.target.value);
     }
     const OnChangeCheck = e => {
         setDenunciation({
@@ -131,8 +132,10 @@ const Denunciation = (props) => {
                         showIcon={true} 
                         locale={es} 
                         dateFormat="dd/mm/yy" 
-                        value={dates1} 
-                        OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} 
+                        name = 'den_fecha_recepcion'
+                        value={den_fecha_recepcion} 
+                        //OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} 
+                        onChange={OnChange}
                         readOnlyInput={true}
                     />
                 </Form.Group>

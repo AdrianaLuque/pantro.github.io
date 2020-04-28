@@ -13,11 +13,12 @@ const MyTable = ({ register }) => {//extends React.Component {
 
   return (
       <BootstrapTable 
+          keyField="DEN_ID_CUSTOM"
           data={ register } 
           selectRow= {selectRowProp} 
           //ref = 'table'
       >   
-          <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM' isKey={ true }>CÓDIGO</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM'>CÓDIGO</TableHeaderColumn>
           <TableHeaderColumn width='210' dataField='DEN_FECHA_RECEPCION'>FECHA DE RECEPCIÓN</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='USU_CUENTA'>USUARIO</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_MEDIO'>MEDIO</TableHeaderColumn>

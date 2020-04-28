@@ -40,12 +40,12 @@ const DenunciationState = props => {
         denunciation.den_id = 0;
         
         try {
-            await ClienteAxios.post('/api/denuncias', denunciation );
+            const resultado = await ClienteAxios.post('/api/denuncias', denunciation );
             //console.log(resultado);
 
             dispatch({
                 type: ADD_DENUNCIATION,
-                payload: denunciation
+                payload: resultado.data
             });
             
         } catch (error) {
