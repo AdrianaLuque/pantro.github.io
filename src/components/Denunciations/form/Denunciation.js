@@ -35,7 +35,7 @@ const Denunciation = (props) => {
 
     //Obtener el state de Alerta
     const DenunciationsContext = useContext(DenunciationContext);
-    const { denunciations, GetDenunciations, AddDenunciation, EditDenunciation } = DenunciationsContext;
+    const { AddDenunciation, EditDenunciation } = DenunciationsContext;
     
 
     //En caso de que el passwors o usuario no exista
@@ -104,9 +104,7 @@ const Denunciation = (props) => {
         //if (username.trim() === '' || password.trim() === '') {
         //    MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
         //}
-        //AddDenunciation(denunciation);   
-        console.log("hola");
-        console.log(denunciation);
+        AddDenunciation(denunciation);
     }
 
     
@@ -119,7 +117,7 @@ const Denunciation = (props) => {
                 <Form.Group controlId="den_id_custom">
                     <Form.Label >Identificador de denuncia</Form.Label>
                     <Form.Control 
-                        readOnly
+                        //readOnly
                         type='text'
                         name='den_id_custom'
                         //value={den_id_custom}
@@ -129,7 +127,14 @@ const Denunciation = (props) => {
                 {/* DEN_FECHA_RECEPCION */}
                 <Form.Group controlId="den_fecha_recepcion">
                     <Form.Label >Fecha de recepción</Form.Label>
-                    <Calendar showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} readOnlyInput={true}/>
+                    <Calendar 
+                        showIcon={true} 
+                        locale={es} 
+                        dateFormat="dd/mm/yy" 
+                        value={dates1} 
+                        OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} 
+                        readOnlyInput={true}
+                    />
                 </Form.Group>
                 {/* DEN_MEDIO */}
                 <Form.Group controlId="den_medio">

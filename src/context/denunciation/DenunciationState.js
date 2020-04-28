@@ -36,15 +36,16 @@ const DenunciationState = props => {
     }
 
     //* Agregar denuncias
-    const AddDenunciations = async ( denunciation ) => {
+    const AddDenunciation = async ( denunciation ) => {
+        denunciation.den_id = 0;
         
         try {
-            const resultado = await ClienteAxios.post('/api/denuncias', denunciation );
+            await ClienteAxios.post('/api/denuncias', denunciation );
             //console.log(resultado);
 
             dispatch({
                 type: ADD_DENUNCIATION,
-                payload: resultado.data
+                payload: denunciation
             });
             
         } catch (error) {
@@ -53,7 +54,7 @@ const DenunciationState = props => {
     }
 
     //* Editar denuncias
-    const EditDenunciations = async ( denunciation ) => {
+    const EditDenunciation = async ( denunciation ) => {
         
         try {
             const resultado = await ClienteAxios.post('/api/denuncias', denunciation);
@@ -74,8 +75,8 @@ const DenunciationState = props => {
             value={{
                 denunciations: state.denunciations,
                 GetDenunciations,
-                AddDenunciations,
-                EditDenunciations
+                AddDenunciation,
+                EditDenunciation
             }}
         >
             {props.children}
