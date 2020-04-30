@@ -65,3 +65,6 @@
 #title-button-roc {
   color: var(--color-rociados);
 }
+.alert-custom {
+  color: red;
+}

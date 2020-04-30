@@ -7,6 +7,8 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 //Imagen
 import {FileUpload} from 'primereact/fileupload';
+//Validar
+import { useForm } from "react-hook-form";
 
 import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../../context/alertas/alertaContext';
@@ -48,10 +50,13 @@ const Denunciation = (props) => {
         // eslint-disable-next-line
     }, [mensaje, autenticado, props.history]);*/
     
-    //State para iniciar sesión
+    //validacion
+    const { register, handleSubmit, errors } = useForm();
+    
+    //State para denuncias
     const [denunciation, setDenunciation] = useState({
         den_id_custom: '',
-        den_fecha_recepcion: '',dates1: null,//estos son juntos
+        den_fecha_recepcion: new Date(),
         den_medio: '',
         den_agente_nombre:'',
         den_tipo: '',
@@ -59,25 +64,35 @@ const Denunciation = (props) => {
         den_insecto_otro:'',
         den_habitante_nombre:'',
         den_habitante_telefono1:'',
-        den_otro_telefono:false,
+        den_otro_telefono: false,
         den_habitante_telefono2:'',
         den_provincia: "",
         den_distrito:'',
         den_localidad:'',
         den_direccion:'',
-        den_referencia:''
+        den_referencia:'',
+        den_fecha_probable_inspeccion: null
     });
 
     //Extraer de usuario
     const {  
-        dates1, 
+        den_id_custom,
         den_fecha_recepcion,
         den_medio, 
+        den_agente_nombre,
         den_tipo,
         den_insecto,
+        den_insecto_otro,
+        den_habitante_nombre,
+        den_habitante_telefono1,
         den_otro_telefono,
+        den_habitante_telefono2,
         den_provincia,
-        den_distrito
+        den_distrito,
+        den_localidad,
+        den_direccion,
+        den_referencia,
+        den_fecha_probable_inspeccion
     } = denunciation;
 
     const OnChange = e => {
@@ -85,8 +100,6 @@ const Denunciation = (props) => {
             ...denunciation,
             [e.target.name] : e.target.value
         });
-        console.log(e.target.name);
-        console.log(e.target.value);
     }
     const OnChangeCheck = e => {
         setDenunciation({
@@ -107,13 +120,13 @@ const Denunciation = (props) => {
         //}
         AddDenunciation(denunciation);
     }
-
+    //const onSubmit = data => console.log(data);
     
     return (
         <>
             { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
             <Form
-                onSubmit={OnSubmit}
+                onSubmit={handleSubmit(OnSubmit)}
             >
                 <Form.Group controlId="den_id_custom">
                     <Form.Label >Identificador de denuncia</Form.Label>
@@ -121,20 +134,19 @@ const Denunciation = (props) => {
                         //readOnly
                         type='text'
                         name='den_id_custom'
-                        //value={den_id_custom}
+                        value={den_id_custom}
                         onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_FECHA_RECEPCION */}
                 <Form.Group controlId="den_fecha_recepcion">
-                    <Form.Label >Fecha de recepción</Form.Label>
+                    <Form.Label >Fecha de recepción: </Form.Label>
                     <Calendar 
                         showIcon={true} 
                         locale={es} 
                         dateFormat="dd/mm/yy" 
                         name = 'den_fecha_recepcion'
                         value={den_fecha_recepcion} 
-                        //OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} 
                         onChange={OnChange}
                         readOnlyInput={true}
                     />
@@ -155,7 +167,9 @@ const Denunciation = (props) => {
                         <option value="agente">A través de agente</option>
                         <option value="whatsapp">Whatsapp</option>
                     </Form.Control>
+                    
                 </Form.Group>
+
                 { den_medio==="agente" ? (
                     <>
                         {/* DEN_AGENTE_NOMBRE */}
@@ -164,9 +178,11 @@ const Denunciation = (props) => {
                             <Form.Control 
                                 type="text"
                                 name= 'den_agente_nombre'
-                                //value= {den_agente_nombre}
+                                value= {den_agente_nombre}
                                 onChange= {OnChange}
+                                ref={register({ required: true })}
                             />
+                            {errors.den_agente_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
                         </Form.Group>
                     </>
                     ) : null
@@ -231,7 +247,7 @@ const Denunciation = (props) => {
                                 type="radio"
                                 name="den_insecto"
                                 label="Fitófagos"
-                                id="fitofagos"
+                                id="fitofagos"ref={register({ required: true })}
                                 onChange= {OnChangeCheck}
                             />
                             <Form.Check
@@ -292,10 +308,12 @@ const Denunciation = (props) => {
                                 <Form.Control 
                                     type="text"
                                     name= 'den_insecto_otro'
-                                    //value= {den_insecto_otro}
+                                    value= {den_insecto_otro}
                                     placeholder = "Especificar ..."
                                     onChange= {OnChange}
+                                    ref={register({ required: true })}
                                 />
+                                {errors.den_insecto_otro && <span className='alert-custom'>*Campo obligatorio</span>}
                             </Form.Group>
                         </>
                     ):null}
@@ -316,9 +334,11 @@ const Denunciation = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_habitante_nombre'
-                        //value={den_habitante_nombre}
+                        value={den_habitante_nombre}
                         onChange={OnChange}
+                        ref={register({ required: true })}
                     />
+                    {errors.den_agente_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
                 {/* DEN_HABITANTE_TELEFONO1 */}
                 <Form.Group controlId="den_habitante_telefono1">
@@ -326,9 +346,12 @@ const Denunciation = (props) => {
                     <Form.Control 
                         type='number'
                         name='den_habitante_telefono1'
-                        //value={den_habitante_telefono1}
+                        value={den_habitante_telefono1}
                         onChange={OnChange}
+                        ref={register({ required: true, maxLength: 9 })}
                     />
+                    {errors.den_habitante_telefono1?.type === "required" && <span className='alert-custom'>*Campo obligatorio</span>}
+                    {errors.den_habitante_telefono1?.type === "maxLength" && <span className='alert-custom'>*Maximo 9 numeros</span>}
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
                     <Form.Check 
@@ -345,15 +368,18 @@ const Denunciation = (props) => {
                             <Form.Control 
                                 type='number'
                                 name='den_habitante_telefono2'
-                                //value={den_habitante_telefono2}
+                                value={den_habitante_telefono2}
                                 onChange={OnChange}
+                                ref={register({ required: true, maxLength: 9 })}
                             />
+                            {errors.den_habitante_telefono2?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                            {errors.den_habitante_telefono2?.type === 'maxLength' && <span className='alert-custom'>*Maximo 9 numeros</span>}
                         </Form.Group>
                     </>):null
                 }
                 {/* DEN_PROVINCIA */}
                 <Form.Group controlId="den_provincia">
-                    <Form.Label >Provincia*</Form.Label>
+                    <Form.Label >Provincia</Form.Label>
                     <Form.Control 
                         as="select"
                         name= 'den_provincia'
@@ -368,7 +394,7 @@ const Denunciation = (props) => {
                 </Form.Group> 
                 {/* DEN_DISTRITO */}
                 <Form.Group controlId="den_distrito">
-                    <Form.Label >Distrito*</Form.Label>
+                    <Form.Label >Distrito</Form.Label>
                     <Form.Control 
                         as="select"
                         name= 'den_distrito'
@@ -387,7 +413,7 @@ const Denunciation = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_localidad'
-                        //value={den_localidad}
+                        value={den_localidad}
                         onChange={OnChange}
                     />
                 </Form.Group>
@@ -397,9 +423,11 @@ const Denunciation = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_direccion'
-                        //value={den_direccion}
+                        value={den_direccion}
                         onChange={OnChange}
+                        ref={register({ required: true })}
                     />
+                    {errors.den_direccion && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
                 {/* DEN_REFERENCIA*/}
                 <Form.Group controlId="den_referencia">
@@ -407,14 +435,26 @@ const Denunciation = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_referencia'
-                        //value={den_referencia}
+                        value={den_referencia}
                         onChange={OnChange}
+                        ref={register({ required: true })}
                     />
+                    {errors.den_referencia && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
                 {/* DEN_FECHA_PROBABLE_INSPECCION*/}
-                <Form.Group controlId="den_fecha_recepcion">
-                    <Form.Label >Fecha probable de inspección</Form.Label>
-                    <Calendar minDate={new Date()} showIcon={true} locale={es} dateFormat="dd/mm/yy" value={dates1} OnChange={(e) => setDenunciation({...denunciation,dates1 : e.value})} selectionMode="multiple" readOnlyInput={true}/>
+                <Form.Group controlId="den_fecha_probable_inspeccion">
+                    <Form.Label >Fecha probable de inspección: </Form.Label>
+                    <Calendar 
+                        minDate = { new Date() }
+                        showIcon={true} 
+                        locale={es} 
+                        dateFormat="dd/mm/yy" 
+                        value={den_fecha_probable_inspeccion} 
+                        name= 'den_fecha_probable_inspeccion'
+                        onChange={ OnChange } 
+                        selectionMode="multiple" 
+                        readOnlyInput={true} 
+                    />
                 </Form.Group>
                 <Button type='submit'>Guardar</Button> 
             </Form>
