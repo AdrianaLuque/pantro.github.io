@@ -41,7 +41,6 @@ const DenunciationState = props => {
         
         try {
             const resultado = await ClienteAxios.post('/api/denuncias', denunciation );
-            //console.log(resultado);
 
             dispatch({
                 type: ADD_DENUNCIATION,

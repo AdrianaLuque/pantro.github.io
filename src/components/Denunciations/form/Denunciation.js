@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../../context/alertas/alertaContext';
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
+import ModalContext from "../../../context/modal/ModalContext";
 import {provincias_aqp, distritos_aqp} from './Ubigeo';
 
 //Fecha en español
@@ -39,6 +40,9 @@ const Denunciation = (props) => {
     const DenunciationsContext = useContext(DenunciationContext);
     const { AddDenunciation, EditDenunciation } = DenunciationsContext;
     
+    //Obtener el state de modal
+    const ModalsContext = useContext(ModalContext);
+    const { CloseModal } = ModalsContext;
 
     //En caso de que el passwors o usuario no exista
     /*useEffect(() => {
@@ -100,27 +104,53 @@ const Denunciation = (props) => {
             ...denunciation,
             [e.target.name] : e.target.value
         });
-    }
+    };
     const OnChangeCheck = e => {
         setDenunciation({
             ...denunciation,
             [e.target.name] : e.target.id
         });
+    };
+
+    //Funcion para obtener la fecha en el formato yyyy-mm-dd
+    const DateFull = ( date ) => {
+        const year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+        if(month < 10){
+            month = "0"+ month;
+        }
+        if ( day < 10) {
+            day = "0"+day;
+        }
+        return(`${year}-${month}-${day}`);
+    }
+    //Funcion para obtener los datos de fecha de probable inspeccion
+    const DateSome = ( arrayDate ) => {
+        let result = 'NA';
+        if ( arrayDate!== null) {
+            result = DateFull(arrayDate[0]);
+            if (arrayDate.length > 1) {
+                for (let i = 1; i < arrayDate.length; i++) {
+                    result = result +'&'+ DateFull(arrayDate[i]);
+                }
+            }
+        }
+        return (result);
     }
 
     const MyUploader = () => {
         console.log("se subio la imagen");
-    }
+    };
 
-    const OnSubmit = e => {
-        e.preventDefault();
-        //Validar que no haya campos vacios
-        //if (username.trim() === '' || password.trim() === '') {
-        //    MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
-        //}
+    const OnSubmit = () => {
+        //Obteniendo solo la fecha en campos calendar
+        denunciation.den_fecha_recepcion = DateFull(denunciation.den_fecha_recepcion);
+        denunciation.den_fecha_probable_inspeccion = DateSome(denunciation.den_fecha_probable_inspeccion);
+                
         AddDenunciation(denunciation);
-    }
-    //const onSubmit = data => console.log(data);
+        CloseModal();
+    };
     
     return (
         <>
@@ -140,15 +170,14 @@ const Denunciation = (props) => {
                 </Form.Group>
                 {/* DEN_FECHA_RECEPCION */}
                 <Form.Group controlId="den_fecha_recepcion">
-                    <Form.Label >Fecha de recepción: </Form.Label>
+                    <Form.Label>Fecha de recepción: </Form.Label>
                     <Calendar 
                         showIcon={true} 
                         locale={es} 
-                        dateFormat="dd/mm/yy" 
+                        dateFormat="yy-mm-dd" 
                         name = 'den_fecha_recepcion'
                         value={den_fecha_recepcion} 
                         onChange={OnChange}
-                        readOnlyInput={true}
                     />
                 </Form.Group>
                 {/* DEN_MEDIO */}
@@ -197,6 +226,7 @@ const Denunciation = (props) => {
                             name="den_tipo"
                             id="verbal"
                             onChange= {OnChangeCheck}
+                            ref={register({ required: true })}
                         />
                         <Form.Check
                             type="radio"
@@ -204,8 +234,10 @@ const Denunciation = (props) => {
                             name="den_tipo"
                             id="con_insecto"
                             onChange= {OnChangeCheck}
+                            ref={register({ required: true })}
                         />
                     </Col>
+                    {errors.den_tipo && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
                 {den_tipo==="verbal" || den_tipo==="con_insecto"?
                     (<>
@@ -221,6 +253,7 @@ const Denunciation = (props) => {
                                 name="den_insecto"
                                 id="chinches_cama"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -228,6 +261,7 @@ const Denunciation = (props) => {
                                 label="Chirimachas"
                                 id="chirimachas"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -235,6 +269,7 @@ const Denunciation = (props) => {
                                 label="Garrapatas"
                                 id="garrapatas"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -242,13 +277,15 @@ const Denunciation = (props) => {
                                 label="Mosquitos"
                                 id="mosquitos"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Fitófagos"
-                                id="fitofagos"ref={register({ required: true })}
+                                id="fitofagos"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -256,6 +293,7 @@ const Denunciation = (props) => {
                                 label="Grillos"
                                 id="grillos"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -263,6 +301,7 @@ const Denunciation = (props) => {
                                 label="Cucarachas"
                                 id="cucarachas"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -270,6 +309,7 @@ const Denunciation = (props) => {
                                 label="Escarabajos"
                                 id="escarabajos"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -277,6 +317,7 @@ const Denunciation = (props) => {
                                 label="Pulgones"
                                 id="pulgones"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -284,6 +325,7 @@ const Denunciation = (props) => {
                                 label="Pulgas"
                                 id="pulgas"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -291,6 +333,7 @@ const Denunciation = (props) => {
                                 label="Hitas"
                                 id="hitas"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
@@ -298,8 +341,10 @@ const Denunciation = (props) => {
                                 label="Otro"
                                 id="otro"
                                 onChange= {OnChangeCheck}
+                                ref={register({ required: true })}
                             />
                         </Col>
+                        {errors.den_insecto && <span className='alert-custom'>*Campo obligatorio</span>}
                     </Form.Group>
                     {den_insecto==="otro"? (
                         <>
@@ -338,7 +383,7 @@ const Denunciation = (props) => {
                         onChange={OnChange}
                         ref={register({ required: true })}
                     />
-                    {errors.den_agente_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
+                    {errors.den_habitante_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
                 {/* DEN_HABITANTE_TELEFONO1 */}
                 <Form.Group controlId="den_habitante_telefono1">
@@ -446,6 +491,7 @@ const Denunciation = (props) => {
                     <Form.Label >Fecha probable de inspección: </Form.Label>
                     <Calendar 
                         minDate = { new Date() }
+                        maxDateCount = {3}
                         showIcon={true} 
                         locale={es} 
                         dateFormat="dd/mm/yy" 
