@@ -5,12 +5,32 @@ import DenunciationContext from './DenunciationContext';
 import DenunciationReducer from './DenunciationReducer';
 import { 
     GET_DENUNCIATIONS,
-    ADD_DENUNCIATION
+    ADD_DENUNCIATION,
+    UPDATE_DENUNCIATION
 } from '../../types';
 
 const DenunciationState = props => {
     
     const initialState = {
+        denunciation: {
+            den_id_custom: '',
+            den_fecha_recepcion: new Date(),
+            den_medio: '',
+            den_agente_nombre:'',
+            den_tipo: '',
+            den_insecto: '',
+            den_insecto_otro:'',
+            den_habitante_nombre:'',
+            den_habitante_telefono1:'',
+            den_otro_telefono:false,
+            den_habitante_telefono2:'',
+            den_provincia: "",
+            den_distrito:'',
+            den_localidad:'',
+            den_direccion:'',
+            den_referencia:'',
+            den_fecha_probable_inspeccion: null
+        },
         denunciations: []
     }
 
@@ -52,6 +72,14 @@ const DenunciationState = props => {
         }
     }
 
+//* Agregar denuncias
+    const UpdateDenunciation = ( objDenunciation ) => {
+        dispatch({
+            type: UPDATE_DENUNCIATION,
+            payload: objDenunciation
+        });
+    }
+
     //* Editar denuncias
     const EditDenunciation = async ( denunciation ) => {
         
@@ -72,9 +100,11 @@ const DenunciationState = props => {
     return(
         <DenunciationContext.Provider
             value={{
+                denunciation: state.denunciation,
                 denunciations: state.denunciations,
                 GetDenunciations,
                 AddDenunciation,
+                UpdateDenunciation,
                 EditDenunciation
             }}
         >

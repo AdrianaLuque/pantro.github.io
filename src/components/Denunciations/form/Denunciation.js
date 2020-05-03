@@ -38,7 +38,7 @@ const Denunciation = (props) => {
 
     //Obtener el state de Alerta
     const DenunciationsContext = useContext(DenunciationContext);
-    const { AddDenunciation, EditDenunciation } = DenunciationsContext;
+    const { denunciation, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
     //Obtener el state de modal
     const ModalsContext = useContext(ModalContext);
@@ -58,26 +58,8 @@ const Denunciation = (props) => {
     const { register, handleSubmit, errors } = useForm();
     
     //State para denuncias
-    const [denunciation, setDenunciation] = useState({
-        den_id_custom: '',
-        den_fecha_recepcion: new Date(),
-        den_medio: '',
-        den_agente_nombre:'',
-        den_tipo: '',
-        den_insecto: '',
-        den_insecto_otro:'',
-        den_habitante_nombre:'',
-        den_habitante_telefono1:'',
-        den_otro_telefono: false,
-        den_habitante_telefono2:'',
-        den_provincia: "",
-        den_distrito:'',
-        den_localidad:'',
-        den_direccion:'',
-        den_referencia:'',
-        den_fecha_probable_inspeccion: null
-    });
-
+    const [currentDenunciation, setCurrentDenunciation] = useState( denunciation );
+    
     //Extraer de usuario
     const {  
         den_id_custom,
@@ -97,19 +79,15 @@ const Denunciation = (props) => {
         den_direccion,
         den_referencia,
         den_fecha_probable_inspeccion
-    } = denunciation;
+    } = currentDenunciation;
 
     const OnChange = e => {
-        setDenunciation({
-            ...denunciation,
+        setCurrentDenunciation({
+            ...currentDenunciation,
             [e.target.name] : e.target.value
         });
-    };
-    const OnChangeCheck = e => {
-        setDenunciation({
-            ...denunciation,
-            [e.target.name] : e.target.id
-        });
+        console.log(e.target.name);
+        console.log(e.target.value);
     };
 
     //Funcion para obtener la fecha en el formato yyyy-mm-dd
@@ -145,10 +123,10 @@ const Denunciation = (props) => {
 
     const OnSubmit = () => {
         //Obteniendo solo la fecha en campos calendar
-        denunciation.den_fecha_recepcion = DateFull(denunciation.den_fecha_recepcion);
-        denunciation.den_fecha_probable_inspeccion = DateSome(denunciation.den_fecha_probable_inspeccion);
-                
-        AddDenunciation(denunciation);
+        currentDenunciation.den_fecha_recepcion = DateFull(currentDenunciation.den_fecha_recepcion);
+        currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
+
+        AddDenunciation(currentDenunciation);
         CloseModal();
     };
     
@@ -224,16 +202,18 @@ const Denunciation = (props) => {
                             type="radio"
                             label="Verbal"
                             name="den_tipo"
-                            id="verbal"
-                            onChange= {OnChangeCheck}
+                            value="verbal"
+                            checked={ den_tipo=== "verbal"}
+                            onChange= {OnChange}
                             ref={register({ required: true })}
                         />
                         <Form.Check
                             type="radio"
                             label="Con insecto"
                             name="den_tipo"
-                            id="con_insecto"
-                            onChange= {OnChangeCheck}
+                            value="con_insecto"
+                            checked={ den_tipo=== "con_insecto"}
+                            onChange= {OnChange}
                             ref={register({ required: true })}
                         />
                     </Col>
@@ -251,96 +231,108 @@ const Denunciation = (props) => {
                                 type="radio"
                                 label="Chinches de Cama"
                                 name="den_insecto"
-                                id="chinches_cama"
-                                onChange= {OnChangeCheck}
+                                value="chinches_cama"
+                                checked={ den_insecto=== "chinches_cama"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Chirimachas"
-                                id="chirimachas"
-                                onChange= {OnChangeCheck}
+                                value="chirimachas"
+                                checked={ den_insecto=== "chirimachas"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Garrapatas"
-                                id="garrapatas"
-                                onChange= {OnChangeCheck}
+                                value="garrapatas"
+                                checked={ den_insecto=== "garrapatas"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Mosquitos"
-                                id="mosquitos"
-                                onChange= {OnChangeCheck}
+                                value="mosquitos"
+                                checked={ den_insecto=== "mosquitos"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Fitófagos"
-                                id="fitofagos"
-                                onChange= {OnChangeCheck}
+                                value="fitofagos"
+                                checked={ den_insecto=== "fitofagos"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Grillos"
-                                id="grillos"
-                                onChange= {OnChangeCheck}
+                                value="grillos"
+                                checked={ den_insecto=== "grillos"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Cucarachas"
-                                id="cucarachas"
-                                onChange= {OnChangeCheck}
+                                value="cucarachas"
+                                checked={ den_insecto=== "cucarachas"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Escarabajos"
-                                id="escarabajos"
-                                onChange= {OnChangeCheck}
+                                value="escarabajos"
+                                checked={ den_insecto=== "escarabajos"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Pulgones"
-                                id="pulgones"
-                                onChange= {OnChangeCheck}
+                                value="pulgones"
+                                checked={ den_insecto=== "pulgones"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Pulgas"
-                                id="pulgas"
-                                onChange= {OnChangeCheck}
+                                value="pulgas"
+                                checked={ den_insecto=== "pulgas"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Hitas"
-                                id="hitas"
-                                onChange= {OnChangeCheck}
+                                value="hitas"
+                                checked={ den_insecto=== "hitas"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
                                 label="Otro"
-                                id="otro"
-                                onChange= {OnChangeCheck}
+                                value="otro"
+                                checked={ den_insecto=== "otro"}
+                                onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                         </Col>
@@ -401,8 +393,10 @@ const Denunciation = (props) => {
                 <Form.Group controlId="den_otro_telefono">
                     <Form.Check 
                         type="checkbox" 
-                        label="Otro teléfono adicional"
                         name="den_otro_telefono"
+                        label="Otro teléfono adicional"
+                        //value={prueba1.den_otro_telefono}
+                        //checked={ den_otro_telefono=== "otro"}
                         onChange={OnChange}
                     />
                 </Form.Group>

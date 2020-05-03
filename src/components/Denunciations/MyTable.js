@@ -1,14 +1,43 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-const MyTable = ({ register }) => {//extends React.Component {
+import DenunciationContext from "../../context/denunciation/DenunciationContext";
+
+const MyTable = ({ register }) => {
+
+    //Obtener el state de Alerta
+  const DenunciationsContext = useContext(DenunciationContext);
+  const { UpdateDenunciation } = DenunciationsContext;
+  
+  const onRowSelect = (row, isSelected) => {
+    if ( isSelected ) {
+      let obj = {};
+      for(var prop in row){
+        //console.log(prop+':'+row[prop]);
+        if (prop === 'DEN_FECHA_RECEPCION') {
+          row[prop] = new Date(row[prop]);
+        } else if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
+          let obj = [];
+          let aux = row[prop];
+          aux = aux.split('&');
+          for (let i = 1; i < aux.length; i++) {
+            obj.push(new Date(aux[i]));
+          }
+          row[prop] = obj;
+        }
+        obj[prop.toLowerCase()]=row[prop];
+      }
+      UpdateDenunciation(obj);
+    }
+  }
 
   const selectRowProp = {
     mode: 'radio',
     bgColor: '#5bc0de', // you should give a bgcolor, otherwise, you can't regonize which row has been selected
     //hideSelectColumn: true,  // enable hide selection column.
     clickToSelect: true,  // you should enable clickToSelect, otherwise, you can't select column.
+    onSelect: onRowSelect
   };
 
   return (
@@ -16,7 +45,6 @@ const MyTable = ({ register }) => {//extends React.Component {
           keyField="DEN_ID_CUSTOM"
           data={ register } 
           selectRow= {selectRowProp} 
-          //ref = 'table'
       >   
           <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM'>CÓDIGO</TableHeaderColumn>
           <TableHeaderColumn width='210' dataField='DEN_FECHA_RECEPCION'>FECHA DE RECEPCIÓN</TableHeaderColumn>
