@@ -72,7 +72,7 @@ const DenunciationState = props => {
         }
     }
 
-//* Agregar denuncias
+    //* Denuncia seleccionada
     const UpdateDenunciation = ( objDenunciation ) => {
         dispatch({
             type: UPDATE_DENUNCIATION,

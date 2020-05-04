@@ -80,14 +80,19 @@ const Denunciation = (props) => {
         den_referencia,
         den_fecha_probable_inspeccion
     } = currentDenunciation;
-
+        
     const OnChange = e => {
         setCurrentDenunciation({
             ...currentDenunciation,
             [e.target.name] : e.target.value
         });
-        console.log(e.target.name);
-        console.log(e.target.value);
+    };
+
+    const OnChangeCheck = e => {
+        setCurrentDenunciation({
+            ...currentDenunciation,
+            [e.target.name] : e.target.checked
+        });
     };
 
     //Funcion para obtener la fecha en el formato yyyy-mm-dd
@@ -395,9 +400,8 @@ const Denunciation = (props) => {
                         type="checkbox" 
                         name="den_otro_telefono"
                         label="Otro teléfono adicional"
-                        //value={prueba1.den_otro_telefono}
-                        //checked={ den_otro_telefono=== "otro"}
-                        onChange={OnChange}
+                        checked={ den_otro_telefono }
+                        onChange={OnChangeCheck}
                     />
                 </Form.Group>
                 {den_otro_telefono? 
