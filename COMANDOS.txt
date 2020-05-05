@@ -6,3 +6,4 @@
 - npm install --save d3 //Para leer CSV
 - npm install --save axios
 - npm install react-hook-form //Validar
+- npm install --save leaflet.markercluster
