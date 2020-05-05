@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { Map, TileLayer, Popup, CircleMarker } from "react-leaflet";
 
 import CsvContext from "../../context/csv/CsvContext";
-import MarkerCluster from "./MarkerCluster";
 
 const MyMap = props => {
 
@@ -33,42 +32,7 @@ const MyMap = props => {
     }
     return total/n;
   }*/
-  const [markers, setMarkers] = useState([
-    {
-      position: { lng: -122.673447, lat: 45.5225581 },
-      text: "Voodoo Doughnut"
-    },
-    {
-      position: { lng: -122.6781446, lat: 45.5225512 },
-      text: "Bailey's Taproom"
-    },
-    {
-      position: { lng: -122.67535700000002, lat: 45.5192743 },
-      text: "Barista"
-    },
-    {
-      position: { lng: -122.65596570000001, lat: 45.5199148000001 },
-      text: "Base Camp Brewing"
-    }
-  ]);
 
-  const handleClick = () => {
-    setMarkers([
-      {
-        position: { lng: -110.673447, lat: 40.5225581 },
-        text: "Voodoo Doughnut"
-      },
-      {
-        position: { lng: -110.6781446, lat: 40.5225512 },
-        text: "Bailey's Taproom"
-      },
-      {
-        position: { lng: -110.67535700000002, lat: 40.5192743 },
-        text: "Barista"
-      }
-    ]);
-  };
-  
   return (
     <>
       <Map center={center} zoom={zoom} preferCanvas={true}>
@@ -95,7 +59,6 @@ const MyMap = props => {
           </CircleMarker>
         ))}
       </Map>
-      <button onClick={handleClick}>Change cluster</button>
     </>
   );
 }
