@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import CsvContext from './CsvContext';
 import CsvReducer from './CsvReducer';
 import { 
-    READ_CSV,
+    CSV_HOUSES,
     CSV_PARTICIPANTS_INMUNE,
     CSV_HEALTH_POSTS
 } from '../../types';
@@ -12,7 +12,7 @@ import {
 const CsvState = props => {
     
     const initialState = {
-        housesCsv: [],
+        houses: [],
         participantsInmune: [],
         healthPosts: []
     }
@@ -21,7 +21,7 @@ const CsvState = props => {
     const [state, dispatch] = useReducer(CsvReducer, initialState);
 
     //Funciones
-    const ReadCsv = async () => {
+    const CsvHouses = async () => {
         //d3.csv(fileCsv, function(data) { console.log(data); });
         //Obtener CSV
         const fileCsv= "test2";
@@ -31,7 +31,7 @@ const CsvState = props => {
           const results = await d3.csv(pathCsv);
           
             dispatch({
-                type: READ_CSV,
+                type: CSV_HOUSES,
                 payload: results
             });
             
@@ -79,10 +79,10 @@ const CsvState = props => {
     return(
         <CsvContext.Provider
             value={{
-                housesCsv: state.housesCsv,
+                houses: state.houses,
                 participantsInmune: state.participantsInmune,
                 healthPosts: state.healthPosts,
-                ReadCsv,
+                CsvHouses,
                 CsvParticipantsInmune,
                 CsvHealthPosts
             }}

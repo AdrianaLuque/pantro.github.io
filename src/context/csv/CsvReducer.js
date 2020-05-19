@@ -1,15 +1,15 @@
 import { 
-    READ_CSV,
+    CSV_HOUSES,
     CSV_PARTICIPANTS_INMUNE,
     CSV_HEALTH_POSTS
 } from '../../types';
 
 export default (state, action) => {
     switch (action.type) {
-        case READ_CSV:
+        case CSV_HOUSES:
             return{
                 ...state,
-                housesCsv: action.payload
+                houses: action.payload
             };
         case CSV_PARTICIPANTS_INMUNE:
             return{

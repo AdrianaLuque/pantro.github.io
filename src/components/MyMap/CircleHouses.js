@@ -7,19 +7,24 @@ const CircleHouses = () => {
 
     //Obtener el state de Alerta
     const CsvsContext = useContext(CsvContext);
-    const { housesCsv, ReadCsv } = CsvsContext;
-    console.log(housesCsv);
+    const { houses, CsvHouses } = CsvsContext;
     useEffect(() => {
-        ReadCsv();
+        CsvHouses();
         // eslint-disable-next-line
-    }, []);                                                                                                                                                           
+    }, []); 
+
+    let total_ca = houses;
+    //Agregando texto popup a total_ca
+    total_ca.forEach(element => {
+      element.inspectionText = "Ult. visita : --" ;
+    });                                                                                                                                                          
   
     return (
-        housesCsv.map( house => (
+        total_ca.map( element => (
           <CircleMarker 
-            key = {house.UNICODE}
-            center={[parseFloat(house.LATITUDE),parseFloat(house.LONGITUDE)]}
-            fillColor = {house.color}
+            key = {element.UNICODE}
+            center={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
+            fillColor = {element.color}
             radius = {6}
             //// = {true}
             color = "black"
@@ -27,9 +32,7 @@ const CircleHouses = () => {
             fillOpacity = {1}
           >
               <Popup>
-                Nombre: Juan Perez <br />
-                Direccion: Av Angamos 728 <br/>
-                Celular: 9999999<br/>
+                {element.inspectionText}
               </Popup>
           </CircleMarker>
         ))

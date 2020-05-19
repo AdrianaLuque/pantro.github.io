@@ -15,7 +15,7 @@ export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
 //Csv
-export const READ_CSV = 'READ_CSV';
+export const CSV_HOUSES = 'CSV_HOUSES';
 export const CSV_PARTICIPANTS_INMUNE = 'CSV_PARTICIPANTS_INMUNE';
 export const CSV_HEALTH_POSTS = 'CSV_HEALTH_POSTS';
 
