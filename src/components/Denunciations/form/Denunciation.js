@@ -16,6 +16,8 @@ import DenunciationContext from '../../../context/denunciation/DenunciationConte
 import ModalContext from "../../../context/modal/ModalContext";
 import {provincias_aqp, distritos_aqp} from './Ubigeo';
 
+import { DateFull } from "../../../Functions";
+
 //Fecha en español
 const es = {
     firstDayOfWeek: 1,
@@ -95,19 +97,6 @@ const Denunciation = (props) => {
         });
     };
 
-    //Funcion para obtener la fecha en el formato yyyy-mm-dd
-    const DateFull = ( date ) => {
-        const year = date.getFullYear();
-        let month = date.getMonth()+1;
-        let day = date.getDate();
-        if(month < 10){
-            month = "0"+ month;
-        }
-        if ( day < 10) {
-            day = "0"+day;
-        }
-        return(`${year}-${month}-${day}`);
-    }
     //Funcion para obtener los datos de fecha de probable inspeccion
     const DateSome = ( arrayDate ) => {
         let result = 'NA';

@@ -1,5 +1,7 @@
 import { 
-    READ_CSV
+    READ_CSV,
+    CSV_PARTICIPANTS_INMUNE,
+    CSV_HEALTH_POSTS
 } from '../../types';
 
 export default (state, action) => {
@@ -8,6 +10,16 @@ export default (state, action) => {
             return{
                 ...state,
                 housesCsv: action.payload
+            };
+        case CSV_PARTICIPANTS_INMUNE:
+            return{
+                ...state,
+                participantsInmune: action.payload
+            };
+        case CSV_HEALTH_POSTS:
+            return{
+                ...state,
+                healthPosts: action.payload
             };
         default:
             return state;
