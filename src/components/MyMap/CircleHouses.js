@@ -1,15 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { Popup, CircleMarker } from "react-leaflet";
 
+import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import CsvContext from "../../context/csv/CsvContext";
 
 const CircleHouses = () => {
 
-    //Obtener el state de Alerta
+    //Obtener el state de Usuario
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const { user } = AuthenticationsContext;
+    //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
     const { houses, CsvHouses } = CsvsContext;
     useEffect(() => {
-        CsvHouses();
+        CsvHouses(user.USU_CATCHMENT_AREA);
         // eslint-disable-next-line
     }, []); 
 

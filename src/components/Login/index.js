@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { Container, Col, Form, Button } from 'react-bootstrap';
 
-import authContext from "../../context/auth/authContext";
+import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import alertaContext from '../../context/alertas/alertaContext';
 
 const Login = (props) => {
@@ -10,12 +10,12 @@ const Login = (props) => {
     const alertasContext = useContext(alertaContext);
     const { alerta, MostrarAlerta } = alertasContext;
 
-    const authsContext = useContext(authContext);
-    const { mensaje, autenticado, IniciarSesion } = authsContext;
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const { mensaje, authenticated, Login } = AuthenticationsContext;
 
     //En caso de que el passwors o usuario no exista
     useEffect(() => {
-        if (autenticado) {
+        if (authenticated) {
             props.history.push('/actividades');
         }
         
@@ -24,34 +24,32 @@ const Login = (props) => {
         }
         //Para evitar que mande error por que sabemos que esta bien
         // eslint-disable-next-line
-    }, [mensaje, autenticado, props.history]);
+    }, [mensaje, authenticated, props.history]);
     
     //State para iniciar sesión
-    const [usuario, guardarUsuario] = useState({
+    const [user, setUser] = useState({
         username: '',
         password: ''
     });
 
     //Extraer de usuario
-    const { username, password } = usuario;
+    const { username, password } = user;
 
     const onChange = e => {
-        guardarUsuario({
-            ...usuario,
+        setUser({
+            ...user,
             [e.target.name] : e.target.value
         })
     }
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log("se presiono boton");
         //Validar que no haya campos vacios
         if (username.trim() === '' || password.trim() === '') {
             MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
         }
-
         //Pasarlo al action
-        IniciarSesion({ username, password });
+        Login({ username, password });
     }
 
     return (

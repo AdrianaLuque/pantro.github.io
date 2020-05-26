@@ -62,3 +62,4 @@ export const Mean = (data, select) => {
     }
     return total/n;
 }
+

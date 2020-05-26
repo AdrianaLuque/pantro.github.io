@@ -10,7 +10,7 @@ import {FileUpload} from 'primereact/fileupload';
 //Validar
 import { useForm } from "react-hook-form";
 
-import authContext from "../../../context/auth/authContext";
+//import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../../context/alertas/alertaContext';
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import ModalContext from "../../../context/modal/ModalContext";
@@ -35,8 +35,8 @@ const Denunciation = (props) => {
     const alertasContext = useContext(alertaContext);
     const { alerta, MostrarAlerta } = alertasContext;
 
-    const authsContext = useContext(authContext);
-    const { mensaje } = authsContext;
+    /*const authsContext = useContext(authContext);
+    const { mensaje } = authsContext;*/
 
     //Obtener el state de Alerta
     const DenunciationsContext = useContext(DenunciationContext);

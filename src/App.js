@@ -7,7 +7,7 @@ import MyMap from "./components/MyMap";
 import Activities from "./components/Activities";
 import Denunciations from "./components/Denunciations";
 import AlertaState from './context/alertas/alertaState';
-import AuthState from './context/auth/authState';
+import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';
 import InspectionState from './context/inspection/InspectionState';
 import CsvState from './context/csv/CsvState';
@@ -16,7 +16,7 @@ import ModalState from './context/modal/ModalState';
 function App() {
   return (
     <AlertaState>
-      <AuthState>
+      <AuthenticationState>
         <DenunciationState>
           <InspectionState>
             <CsvState>
@@ -24,16 +24,16 @@ function App() {
                 <Router> 
                   <Switch>
                     <Route exact path="/" component={Login}/>
-                    <Route exact path="/map" component={MyMap}/>
                     <Route exact path="/actividades" component={Activities}/>
-                    <Route exact path="/denuncias" component={Denunciations}/>
+                    <Route exact path="/actividades/denuncias" component={Denunciations}/>
+                    <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
                   </Switch>
                 </Router>
               </ModalState>
             </CsvState>
           </InspectionState>
         </DenunciationState>
-      </AuthState>
+      </AuthenticationState>
     </AlertaState>
   );
 }

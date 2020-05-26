@@ -14,7 +14,6 @@ const MyTable = ({ register }) => {
     if ( isSelected ) {
       let obj = {};
       for(var prop in row){
-        //console.log(prop+':'+row[prop]);
         if (prop === 'DEN_FECHA_RECEPCION') {
           row[prop] = new Date(row[prop]);
         } else if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {

@@ -30,17 +30,6 @@ const Logic = () => {
         //total_ca <- total_ca[order(total_ca$group_num, total_ca$order),]
     }
 
-    /*if (n_row > 1) {
-    for(i in 2:n_row){
-        new_ca <- read.csv(paste("catchment_area/",names_ca[i],".csv", sep = ""), stringsAsFactors = FALSE)
-        #Ordenar OBLIGATORIAMENTE por "group_num" y por "order"
-        if (varApp == "bluepoint") {
-        new_ca <- new_ca[order(new_ca$group_num, new_ca$order),]
-        }
-        total_ca <- rbind(total_ca, new_ca)      
-    }  
-    }*/
-
     //Csv
     let total_ca = housesCsv;
     //Eliminando viviendas que no tienen GPS

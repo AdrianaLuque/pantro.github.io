@@ -9,7 +9,7 @@ export default (state, action) => {
         case CSV_HOUSES:
             return{
                 ...state,
-                houses: action.payload
+                houses: state.houses.concat(action.payload)
             };
         case CSV_PARTICIPANTS_INMUNE:
             return{

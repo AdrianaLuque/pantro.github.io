@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, { useReducer, useContext } from 'react';
 import * as d3 from 'd3';
 
 import CsvContext from './CsvContext';
@@ -8,6 +8,7 @@ import {
     CSV_PARTICIPANTS_INMUNE,
     CSV_HEALTH_POSTS
 } from '../../types';
+import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 
 const CsvState = props => {
     
@@ -20,23 +21,30 @@ const CsvState = props => {
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(CsvReducer, initialState);
 
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const { user } = AuthenticationsContext;
+
     //Funciones
-    const CsvHouses = async () => {
-        //d3.csv(fileCsv, function(data) { console.log(data); });
-        //Obtener CSV
-        const fileCsv= "test2";
-        const pathCsv = require('../../catchment-area/' + fileCsv + '.csv');
+    const CsvHouses = async (fileCsv) => {
         
-        try {
-          const results = await d3.csv(pathCsv);
-          
-            dispatch({
-                type: CSV_HOUSES,
-                payload: results
-            });
-            
-        } catch (error) {
-            console.log(error);
+        if (Object.keys(fileCsv).length !== 0) {
+            const arrayFileCsv = fileCsv.split('&');
+            for (let i = 0; i < arrayFileCsv.length; i++) {
+                //Obtener CSV
+                let pathCsv = require('../../catchment-area/' + arrayFileCsv[i] + '.csv');
+                
+                try {
+                    const results = await d3.csv(pathCsv);
+                
+                    dispatch({
+                        type: CSV_HOUSES,
+                        payload: results
+                    });
+                    
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         }
     };
           
