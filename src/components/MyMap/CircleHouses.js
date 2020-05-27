@@ -3,6 +3,7 @@ import { Popup, CircleMarker } from "react-leaflet";
 
 import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import CsvContext from "../../context/csv/CsvContext";
+import InspectionContext from "../../context/inspection/InspectionContext";
 
 const CircleHouses = () => {
 
@@ -11,13 +12,22 @@ const CircleHouses = () => {
     const { user } = AuthenticationsContext;
     //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
-    const { houses, CsvHouses } = CsvsContext;
-    useEffect(() => {
-        CsvHouses(user.USU_CATCHMENT_AREA);
-        // eslint-disable-next-line
-    }, []);
-
+    let { houses, CsvHouses } = CsvsContext;
+    //Obtener el inspecciones
+    const InspectionsContext = useContext(InspectionContext);
+    const { inspections, GetInspections } = InspectionsContext;
+    
+    useEffect(() => {  
+      CsvHouses(user.USU_CATCHMENT_AREA);
+      // eslint-disable-next-line
+    }, [user]);
+    
+    //* OJO: este codigo se ejecuta 4 veces, en el futuro ver como solucionarlo
+    //- LOGICA
     let total_ca = houses;
+    
+    //const codeLoc = [...new Set(total_ca.map(house => house.codeLoc))];
+        
     //Agregando texto popup a total_ca
     total_ca.forEach(element => {
       element.inspectionText = "Ult. visita : --" ;

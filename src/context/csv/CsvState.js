@@ -34,8 +34,10 @@ const CsvState = props => {
                 let pathCsv = require('../../catchment-area/' + arrayFileCsv[i] + '.csv');
                 
                 try {
-                    const results = await d3.csv(pathCsv);
-                
+                    let results = await d3.csv(pathCsv);
+                    //Eliminando viviendas que no tienen GPS
+                    results = results.filter(house => house.LATITUDE !== null || house.LATITUDE !== "");
+                        
                     dispatch({
                         type: CSV_HOUSES,
                         payload: results

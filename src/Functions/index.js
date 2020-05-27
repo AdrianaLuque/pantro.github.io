@@ -23,7 +23,6 @@ export const InnerJoin = (array1, array2, nameCol1, nameCol2 ) => {
                 result.push(array2[j]);
             }            
         }
-        
     }
     
     return result;

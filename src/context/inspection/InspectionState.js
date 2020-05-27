@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useContext} from 'react';
 import ClienteAxios from "../../config/axios";
 
 import InspectionContext from './InspectionContext';
@@ -7,6 +7,7 @@ import {
     GET_INSPECTIONS,
     ADD_INSPECTION
 } from '../../types';
+import CsvContext from "../csv/CsvContext";
 
 const InspectionState = props => {
     
@@ -36,13 +37,21 @@ const InspectionState = props => {
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(InspectionReducer, initialState);
 
+    //Obtener viviendas
+    const CsvsContext = useContext(CsvContext);
+    const { houses } = CsvsContext;
+
     //FUNCIONES
     //* Obtener denuncias
     const GetInspections = async () => {
+
+        //Obteniendo los codigos de localidad unicos
+        //const codeLoc = [...new Set(houses.map(house => house.codeLoc))];
+        //console.log(aux);
+        console.log("ingreso GetInspections");
         
         try {
             const resultado = await ClienteAxios.get('/api/inspecciones');
-            console.log(resultado);
 
             dispatch({
                 type: GET_INSPECTIONS,

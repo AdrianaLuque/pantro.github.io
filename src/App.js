@@ -17,22 +17,22 @@ function App() {
   return (
     <AlertaState>
       <AuthenticationState>
-        <DenunciationState>
-          <InspectionState>
-            <CsvState>
-              <ModalState>
-                <Router> 
-                  <Switch>
-                    <Route exact path="/" component={Login}/>
-                    <Route exact path="/actividades" component={Activities}/>
-                    <Route exact path="/actividades/denuncias" component={Denunciations}/>
-                    <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
-                  </Switch>
-                </Router>
-              </ModalState>
-            </CsvState>
-          </InspectionState>
-        </DenunciationState>
+        <CsvState>
+          <DenunciationState>
+            <InspectionState>
+                <ModalState>
+                  <Router> 
+                    <Switch>
+                      <Route exact path="/" component={Login}/>
+                      <Route exact path="/actividades" component={Activities}/>
+                      <Route exact path="/actividades/denuncias" component={Denunciations}/>
+                      <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
+                    </Switch>
+                  </Router>
+                </ModalState>
+            </InspectionState>
+          </DenunciationState>
+        </CsvState>
       </AuthenticationState>
     </AlertaState>
   );
