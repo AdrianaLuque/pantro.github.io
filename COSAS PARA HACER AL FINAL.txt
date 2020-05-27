@@ -1,0 +1,3 @@
+- Decirle a Justin el nuevo formato de bluepoint.
+- Cambiar nombre de columnas de DENUNCIAS.
+- Eliminar tabla AUDITOR.

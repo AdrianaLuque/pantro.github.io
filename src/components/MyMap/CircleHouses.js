@@ -15,7 +15,7 @@ const CircleHouses = () => {
     useEffect(() => {
         CsvHouses(user.USU_CATCHMENT_AREA);
         // eslint-disable-next-line
-    }, []); 
+    }, []);
 
     let total_ca = houses;
     //Agregando texto popup a total_ca
