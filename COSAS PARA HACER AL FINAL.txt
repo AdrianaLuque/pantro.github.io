@@ -1,3 +1,4 @@
 - Decirle a Justin el nuevo formato de bluepoint.
 - Cambiar nombre de columnas de DENUNCIAS.
 - Eliminar tabla AUDITOR.
+- Limpiar los CSV, hay columnas que no se utilizan.

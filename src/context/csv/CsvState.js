@@ -6,9 +6,9 @@ import CsvReducer from './CsvReducer';
 import { 
     CSV_HOUSES,
     CSV_PARTICIPANTS_INMUNE,
-    CSV_HEALTH_POSTS
+    CSV_HEALTH_POSTS,
+    UPDATE_HOUSES
 } from '../../types';
-import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 
 const CsvState = props => {
     
@@ -20,9 +20,6 @@ const CsvState = props => {
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(CsvReducer, initialState);
-
-    const AuthenticationsContext = useContext(AuthenticationContext);
-    const { user } = AuthenticationsContext;
 
     //Funciones
     const CsvHouses = async (fileCsv) => {
@@ -37,7 +34,8 @@ const CsvState = props => {
                     let results = await d3.csv(pathCsv);
                     //Eliminando viviendas que no tienen GPS
                     results = results.filter(house => house.LATITUDE !== null || house.LATITUDE !== "");
-                        
+                    
+                    //Lo hago asi para que me diga si hay algun error al leer cada archivo CSV
                     dispatch({
                         type: CSV_HOUSES,
                         payload: results
@@ -85,6 +83,14 @@ const CsvState = props => {
             console.log(error);
         }
     };
+    
+    const UpdateHouses = async (newHouses) => {
+        //Obtener CSV
+        dispatch({
+            type: UPDATE_HOUSES,
+            payload: newHouses
+        });
+    };
 
     return(
         <CsvContext.Provider
@@ -94,7 +100,8 @@ const CsvState = props => {
                 healthPosts: state.healthPosts,
                 CsvHouses,
                 CsvParticipantsInmune,
-                CsvHealthPosts
+                CsvHealthPosts,
+                UpdateHouses
             }}
         >
             {props.children}

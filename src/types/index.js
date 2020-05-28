@@ -11,6 +11,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const CSV_HOUSES = 'CSV_HOUSES';
 export const CSV_PARTICIPANTS_INMUNE = 'CSV_PARTICIPANTS_INMUNE';
 export const CSV_HEALTH_POSTS = 'CSV_HEALTH_POSTS';
+export const UPDATE_HOUSES = 'UPDATE_HOUSES';
 
 //Login
 export const LOGIN_EXIT = 'LOGIN_EXIT';
