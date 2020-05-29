@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Popup, CircleMarker } from "react-leaflet";
+import { Button } from 'react-bootstrap';
 
 import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import CsvContext from "../../context/csv/CsvContext";
@@ -34,7 +35,11 @@ const CircleHouses = () => {
         //Recorriendo todas las viviendas para poner popup
         houses.forEach(element => {
           //element.inspectionText = `` ;
-          element.inspectionText = <div><b>{element.UNICODE}</b><br/>Ult. visita : --:--</div>;
+          element.inspectionText = <div>
+                                    <b>{element.UNICODE}</b><br/>
+                                    Ult. visita : --:--<br/>
+                                    <Button >Ingresar Datos</Button>
+                                   </div>;
         });
         //Actualizar popup segun inspecciones
         visitedHousesInspection.forEach(visited => {
