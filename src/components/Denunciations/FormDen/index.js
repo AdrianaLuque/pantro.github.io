@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 //import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../../context/alertas/alertaContext';
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
-import ModalContext from "../../../context/modal/ModalContext";
+import MyModal from "../../Modal/MyModal";
 import {provincias_aqp, distritos_aqp} from './Ubigeo';
 
 import { DateFull } from "../../../Functions";
@@ -42,10 +42,6 @@ const Denunciation = (props) => {
     const DenunciationsContext = useContext(DenunciationContext);
     const { denunciation, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
-    //Obtener el state de modal
-    const ModalsContext = useContext(ModalContext);
-    const { CloseModal } = ModalsContext;
-
     //En caso de que el passwors o usuario no exista
     /*useEffect(() => {
         
@@ -121,11 +117,11 @@ const Denunciation = (props) => {
         currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
 
         AddDenunciation(currentDenunciation);
-        CloseModal();
+        props.ChangeModal();
     };
     
     return (
-        <>
+        <MyModal modal={props.modal} ChangeModal={props.ChangeModal} formTitle={props.formTitle}>
             { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
             <Form
                 onSubmit={handleSubmit(OnSubmit)}
@@ -491,7 +487,7 @@ const Denunciation = (props) => {
                 </Form.Group>
                 <Button type='submit'>Guardar</Button> 
             </Form>
-        </>
+        </MyModal>
     );
 }
 

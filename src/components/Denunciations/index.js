@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Button } from 'react-bootstrap';
 
-
 import DenunciationContext from "../../context/denunciation/DenunciationContext";
-import MyModal from "./form/MyModal";
-import ModalContext from "../../context/modal/ModalContext";
+import FormDen from "./FormDen";
 import MyTable from "./MyTable";
 
 const Denunciations = () => {
@@ -13,9 +11,10 @@ const Denunciations = () => {
   const DenunciationsContext = useContext(DenunciationContext);
   const { denunciations, GetDenunciations, AddDenunciation, EditDenunciation } = DenunciationsContext;
 
-  //Obtener el state de modal
-  const ModalsContext = useContext(ModalContext);
-  const { ShowModal } = ModalsContext;
+  //Modal
+  const [modal, setModal] = useState(false);
+  //Titulo del formulario
+  const [formTitle, setFormTitle] = useState(null);
 
   useEffect(() => {
       GetDenunciations();
@@ -23,16 +22,25 @@ const Denunciations = () => {
       // eslint-disable-next-line
   }, []);
 
+  const HandleAdd = () => {
+    setFormTitle("Nuevo registro de denuncias");
+    ChangeModal();
+  }
   const HandleEdit = () => {
-    ShowModal();
+    setFormTitle("Editar registro de denuncias");
+    ChangeModal();
+  }
+
+  const ChangeModal = () => {
+    setModal(!modal);
   }
 
   return(
       <Container>
         <h2>Información de Denuncias</h2>
-        <Button onClick={ShowModal}>Agregar</Button>
+        <Button onClick={HandleAdd}>Agregar</Button>
         <Button onClick={HandleEdit}>Edita</Button>
-        <MyModal/>
+        <FormDen modal={modal} ChangeModal={ChangeModal} formTitle={formTitle}/>
         <MyTable register={denunciations}/>
       </Container>
   );
