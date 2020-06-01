@@ -11,29 +11,26 @@ import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';
 import InspectionState from './context/inspection/InspectionState';
 import CsvState from './context/csv/CsvState';
-import ModalState from './context/modal/ModalState';
 
 function App() {
   return (
     <AlertaState>
-      <AuthenticationState>
-        <CsvState>
-          <DenunciationState>
-            <InspectionState>
-                <ModalState>
-                  <Router> 
-                    <Switch>
-                      <Route exact path="/" component={Login}/>
-                      <Route exact path="/actividades" component={Activities}/>
-                      <Route exact path="/actividades/denuncias" component={Denunciations}/>
-                      <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
-                    </Switch>
-                  </Router>
-                </ModalState>
-            </InspectionState>
-          </DenunciationState>
-        </CsvState>
-      </AuthenticationState>
+      <CsvState>
+        <DenunciationState>
+          <InspectionState>
+            <AuthenticationState>
+              <Router> 
+                <Switch>
+                  <Route exact path="/" component={Login}/>
+                  <Route exact path="/actividades" component={Activities}/>
+                  <Route exact path="/actividades/denuncias" component={Denunciations}/>
+                  <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
+                </Switch>
+              </Router>
+            </AuthenticationState>
+          </InspectionState>
+        </DenunciationState>
+      </CsvState>
     </AlertaState>
   );
 }

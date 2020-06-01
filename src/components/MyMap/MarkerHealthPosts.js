@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Popup, Marker } from "react-leaflet";
 import L from "leaflet";
 import { Button } from 'react-bootstrap';
@@ -11,16 +11,11 @@ const MarkerHealthPosts = () => {
 
     //Obtener el state de Alerta
     const CsvsContext = useContext(CsvContext);
-    const { houses, healthPosts, CsvHealthPosts } = CsvsContext;
+    const { houses, healthPosts } = CsvsContext;
     //Modal
     const [modal, setModal] = useState(false);
     //Titulo del formulario
     const [formTitle, setFormTitle] = useState(null);
-    
-    useEffect(() => {
-        CsvHealthPosts();
-        // eslint-disable-next-line
-    }, []); 
     
     const HandleAdd = () => {
       setFormTitle("Ingresar registro de visitas a puestos de salud");

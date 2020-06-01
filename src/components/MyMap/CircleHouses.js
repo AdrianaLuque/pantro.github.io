@@ -1,35 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Popup, CircleMarker } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
-import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import CsvContext from "../../context/csv/CsvContext";
 import InspectionContext from "../../context/inspection/InspectionContext";
-import { InnerJoin, Merge } from "../../Functions";
+import { InnerJoin } from "../../Functions";
 import FormInsp from "../Inspections/FormInsp";
 
 const CircleHouses = () => {
 
-    //Obtener el state de Usuario
-    const AuthenticationsContext = useContext(AuthenticationContext);
-    const { user } = AuthenticationsContext;
     //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
-    let { houses, CsvHouses, UpdateHouses } = CsvsContext;
+    let { houses, UpdateHouses } = CsvsContext;
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
-    const { inspections, GetInspections } = InspectionsContext;
+    const { inspections } = InspectionsContext;
     //Modal
     const [modal, setModal] = useState(false);
     //Titulo del formulario
     const [formTitle, setFormTitle] = useState(null);
-        
-    useEffect(() => {  
-      CsvHouses(user.USU_CATCHMENT_AREA);
-      GetInspections();
-      // eslint-disable-next-line
-    }, [user]);
-    
+            
     const HandleAdd = () => {
       setFormTitle("Ingresar registro de inspecciones");
       ChangeModal();

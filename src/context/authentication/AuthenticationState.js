@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, { useReducer, useContext } from 'react';
 
 import authContext from './AuthenticationContext';
 import authReducer from './AuthenticationReducer';
@@ -9,6 +9,8 @@ import {
     LOGIN_ERROR,
     LOGIN_END
 } from '../../types';
+import CsvContext from "../csv/CsvContext";
+import InspectionContext from "../inspection/InspectionContext";
 
 const AuthenticationState = props => {
     
@@ -22,6 +24,12 @@ const AuthenticationState = props => {
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(authReducer, initialState);
+    //Obtener viviendas
+    const CsvsContext = useContext(CsvContext);
+    let { CsvHouses, CsvHealthPosts, CsvParticipantsInmune } = CsvsContext;
+    //Obtener el inspecciones
+    const InspectionsContext = useContext(InspectionContext);
+    const { GetInspections } = InspectionsContext;
 
     //Cuando el usuario inicia sesion
     const Login = async datos => {
@@ -30,6 +38,12 @@ const AuthenticationState = props => {
             const respuesta = await ClienteAxios.post('/api/acceder', datos);
             //Almacenando el username que se logio
             await ClienteAxios.post('/api/visitas-app', datos);
+            
+            //Cargando datos que se necesitaran
+            await CsvHouses(respuesta.data.USU_CATCHMENT_AREA);
+            await CsvHealthPosts();
+            await CsvParticipantsInmune();
+            await GetInspections();
             
             dispatch({
                 type: LOGIN_EXIT,
