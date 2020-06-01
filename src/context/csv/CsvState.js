@@ -7,7 +7,8 @@ import {
     CSV_HOUSES,
     CSV_PARTICIPANTS_INMUNE,
     CSV_HEALTH_POSTS,
-    UPDATE_HOUSES
+    UPDATE_HOUSES,
+    CSV_CLEAN
 } from '../../types';
 
 const CsvState = props => {
@@ -92,6 +93,12 @@ const CsvState = props => {
         });
     };
 
+    const CsvClean = () => {
+        dispatch({
+            type: CSV_CLEAN
+        });
+    }
+
     return(
         <CsvContext.Provider
             value={{
@@ -101,7 +108,8 @@ const CsvState = props => {
                 CsvHouses,
                 CsvParticipantsInmune,
                 CsvHealthPosts,
-                UpdateHouses
+                UpdateHouses,
+                CsvClean
             }}
         >
             {props.children}

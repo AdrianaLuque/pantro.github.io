@@ -12,6 +12,7 @@ export const CSV_HOUSES = 'CSV_HOUSES';
 export const CSV_PARTICIPANTS_INMUNE = 'CSV_PARTICIPANTS_INMUNE';
 export const CSV_HEALTH_POSTS = 'CSV_HEALTH_POSTS';
 export const UPDATE_HOUSES = 'UPDATE_HOUSES';
+export const CSV_CLEAN = 'CSV_CLEAN';
 
 //Login
 export const LOGIN_EXIT = 'LOGIN_EXIT';

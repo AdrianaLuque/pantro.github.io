@@ -26,7 +26,7 @@ const AuthenticationState = props => {
     const [state, dispatch] = useReducer(authReducer, initialState);
     //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
-    let { CsvHouses, CsvHealthPosts, CsvParticipantsInmune } = CsvsContext;
+    let { CsvHouses, CsvHealthPosts, CsvParticipantsInmune, CsvClean } = CsvsContext;
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
     const { GetInspections } = InspectionsContext;
@@ -66,6 +66,8 @@ const AuthenticationState = props => {
 
     //Cierra la sesion del usuario
     const Logout = () => {
+        CsvClean();
+
         dispatch({
             type: LOGIN_END
         });

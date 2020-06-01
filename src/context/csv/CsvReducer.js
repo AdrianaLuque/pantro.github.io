@@ -2,7 +2,8 @@ import {
     CSV_HOUSES,
     CSV_PARTICIPANTS_INMUNE,
     CSV_HEALTH_POSTS,
-    UPDATE_HOUSES
+    UPDATE_HOUSES,
+    CSV_CLEAN
 } from '../../types';
 
 export default (state, action) => {
@@ -26,6 +27,12 @@ export default (state, action) => {
             return{
                 ...state,
                 houses: action.payload
+            };
+        case CSV_CLEAN:
+            return{
+                houses:[],
+                participantsInmune:[],
+                healthPosts:[]
             };
         default:
             return state;
