@@ -35,7 +35,7 @@ const MarkerHealthPosts = () => {
         element.inspectionText = <div>
                                     <b>{element.UNICODE}</b><br/>
                                     Ult. visita : --:--<br/>
-                                    <Button onClick={HandleAdd}>Ingresar Datos</Button>
+                                    <Button variant="success" onClick={HandleAdd}>Visita Puesto de Salud</Button>
                                    </div>;
       });
     }

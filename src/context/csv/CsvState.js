@@ -33,8 +33,9 @@ const CsvState = props => {
                 
                 try {
                     let results = await d3.csv(pathCsv);
+                    
                     //Eliminando viviendas que no tienen GPS
-                    results = results.filter(house => house.LATITUDE !== null || house.LATITUDE !== "");
+                    results = results.filter(house => house.LATITUDE !== null && house.LATITUDE !== "" && house.LATITUDE !== "NA");
                     
                     //Lo hago asi para que me diga si hay algun error al leer cada archivo CSV
                     dispatch({

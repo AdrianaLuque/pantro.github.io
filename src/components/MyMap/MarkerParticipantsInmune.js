@@ -55,7 +55,7 @@ const MarkerParticipantsInmune = () => {
                 Nombre: {element.NOMBRE} <br />
                 Direccion: {element.DIRECCION} <br/>
                 Celular: {element.TELEFONO}<br/>
-                <Button onClick={HandleAdd}>Ingresar Datos</Button>
+                <Button variant="warning" onClick={HandleAdd}>Visita Agente</Button>
               </Popup>
           </Marker>
         ))}
