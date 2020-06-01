@@ -31,7 +31,9 @@ const InspectionState = props => {
             den_referencia:'',
             den_fecha_probable_inspeccion: null
         },
-        inspections: []
+        inspections: [],
+        newInspections: [],
+        newHealthPosts: [],
     }
 
     //Dispatch para ejecutar las acciones
@@ -76,6 +78,8 @@ const InspectionState = props => {
             value={{
                 inspection: state.inspection,
                 inspections: state.inspections,
+                newInspections: state.newInspections,
+                newHealthPosts: state.newHealthPosts,
                 GetInspections,
                 AddInspection
             }}

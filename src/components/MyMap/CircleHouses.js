@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Popup, CircleMarker } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
@@ -6,6 +6,7 @@ import AuthenticationContext from "../../context/authentication/AuthenticationCo
 import CsvContext from "../../context/csv/CsvContext";
 import InspectionContext from "../../context/inspection/InspectionContext";
 import { InnerJoin, Merge } from "../../Functions";
+import FormInsp from "../Inspections/FormInsp";
 
 const CircleHouses = () => {
 
@@ -18,6 +19,10 @@ const CircleHouses = () => {
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
     const { inspections, GetInspections } = InspectionsContext;
+    //Modal
+    const [modal, setModal] = useState(false);
+    //Titulo del formulario
+    const [formTitle, setFormTitle] = useState(null);
         
     useEffect(() => {  
       CsvHouses(user.USU_CATCHMENT_AREA);
@@ -25,6 +30,15 @@ const CircleHouses = () => {
       // eslint-disable-next-line
     }, [user]);
     
+    const HandleAdd = () => {
+      setFormTitle("Ingresar registro de inspecciones");
+      ChangeModal();
+    }
+
+    const ChangeModal = () => {
+      setModal(!modal);
+    }
+
     //- LOGICA
     //Para asegurar que ingresa una sola vez
     if (houses.length > 0) {
@@ -38,7 +52,7 @@ const CircleHouses = () => {
           element.inspectionText = <div>
                                     <b>{element.UNICODE}</b><br/>
                                     Ult. visita : --:--<br/>
-                                    <Button >Ingresar Datos</Button>
+                                    <Button onClick={HandleAdd}>Ingresar Datos</Button>
                                    </div>;
         });
         //Actualizar popup segun inspecciones
@@ -56,7 +70,8 @@ const CircleHouses = () => {
     }
     
     return (
-        houses.map( element => (
+      <>
+        {houses.map( element => (
           <CircleMarker 
             key = {element.UNICODE}
             center={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
@@ -71,7 +86,9 @@ const CircleHouses = () => {
                 {element.inspectionText}
               </Popup>
           </CircleMarker>
-        ))
+        ))}
+        <FormInsp modal={modal} ChangeModal={ChangeModal} formTitle={formTitle}/>
+      </>
     );
 }
 

@@ -4,15 +4,13 @@ import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
 import 'primereact/resources/primereact.min.css';//Fecha
 import 'primeicons/primeicons.css';//Fecha
-import {FileUpload} from 'primereact/fileupload';//Imagen
 import { useForm } from "react-hook-form";//Validar
 
 //import authContext from "../../../context/auth/authContext";
-import alertaContext from '../../../context/alertas/alertaContext';
-import DenunciationContext from '../../../context/denunciation/DenunciationContext';
-import MyModal from "../../Modal/MyModal";
-import {provincias_aqp, distritos_aqp} from './Ubigeo';
-import { DateFull } from "../../../Functions";
+import alertaContext from '../../context/alertas/alertaContext';
+import InspectionContext from '../../context/inspection/InspectionContext';
+import MyModal from "../Modal/MyModal";
+import { DateFull } from "../../Functions";
 
 //Fecha en español
 const es = {
@@ -25,18 +23,18 @@ const es = {
 };
 
 //Formulario de denuncia
-const FormDen = (props) => {
+const FormInps = (props) => {
   
     //Extraer los valores del context
     const alertasContext = useContext(alertaContext);
     const { alerta, MostrarAlerta } = alertasContext;
 
+    //Extraer los valores del context
+    const InspectionsContext = useContext(InspectionContext);
+    const { inspection } = InspectionsContext;
+
     /*const authsContext = useContext(authContext);
     const { mensaje } = authsContext;*/
-
-    //Obtener el state de Alerta
-    const DenunciationsContext = useContext(DenunciationContext);
-    const { denunciation, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
     //En caso de que el passwors o usuario no exista
     /*useEffect(() => {
@@ -52,7 +50,7 @@ const FormDen = (props) => {
     const { register, handleSubmit, errors } = useForm();
     
     //State para denuncias
-    const [currentDenunciation, setCurrentDenunciation] = useState( denunciation );
+    const [currentDenunciation, setCurrentDenunciation] = useState( inspection );
     
     //Extraer de usuario
     const {  
@@ -112,7 +110,7 @@ const FormDen = (props) => {
         currentDenunciation.den_fecha_recepcion = DateFull(currentDenunciation.den_fecha_recepcion);
         currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
 
-        AddDenunciation(currentDenunciation);
+        //AddDenunciation(currentDenunciation);
         props.ChangeModal();
     };
     
@@ -346,7 +344,6 @@ const FormDen = (props) => {
                     <>{/* DEN_INSECTO_IMAGEN */}
                         <Form.Group>
                             <Form.Label >Ingrese la imagen</Form.Label><br/>
-                            <FileUpload name="demo"  url="./upload" mode="basic" chooseLabel="Subir imagen" accept="image/*"  customUpload={true} uploadHandler={MyUploader}/>
                         </Form.Group>
                     </>
                     ):null
@@ -401,36 +398,6 @@ const FormDen = (props) => {
                         </Form.Group>
                     </>):null
                 }
-                {/* DEN_PROVINCIA */}
-                <Form.Group controlId="den_provincia">
-                    <Form.Label >Provincia</Form.Label>
-                    <Form.Control 
-                        as="select"
-                        name= 'den_provincia'
-                        value= {den_provincia}
-                        onChange= {OnChange}
-                    >
-                        <option>Seleccione Provincia</option>
-                        {provincias_aqp.map((e, key) => {
-                            return <option key={key} value={e.provinciaId}>{e.provinciaName}</option>;
-                        })} 
-                    </Form.Control>
-                </Form.Group> 
-                {/* DEN_DISTRITO */}
-                <Form.Group controlId="den_distrito">
-                    <Form.Label >Distrito</Form.Label>
-                    <Form.Control 
-                        as="select"
-                        name= 'den_distrito'
-                        value= {den_distrito}
-                        onChange= {OnChange}
-                    >
-                        <option>Seleccione Distrito</option>
-                        {distritos_aqp[den_provincia].map((e, key) => {
-                            return <option key={key} value={e.distritoId}>{e.distritoName}</option>;
-                        })} 
-                    </Form.Control>
-                </Form.Group> 
                 {/* DEN_LOCALIDAD */}
                 <Form.Group controlId="den_localidad">
                     <Form.Label >Localidad</Form.Label>
@@ -487,4 +454,4 @@ const FormDen = (props) => {
     );
 }
 
-export default FormDen;
+export default FormInps;

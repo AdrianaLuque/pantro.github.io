@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Popup, Marker } from "react-leaflet";
 import L from "leaflet";
+import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
+import FormPI from "../ParticipantsInmune/FormPI";
 import { Merge } from "../../Functions";
 
 const MarkerParticipantsInmune = () => {
@@ -10,12 +12,25 @@ const MarkerParticipantsInmune = () => {
     //Obtener el state de Alerta
     const CsvsContext = useContext(CsvContext);
     const { houses, participantsInmune, CsvParticipantsInmune } = CsvsContext;
-    
+    //Modal
+    const [modal, setModal] = useState(false);
+    //Titulo del formulario
+    const [formTitle, setFormTitle] = useState(null);
+
     useEffect(() => {
         CsvParticipantsInmune();
         // eslint-disable-next-line
     }, []); 
     
+    const HandleAdd = () => {
+      setFormTitle("Ingresar registro de visitas a puestos de salud");
+      ChangeModal();
+    }
+
+    const ChangeModal = () => {
+      setModal(!modal);
+    }
+
     //AGREGANDO AGENTES
     //Eliminar al participante que no tiene unicode de vivienda
     let participants_inmune = participantsInmune.filter(element => element.UNICODE !== "");
@@ -34,7 +49,8 @@ const MarkerParticipantsInmune = () => {
     });
     
     return (
-        participants_inmune.map( element => (
+      <>
+        {participants_inmune.map( element => (
           <Marker 
             key = {element.UNICODE}
             position={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
@@ -44,9 +60,12 @@ const MarkerParticipantsInmune = () => {
                 Nombre: {element.NOMBRE} <br />
                 Direccion: {element.DIRECCION} <br/>
                 Celular: {element.TELEFONO}<br/>
+                <Button onClick={HandleAdd}>Ingresar Datos</Button>
               </Popup>
           </Marker>
-        ))
+        ))}
+        <FormPI modal={modal} ChangeModal={ChangeModal} formTitle={formTitle}/>
+      </>
     );
 }
 

@@ -1,8 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Popup, Marker } from "react-leaflet";
 import L from "leaflet";
+import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
+import FormHP from "../HealthPosts/FormHP";
 import { Merge } from "../../Functions";
 
 const MarkerHealthPosts = () => {
@@ -10,19 +12,36 @@ const MarkerHealthPosts = () => {
     //Obtener el state de Alerta
     const CsvsContext = useContext(CsvContext);
     const { houses, healthPosts, CsvHealthPosts } = CsvsContext;
+    //Modal
+    const [modal, setModal] = useState(false);
+    //Titulo del formulario
+    const [formTitle, setFormTitle] = useState(null);
     
     useEffect(() => {
         CsvHealthPosts();
         // eslint-disable-next-line
     }, []); 
     
+    const HandleAdd = () => {
+      setFormTitle("Ingresar registro de visitas a puestos de salud");
+      ChangeModal();
+    }
+
+    const ChangeModal = () => {
+      setModal(!modal);
+    }
+
     //AGREGANDO PUESTOS DE SALUD
     //Obteniendo los puestos de salud que corresponden a este catchment-area
     let health_posts = Merge(houses, healthPosts, "UNICODE");
     //Agregando texto de PUESTOS DE SALUD
     if ( health_posts.length > 0 ) {
       health_posts.forEach(element => {
-        element.inspectionText = "Ult. visita : --" ;
+        element.inspectionText = <div>
+                                    <b>{element.UNICODE}</b><br/>
+                                    Ult. visita : --:--<br/>
+                                    <Button onClick={HandleAdd}>Ingresar Datos</Button>
+                                   </div>;
       });
     }
 
@@ -33,7 +52,8 @@ const MarkerHealthPosts = () => {
     });
     
     return (
-        health_posts.map( element => (
+      <>
+        {health_posts.map( element => (
           <Marker 
             key = {element.UNICODE}
             position={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
@@ -43,7 +63,9 @@ const MarkerHealthPosts = () => {
                 {element.inspectionText}
               </Popup>
           </Marker>
-        ))
+        ))}
+        <FormHP modal={modal} ChangeModal={ChangeModal} formTitle={formTitle}/>
+      </>
     );
 }
 
