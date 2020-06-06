@@ -3,3 +3,21 @@
 - Eliminar tabla AUDITOR.
 - Limpiar los CSV, hay columnas que no se utilizan.
 - Ver como mejorar los context en App.js
+
+- # Esto se modifico en a base de datos desde el dia 17feb2020 en VIGILANCIA-INTEGRADA
+                  #--------------------------------------------------------
+                  #"1) Una casa con mas de un código" = 1,
+                  #"2) Una casa con un código pero dividida en departamentos" = 2,
+                  #"3) Vivienda sin código" = 3, 
+                  #"4) Dos casas distintas con el mismo código" = 4,
+                  #"5) Código equivocado" = 5,
+                  #"6) Código del mapa que no se encuentra en campo" = 6,
+                  #"7) Código en campo que no se encuentra en el mapa" = 7,
+                  #"8) Otro"=8
+                  #---------------------------------------------------------
+                  
+- Al final ver si estas columnas son necesarias: INSPECTION_FLAG,
+    PREDICTED_PROBAB,
+    PREDICTED_PROBAB_MEAN,
+    RISK_COLOR
+

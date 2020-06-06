@@ -19,8 +19,11 @@ const CircleHouses = () => {
     const [modal, setModal] = useState(false);
     //Titulo del formulario
     const [formTitle, setFormTitle] = useState(null);
+    //Titulo del formulario
+    const [unicode, setUnicode] = useState(null);
             
-    const HandleAdd = () => {
+    const HandleAdd = ( valUnicode ) => {
+      setUnicode(valUnicode);
       setFormTitle("Ingresar registro de inspecciones");
       ChangeModal();
     }
@@ -40,16 +43,14 @@ const CircleHouses = () => {
         houses.forEach(element => {
           //element.inspectionText = `` ;
           element.inspectionText = <div>
-                                    <b>{element.UNICODE}</b><br/>
-                                    Ult. visita : --:--<br/>
-                                    <Button onClick={HandleAdd}>Ingresar Datos</Button>
+                                    Ult. visita : --:--
                                    </div>;
         });
         //Actualizar popup segun inspecciones
         visitedHousesInspection.forEach(visited => {
           houses.some(element => {
             if (visited.UNICODE === element.UNICODE) {
-              element.inspectionText = <div><b>{element.UNICODE}</b><br/>Ult. visita: <b>{visited.FECHA}</b><br/> Estado en Inspec: <b>{visited.STATUS_INSPECCION}</b></div>;
+              element.inspectionText = <div>Ult. visita: <b>{visited.FECHA}</b><br/> Estado en Inspec: <b>{visited.STATUS_INSPECCION}</b></div>;
               return true;
             } else {
               return false;
@@ -73,11 +74,13 @@ const CircleHouses = () => {
             fillOpacity = {1}
           >
               <Popup>
+                <b>{element.UNICODE}</b>
                 {element.inspectionText}
+                <Button onClick={()=>HandleAdd(element.UNICODE)}>Ingresar Datos</Button>
               </Popup>
           </CircleMarker>
         ))}
-        <FormInsp modal={modal} ChangeModal={ChangeModal} formTitle={formTitle}/>
+        <FormInsp modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} unicode={unicode}/>
       </>
     );
 }
