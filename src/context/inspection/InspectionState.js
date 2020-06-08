@@ -25,7 +25,7 @@ const InspectionState = props => {
             entrevista: '',
             motivo_volver: '',
             fecha_volver: '',
-            renuente: '',
+            renuente: 'R1',
             intra_inspeccion: '',
             intra_chiris: '',
             intra_rastros: '',

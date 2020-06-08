@@ -110,3 +110,14 @@ header{
   padding: 14px 2px;
   border-radius: 10px;
 }
+.table-check {
+  font-size: 15px;
+}
+.table-check > .row > .col {
+  padding: 0 5px;
+  text-align: center;
+}
+.animales-opt .form-check {
+  display: inline-block;
+  padding-top: 8px;
+}

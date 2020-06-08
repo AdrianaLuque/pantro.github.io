@@ -94,7 +94,15 @@ const FormInps = (props) => {
     const [observaciones, setObservaciones] = useState( false );
     const [obs_text1, setObs_text1] = useState( '' );
     const [obs_text2, setObs_text2] = useState( '' );
-
+    const [renuente_otro, setRenuente_otro] = useState( '' );
+    //Animales
+    const [perros, setPerros] = useState( false );
+    const [gatos, setGatos] = useState( false );
+    const [aves_corral, setAves_corral] = useState( false );
+    const [cuyes, setCuyes] = useState( false );
+    const [conejos, setConejos] = useState( false );
+    const [otros, setOtros] = useState( false );
+    
     const OnChange = e => {
         setCurrentInspection({
             ...currentInspection,
@@ -105,6 +113,18 @@ const FormInps = (props) => {
     const OnChangeCheck = e => {
         if (e.target.name==="observaciones") {
             setObservaciones(e.target.checked);
+        } else if (e.target.name==="perros") {
+            setPerros(e.target.checked);
+        } else if (e.target.name==="gatos") {
+            setGatos(e.target.checked);
+        } else if (e.target.name==="aves_corral") {
+            setAves_corral(e.target.checked);
+        } else if (e.target.name==="cuyes") {
+            setCuyes(e.target.checked);
+        } else if (e.target.name==="conejos") {
+            setConejos(e.target.checked);
+        } else if (e.target.name==="otros") {
+            setOtros(e.target.checked);
         } else {
             setCurrentInspection({
                 ...currentInspection,
@@ -345,7 +365,6 @@ const FormInps = (props) => {
                                         name= 'renuente'
                                         value= {renuente}
                                         onChange= {OnChange}
-                                        defaultValue = "R1"
                                     >
                                         <option value="R1">R1) No tiene tiempo trabaja</option>
                                         <option value="R2">R2) Desconfianza</option>
@@ -355,11 +374,316 @@ const FormInps = (props) => {
                                         <option value="R6">R6) Otro</option>
                                     </Form.Control>
                                 </Form.Group>
+                                {(renuente === 'R6')? (
+                                    <>
+                                        {/* RENUENTE_OTRO */}
+                                        <Form.Group controlId="renuente_otro">
+                                            <Form.Control 
+                                                type="text"
+                                                name= 'renuente_otro'
+                                                value= {renuente_otro}
+                                                onChange= {OnChange}
+                                                placeholder = "Describa su opción ..."
+                                                ref={register({ required: true })}
+                                            />
+                                            {errors.renuente_otro && <span className='alert-custom'>*Campo obligatorio</span>}
+                                        </Form.Group>
+                                    </>
+                                ):null}
                             </>
+                        ):null}
+                        {(status_inspeccion === 'inspeccion')? (
+                        <>
+                            <hr/>
+                            <div className="table-check">
+                                <Row>
+                                    <Col></Col>
+                                    <Col>Lugar inspección*</Col>
+                                    <Col>Halló Chiris </Col>
+                                    <Col>Halló Rastros</Col>
+                                </Row>
+                                <Row>
+                                    <Col>INTRA</Col>
+                                    <Col>
+                                        {/* LUGAR_INSPECCION_INTRA */}
+                                        <Form.Group controlId="lugar_inspeccion_intra">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="lugar_inspeccion_intra"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        {/* CHIRIS_INTRA */}
+                                        <Form.Group controlId="chiris_intra">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="chiris_intra"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        {/* RASTROS_INTRA */}
+                                        <Form.Group controlId="rastros_intra">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="rastros_intra"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>PERI</Col>
+                                    <Col>
+                                        {/* LUGAR_INSPECCION_PERI */}
+                                        <Form.Group controlId="lugar_inspeccion_peri">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="lugar_inspeccion_peri"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        {/* CHIRIS_PERI */}
+                                        <Form.Group controlId="chiris_peri">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="chiris_peri"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        {/* RASTROS_PERI */}
+                                        <Form.Group controlId="rastros_peri">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="rastros_peri"
+                                                onChange={OnChangeCheck}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                            </div>
+                            <hr/>
+                            {/* PERSONAS_PREDIO*/}
+                            <Form.Group controlId="personas_predio">
+                                <Form.Label>Cuántas personas viven en el predio?</Form.Label>
+                                <Form.Control 
+                                    type='number'
+                                    name='personas_predio'
+                                    value={personas_predio}
+                                    onChange={OnChange}
+                                    ref={register({ required: true, maxLength: 2 })}
+                                />
+                                {errors.personas_predio?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                {errors.personas_predio?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                            </Form.Group>
+                            {/* ANIMALES */}
+                            <div className="animales-opt">Qué animales hay?
+                                <Row>
+                                    <Col>
+                                        {/* PERROS */}
+                                        <Form.Group controlId="perros">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="perros"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Perros</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(perros === true)? (
+                                        <Col>
+                                            {/* CANT_PERROS */}
+                                            <Form.Group controlId="cant_perros">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_perros'
+                                                    value={cant_perros}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_perros?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.can_perros?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        {/* GATOS */}
+                                        <Form.Group controlId="gatos">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="gatos"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Gatos</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(gatos === true)? (
+                                        <Col>
+                                            {/* CANT_GATOS */}
+                                            <Form.Group controlId="cant_gatos">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_gatos'
+                                                    value={cant_gatos}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_gatos?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_gatos?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        {/* AVES_CORRAL */}
+                                        <Form.Group controlId="aves_corral">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="aves_corral"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Aves Corral</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(aves_corral === true)? (
+                                        <Col>
+                                            {/* CANT_AVES_CORRAL */}
+                                            <Form.Group controlId="cant_aves_corral">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_aves_corral'
+                                                    value={cant_aves_corral}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_aves_corral?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_aves_corral?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        {/* CUYES */}
+                                        <Form.Group controlId="cuyes">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="cuyes"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Cuyes</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(cuyes === true)? (
+                                        <Col>
+                                            {/* CANT_CUYES */}
+                                            <Form.Group controlId="cant_cuyes">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_cuyes'
+                                                    value={cant_cuyes}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_cuyes?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_cuyes?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        {/* CONEJOS */}
+                                        <Form.Group controlId="conejos">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="conejos"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Conejos</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(conejos === true)? (
+                                        <Col>
+                                            {/* CANT_CONEJOS */}
+                                            <Form.Group controlId="cant_conejos">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_conejos'
+                                                    value={cant_conejos}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_conejos?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_conejos?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        {/* OTROS */}
+                                        <Form.Group controlId="otros">
+                                            <Form.Check 
+                                                type="checkbox" 
+                                                name="otros"
+                                                onChange={OnChangeCheck}
+                                            />
+                                            <Form.Label>Otros</Form.Label>
+                                        </Form.Group>
+                                    </Col>
+                                    {(otros === true)? (
+                                        <Col>
+                                            {/* TEXT_OTROS */}
+                                            <Form.Group controlId="text_otros">
+                                                <Form.Control 
+                                                    type="text"
+                                                    name= 'text_otros'
+                                                    value= {text_otros}
+                                                    onChange= {OnChange}
+                                                    placeholder = "Indique otro ..."
+                                                    ref={register({ required: true })}
+                                                />
+                                                {errors.text_otros && <span className='alert-custom'>*Campo obligatorio</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                                <Row>
+                                    <Col></Col>
+                                    {(otros === true)? (
+                                        <Col>
+                                            {/* CANT_OTROS */}
+                                            <Form.Group controlId="cant_otros">
+                                                <Form.Control 
+                                                    type='number'
+                                                    name='cant_otros'
+                                                    value={cant_otros}
+                                                    onChange={OnChange}
+                                                    ref={register({ required: true, maxLength: 2 })}
+                                                />
+                                                {errors.cant_otros?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_otros?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                            </Form.Group>
+                                        </Col>
+                                    ):null}
+                                </Row>
+                            </div>
+                        </>
                         ):null}
                     </>
                 ):null}
-
+                
                 <Button type='submit'>Guardar</Button> 
             </Form>
         </MyModal>
