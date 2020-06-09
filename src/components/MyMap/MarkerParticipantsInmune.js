@@ -18,7 +18,7 @@ const MarkerParticipantsInmune = () => {
     const [formTitle, setFormTitle] = useState(null);
     
     const HandleAdd = () => {
-      setFormTitle("Ingresar registro de visitas a puestos de salud");
+      setFormTitle("Ingresar registro de visitas a participantes de inmune");
       ChangeModal();
     }
 
