@@ -28,3 +28,6 @@ export const UPDATE_DENUNCIATION = 'UPDATE_DENUNCIATION';
 export const GET_INSPECTIONS = 'GET_INSPECTIONS';
 export const ADD_INSPECTION = 'ADD_INSPECTION';
 
+//Cimex
+export const ADD_CIMEX = 'ADD_CIMEX';
+

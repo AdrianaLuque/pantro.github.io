@@ -10,6 +10,7 @@ import AlertaState from './context/alertas/alertaState';
 import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';
 import InspectionState from './context/inspection/InspectionState';
+import CimexState from './context/cimex/CimexState';
 import CsvState from './context/csv/CsvState';
 
 function App() {
@@ -18,16 +19,18 @@ function App() {
       <CsvState>
         <DenunciationState>
           <InspectionState>
-            <AuthenticationState>
-              <Router> 
-                <Switch>
-                  <Route exact path="/" component={Login}/>
-                  <Route exact path="/actividades" component={Activities}/>
-                  <Route exact path="/actividades/denuncias" component={Denunciations}/>
-                  <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
-                </Switch>
-              </Router>
-            </AuthenticationState>
+            <CimexState>
+              <AuthenticationState>
+                <Router> 
+                  <Switch>
+                    <Route exact path="/" component={Login}/>
+                    <Route exact path="/actividades" component={Activities}/>
+                    <Route exact path="/actividades/denuncias" component={Denunciations}/>
+                    <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
+                  </Switch>
+                </Router>
+              </AuthenticationState>
+            </CimexState>
           </InspectionState>
         </DenunciationState>
       </CsvState>

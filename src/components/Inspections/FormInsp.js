@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";//Validar
 //import authContext from "../../../context/auth/authContext";
 import alertaContext from '../../context/alertas/alertaContext';
 import InspectionContext from '../../context/inspection/InspectionContext';
+import CimexContext from '../../context/cimex/CimexContext';
 import MyModal from "../Modal/MyModal";
 import { DateFull } from "../../Functions";
 
@@ -33,26 +34,19 @@ const FormInps = (props) => {
     const InspectionsContext = useContext(InspectionContext);
     const { inspection } = InspectionsContext;
 
-    /*const authsContext = useContext(authContext);
-    const { mensaje } = authsContext;*/
-    
-    //En caso de que el passwors o usuario no exista
-    /*useEffect(() => {
-        
-        if (mensaje) {
-            MostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
-        //Para evitar que mande error por que sabemos que esta bien
-        // eslint-disable-next-line
-    }, [mensaje, autenticado, props.history]);*/
+    //Extraer los valores del context
+    const CimexsContext = useContext(CimexContext);
+    const { cimex } = CimexsContext;
     
     //validacion
     const { register, handleSubmit, errors } = useForm();
     
-    //State para denuncias
+    //State para inspecciones
     const [currentInspection, setCurrentInspection] = useState( inspection );
+    //State para cimex
+    const [currentCimex, setCurrentCimex] = useState( cimex );
     
-    //Extraer de usuario
+    //Extraer de valores de inspeccion
     const {  
         user_name,
         unicode,
@@ -90,6 +84,10 @@ const FormInps = (props) => {
         lat,
         lng,
     } = currentInspection;
+    //Extraer de valores de inspeccion
+    const {  
+        cimex_alguien_picado_casa_ultimo_anio
+    } = currentCimex;
     
     const [observaciones, setObservaciones] = useState( false );
     const [obs_text1, setObs_text1] = useState( '' );
@@ -683,8 +681,45 @@ const FormInps = (props) => {
                         ):null}
                     </>
                 ):null}
-                
-                <Button type='submit'>Guardar</Button> 
+                <hr/>
+                {/*******  FORMULARIO CIMEX *********/}
+                <h5>CHINCHES DE CAMA</h5>
+                {/* CIMEX_ALGUIEN_PICADO_CASA_ULTIMO_ANIO */}
+                <Form.Group>
+                    <Form.Label>1.- En el último año, ¿Algún miembro del hogar ha sido picado por insectos al interior de la vivienda?</Form.Label>
+                    <Col sm={10}>
+                        <Form.Check
+                            type="radio"
+                            label="Sí"
+                            name="cimex_alguien_picado_casa_ultimo_anio"
+                            value="1"
+                            checked={ cimex_alguien_picado_casa_ultimo_anio=== "1"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="No"
+                            name="cimex_alguien_picado_casa_ultimo_anio"
+                            value="0"
+                            checked={ cimex_alguien_picado_casa_ultimo_anio=== "0"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="No sabe"
+                            name="cimex_alguien_picado_casa_ultimo_anio"
+                            value="NS"
+                            checked={ cimex_alguien_picado_casa_ultimo_anio=== "NS"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                    </Col>
+                    {errors.cimex_alguien_picado_casa_ultimo_anio && <span className='alert-custom'>*Campo obligatorio</span>}
+                </Form.Group>
+
+                <Button disabled type='submit'>Guardar</Button> 
             </Form>
         </MyModal>
     );

@@ -54,23 +54,15 @@ const FormHP = (props) => {
     
     //Extraer de usuario
     const {  
-        den_id_custom,
-        den_fecha_recepcion,
-        den_medio, 
-        den_agente_nombre,
-        den_tipo,
-        den_insecto,
-        den_insecto_otro,
-        den_habitante_nombre,
-        den_habitante_telefono1,
-        den_otro_telefono,
-        den_habitante_telefono2,
-        den_provincia,
-        den_distrito,
-        den_localidad,
-        den_direccion,
-        den_referencia,
-        den_fecha_probable_inspeccion
+        visita_ps_fecha,
+        visita_ps_motivo,
+        visita_ps_motivo_otro,
+        visita_ps_motivo_llamado,
+        visita_ps_motivo_llamado_otro,
+        visita_ps_nuevas_denuncias,
+        visita_ps_quien_dio_informacion,
+        visita_ps_quien_dio_informacion_otro,
+        visita_ps_encontro_insecto
     } = currentDenunciation;
         
     const OnChange = e => {
@@ -119,336 +111,283 @@ const FormHP = (props) => {
             { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
             <Form
                 onSubmit={handleSubmit(OnSubmit)}
-            >
-                <Form.Group controlId="den_id_custom">
-                    <Form.Label >Identificador de denuncia</Form.Label>
-                    <Form.Control 
-                        //readOnly
-                        type='text'
-                        name='den_id_custom'
-                        value={den_id_custom}
-                        onChange={OnChange}
-                    />
-                </Form.Group>
-                {/* DEN_FECHA_RECEPCION */}
-                <Form.Group controlId="den_fecha_recepcion">
-                    <Form.Label>Fecha de recepción: </Form.Label>
+            >   
+                {/* VISITA_PS_FECHA */}
+                <Form.Group controlId="visita_ps_fecha">
+                    <Form.Label>Fecha de visita: </Form.Label>
                     <Calendar 
                         showIcon={true} 
                         locale={es} 
                         dateFormat="yy-mm-dd" 
-                        name = 'den_fecha_recepcion'
-                        value={den_fecha_recepcion} 
+                        name = 'visita_ps_fecha'
+                        value={visita_ps_fecha} 
                         onChange={OnChange}
                     />
                 </Form.Group>
-                {/* DEN_MEDIO */}
-                <Form.Group controlId="den_medio">
-                    <Form.Label >Medio de denuncia*</Form.Label>
-                    <Form.Control 
-                        as="select"
-                        name= 'den_medio'
-                        value= {den_medio}
-                        onChange= {OnChange}
-                    >
-                        <option>Seleccione...</option>
-                        <option value="establecimiento">En establecimiento</option>
-                        <option value="calle">En la calle</option>
-                        <option value="telefono">Por teléfono</option>
-                        <option value="agente">A través de agente</option>
-                        <option value="whatsapp">Whatsapp</option>
-                    </Form.Control>
-                    
-                </Form.Group>
-
-                { den_medio==="agente" ? (
-                    <>
-                        {/* DEN_AGENTE_NOMBRE */}
-                        <Form.Group controlId="den_agente_nombre">
-                            <Form.Label >Nombre del agente*</Form.Label>
-                            <Form.Control 
-                                type="text"
-                                name= 'den_agente_nombre'
-                                value= {den_agente_nombre}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            {errors.den_agente_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
-                        </Form.Group>
-                    </>
-                    ) : null
-                }
-                {/* DEN_TIPO */}
+                {/* VISITA_PS_MOTIVO */}
                 <Form.Group>
-                    <Form.Label>Tipo de denuncia*</Form.Label>
+                    <Form.Label>¿Cuál es el motivo de la visita?</Form.Label>
                     <Col sm={10}>
                         <Form.Check
                             type="radio"
-                            label="Verbal"
-                            name="den_tipo"
-                            value="verbal"
-                            checked={ den_tipo=== "verbal"}
+                            label="Visita mensual programada"
+                            name="visita_ps_motivo"
+                            value="visita_mensual_programada"
+                            checked={ visita_ps_motivo=== "visita_mensual_programada"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
                         />
                         <Form.Check
                             type="radio"
-                            label="Con insecto"
-                            name="den_tipo"
-                            value="con_insecto"
-                            checked={ den_tipo=== "con_insecto"}
+                            label="Llamado de inspector"
+                            name="visita_ps_motivo"
+                            value="llamado_inspector"
+                            checked={ visita_ps_motivo=== "llamado_inspector"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="Otro"
+                            name="visita_ps_motivo"
+                            value="otro"
+                            checked={ visita_ps_motivo=== "otro"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
                         />
                     </Col>
                     {errors.den_tipo && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
-                {den_tipo==="verbal" || den_tipo==="con_insecto"?
-                    (<>
-                    {/* DEN_INSECTO */}
-                    <Form.Group as={Row}>
-                        <Form.Label as="legend" column sm={2}>
-                            {den_tipo==="verbal"?"¿Qué cree que es?":"¿Qué insecto es?"}
-                        </Form.Label>
-                        <Col sm={10}> 
+                {visita_ps_motivo==="otro"? (
+                    <>
+                        {/* VISITA_PS_MOTIVO_OTRO */}
+                        <Form.Group controlId="visita_ps_motivo_otro">
+                            <Form.Control 
+                                type="text"
+                                name= 'den_insecto_otro'
+                                value= {visita_ps_motivo_otro}
+                                placeholder = "¿Cuál? ..."
+                                onChange= {OnChange}
+                                ref={register({ required: true })}
+                            />
+                            {errors.visita_ps_motivo_otro && <span className='alert-custom'>*Campo obligatorio</span>}
+                        </Form.Group>
+                    </>
+                ):null}
+                {visita_ps_motivo==="llamado_inspector"? (
+                <>
+                    {/* VISITA_PS_MOTIVO_LLAMADO */}
+                    <Form.Group>
+                        <Form.Label>¿Cuál fue el motivo de la llamada?</Form.Label>
+                        <Col sm={10}>
                             <Form.Check
                                 type="radio"
-                                label="Chinches de Cama"
-                                name="den_insecto"
-                                value="chinches_cama"
-                                checked={ den_insecto=== "chinches_cama"}
+                                label="Reporte de chinches de cama"
+                                name="visita_ps_motivo_llamado"
+                                value="reporte_chinchescama"
+                                checked={ visita_ps_motivo_llamado=== "reporte_chinchescama"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
-                                name="den_insecto"
-                                label="Chirimachas"
-                                value="chirimachas"
-                                checked={ den_insecto=== "chirimachas"}
+                                label="Reporte de chirimachas"
+                                name="visita_ps_motivo_llamado"
+                                value="reporte_chirimachas"
+                                checked={ visita_ps_motivo_llamado=== "reporte_chirimachas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
-                                name="den_insecto"
-                                label="Garrapatas"
-                                value="garrapatas"
-                                checked={ den_insecto=== "garrapatas"}
+                                label="Llamado para que haga recojo de datos"
+                                name="visita_ps_motivo_llamado"
+                                value="llamado_recojo_datos"
+                                checked={ visita_ps_motivo_llamado=== "llamado_recojo_datos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                             <Form.Check
                                 type="radio"
-                                name="den_insecto"
-                                label="Mosquitos"
-                                value="mosquitos"
-                                checked={ den_insecto=== "mosquitos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Fitófagos"
-                                value="fitofagos"
-                                checked={ den_insecto=== "fitofagos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Grillos"
-                                value="grillos"
-                                checked={ den_insecto=== "grillos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Cucarachas"
-                                value="cucarachas"
-                                checked={ den_insecto=== "cucarachas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Escarabajos"
-                                value="escarabajos"
-                                checked={ den_insecto=== "escarabajos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Pulgones"
-                                value="pulgones"
-                                checked={ den_insecto=== "pulgones"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Pulgas"
-                                value="pulgas"
-                                checked={ den_insecto=== "pulgas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Hitas"
-                                value="hitas"
-                                checked={ den_insecto=== "hitas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
                                 label="Otro"
+                                name="visita_ps_motivo_llamado"
                                 value="otro"
-                                checked={ den_insecto=== "otro"}
+                                checked={ visita_ps_motivo_llamado=== "otro"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
                         </Col>
-                        {errors.den_insecto && <span className='alert-custom'>*Campo obligatorio</span>}
+                        {errors.den_tipo && <span className='alert-custom'>*Campo obligatorio</span>}
                     </Form.Group>
-                    {den_insecto==="otro"? (
+                    {visita_ps_motivo_llamado==="otro"? (
                         <>
-                            {/* DEN_INSECTO_OTRO */}
-                            <Form.Group controlId="den_insecto_otro">
+                            {/* VISITA_PS_MOTIVO_LLAMADO_OTRO */}
+                            <Form.Group controlId="visita_ps_motivo_llamado_otro">
                                 <Form.Control 
                                     type="text"
                                     name= 'den_insecto_otro'
-                                    value= {den_insecto_otro}
-                                    placeholder = "Especificar ..."
+                                    value= {visita_ps_motivo_llamado_otro}
+                                    placeholder = "¿Cuál? ..."
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
                                 />
-                                {errors.den_insecto_otro && <span className='alert-custom'>*Campo obligatorio</span>}
+                                {errors.visita_ps_motivo_llamado_otro && <span className='alert-custom'>*Campo obligatorio</span>}
                             </Form.Group>
                         </>
                     ):null}
-                    </>):null
-                }
-                { den_tipo==='con_insecto'? (
-                    <>{/* DEN_INSECTO_IMAGEN */}
+                </>
+                ):null}
+                {/* VISITA_PS_NUEVAS_DENUNCIAS */}
+                <Form.Group>
+                    <Form.Label>¿En la visita, encontró nuevas denuncias?</Form.Label>
+                    <Col sm={10}>
+                        <Form.Check
+                            type="radio"
+                            label="Si, de chirimachas"
+                            name="visita_ps_nuevas_denuncias"
+                            value="chirimachas"
+                            checked={ visita_ps_nuevas_denuncias=== "chirimachas"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="Si, de chinches de cama"
+                            name="visita_ps_nuevas_denuncias"
+                            value="chinchescama"
+                            checked={ visita_ps_nuevas_denuncias=== "chinchescama"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="Si, chirimachas y chinches de cama"
+                            name="visita_ps_nuevas_denuncias"
+                            value="chirimachas_chinchescama"
+                            checked={ visita_ps_nuevas_denuncias=== "chirimachas_chinchescama"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                        <Form.Check
+                            type="radio"
+                            label="No"
+                            name="visita_ps_nuevas_denuncias"
+                            value="no"
+                            checked={ visita_ps_nuevas_denuncias=== "no"}
+                            onChange= {OnChange}
+                            ref={register({ required: true })}
+                        />
+                    </Col>
+                    {errors.visita_ps_nuevas_denuncias && <span className='alert-custom'>*Campo obligatorio</span>}
+                </Form.Group>
+                {visita_ps_nuevas_denuncias!=="no"? (
+                    <>
+                        {/* VISITA_PS_QUIEN_DIO_INFORMACION */}
                         <Form.Group>
-                            <Form.Label >Ingrese la imagen</Form.Label><br/>
+                            <Form.Label>¿Quién le dio la información de la denuncia?</Form.Label>
+                            <Col sm={10}>
+                                <Form.Check
+                                    type="radio"
+                                    label="Personal de admisión"
+                                    name="visita_ps_quien_dio_informacion"
+                                    value="personal_admision"
+                                    checked={ visita_ps_quien_dio_informacion=== "personal_admision"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="Personal de laboratorio"
+                                    name="visita_ps_quien_dio_informacion"
+                                    value="personal_laboratorio"
+                                    checked={ visita_ps_quien_dio_informacion=== "personal_laboratorio"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="Inspector sanitario o veterinario"
+                                    name="visita_ps_quien_dio_informacion"
+                                    value="inspectorsanitario_o_veterinario"
+                                    checked={ visita_ps_quien_dio_informacion=== "inspectorsanitario_o_veterinario"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="Otro"
+                                    name="visita_ps_quien_dio_informacion"
+                                    value="otro"
+                                    checked={ visita_ps_quien_dio_informacion=== "otro"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                            </Col>
+                            {errors.visita_ps_quien_dio_informacion && <span className='alert-custom'>*Campo obligatorio</span>}
+                        </Form.Group>
+                        {visita_ps_quien_dio_informacion==="otro"? (
+                            <>
+                                {/* VISITA_PS_QUIEN_DIO_INFORMACION_OTRO */}
+                                <Form.Group controlId="visita_ps_quien_dio_informacion_otro">
+                                    <Form.Control 
+                                        type="text"
+                                        name= 'visita_ps_quien_dio_informacion_otro'
+                                        value= {visita_ps_quien_dio_informacion_otro}
+                                        placeholder = "¿Cuál? ..."
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    {errors.visita_ps_quien_dio_informacion_otro && <span className='alert-custom'>*Campo obligatorio</span>}
+                                </Form.Group>
+                            </>
+                        ):null}
+                        {/* VISITA_PS_ENCONTRO_INSECTO */}
+                        <Form.Group>
+                            <Form.Label>¿Encontró el insecto?</Form.Label>
+                            <Col sm={10}>
+                                <Form.Check
+                                    type="radio"
+                                    label="Si, aún estaba vivo"
+                                    name="visita_ps_encontro_insecto"
+                                    value="si_aun_vivo"
+                                    checked={ visita_ps_encontro_insecto=== "si_aun_vivo"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="Si, pero ya muerto"
+                                    name="visita_ps_encontro_insecto"
+                                    value="si_muerto"
+                                    checked={ visita_ps_encontro_insecto=== "si_muerto"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="No, solo denuncias verbal"
+                                    name="visita_ps_encontro_insecto"
+                                    value="no_denuncia_verbal"
+                                    checked={ visita_ps_encontro_insecto=== "no_denuncia_verbal"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    label="No, lo habían perdido"
+                                    name="visita_ps_encontro_insecto"
+                                    value="no_habian_perdido"
+                                    checked={ visita_ps_encontro_insecto=== "no_habian_perdido"}
+                                    onChange= {OnChange}
+                                    ref={register({ required: true })}
+                                />
+                            </Col>
+                            {errors.visita_ps_encontro_insecto && <span className='alert-custom'>*Campo obligatorio</span>}
                         </Form.Group>
                     </>
-                    ):null
-                }
-                {/* DEN_HABITANTE_NOMBRE */}
-                <Form.Group controlId="den_habitante_nombre">
-                    <Form.Label>Nombre del habitante*</Form.Label>
-                    <Form.Control 
-                        type='text'
-                        name='den_habitante_nombre'
-                        value={den_habitante_nombre}
-                        onChange={OnChange}
-                        ref={register({ required: true })}
-                    />
-                    {errors.den_habitante_nombre && <span className='alert-custom'>*Campo obligatorio</span>}
-                </Form.Group>
-                {/* DEN_HABITANTE_TELEFONO1 */}
-                <Form.Group controlId="den_habitante_telefono1">
-                    <Form.Label>Teléfono del Habitante*</Form.Label>
-                    <Form.Control 
-                        type='number'
-                        name='den_habitante_telefono1'
-                        value={den_habitante_telefono1}
-                        onChange={OnChange}
-                        ref={register({ required: true, maxLength: 9 })}
-                    />
-                    {errors.den_habitante_telefono1?.type === "required" && <span className='alert-custom'>*Campo obligatorio</span>}
-                    {errors.den_habitante_telefono1?.type === "maxLength" && <span className='alert-custom'>*Maximo 9 numeros</span>}
-                </Form.Group>
-                <Form.Group controlId="den_otro_telefono">
-                    <Form.Check 
-                        type="checkbox" 
-                        name="den_otro_telefono"
-                        label="Otro teléfono adicional"
-                        checked={ den_otro_telefono }
-                        onChange={OnChangeCheck}
-                    />
-                </Form.Group>
-                {den_otro_telefono? 
-                    (<>
-                        {/* DEN_HABITANTE_TELEFONO2 */}
-                        <Form.Group controlId="den_habitante_telefono2">
-                            <Form.Control 
-                                type='number'
-                                name='den_habitante_telefono2'
-                                value={den_habitante_telefono2}
-                                onChange={OnChange}
-                                ref={register({ required: true, maxLength: 9 })}
-                            />
-                            {errors.den_habitante_telefono2?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
-                            {errors.den_habitante_telefono2?.type === 'maxLength' && <span className='alert-custom'>*Maximo 9 numeros</span>}
-                        </Form.Group>
-                    </>):null
-                }
-                {/* DEN_LOCALIDAD */}
-                <Form.Group controlId="den_localidad">
-                    <Form.Label >Localidad</Form.Label>
-                    <Form.Control 
-                        type='text'
-                        name='den_localidad'
-                        value={den_localidad}
-                        onChange={OnChange}
-                    />
-                </Form.Group>
-                {/* DEN_DIRECCION*/}
-                <Form.Group controlId="den_direccion">
-                    <Form.Label >Dirección*</Form.Label>
-                    <Form.Control 
-                        type='text'
-                        name='den_direccion'
-                        value={den_direccion}
-                        onChange={OnChange}
-                        ref={register({ required: true })}
-                    />
-                    {errors.den_direccion && <span className='alert-custom'>*Campo obligatorio</span>}
-                </Form.Group>
-                {/* DEN_REFERENCIA*/}
-                <Form.Group controlId="den_referencia">
-                    <Form.Label>Referencia*</Form.Label>
-                    <Form.Control 
-                        type='text'
-                        name='den_referencia'
-                        value={den_referencia}
-                        onChange={OnChange}
-                        ref={register({ required: true })}
-                    />
-                    {errors.den_referencia && <span className='alert-custom'>*Campo obligatorio</span>}
-                </Form.Group>
-                {/* DEN_FECHA_PROBABLE_INSPECCION*/}
-                <Form.Group controlId="den_fecha_probable_inspeccion">
-                    <Form.Label >Fecha probable de inspección: </Form.Label>
-                    <Calendar 
-                        minDate = { new Date() }
-                        maxDateCount = {3}
-                        showIcon={true} 
-                        locale={es} 
-                        dateFormat="dd/mm/yy" 
-                        value={den_fecha_probable_inspeccion} 
-                        name= 'den_fecha_probable_inspeccion'
-                        onChange={ OnChange } 
-                        selectionMode="multiple" 
-                        readOnlyInput={true} 
-                    />
-                </Form.Group>
-                <Button type='submit'>Guardar</Button> 
+                ):null}
+
+                <Button disabled type='submit'>Guardar</Button> 
             </Form>
         </MyModal>
     );
