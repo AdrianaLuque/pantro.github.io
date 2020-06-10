@@ -12,29 +12,32 @@ import DenunciationState from './context/denunciation/DenunciationState';
 import InspectionState from './context/inspection/InspectionState';
 import CimexState from './context/cimex/CimexState';
 import CsvState from './context/csv/CsvState';
+import SpinnerState from './context/spinner/SpinnerState';
 
 function App() {
   return (
-    <AlertaState>
-      <CsvState>
-        <DenunciationState>
-          <InspectionState>
-            <CimexState>
-              <AuthenticationState>
-                <Router> 
-                  <Switch>
-                    <Route exact path="/" component={Login}/>
-                    <Route exact path="/actividades" component={Activities}/>
-                    <Route exact path="/actividades/denuncias" component={Denunciations}/>
-                    <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
-                  </Switch>
-                </Router>
-              </AuthenticationState>
-            </CimexState>
-          </InspectionState>
-        </DenunciationState>
-      </CsvState>
-    </AlertaState>
+    <SpinnerState>
+      <AlertaState>
+        <CsvState>
+          <DenunciationState>
+            <InspectionState>
+              <CimexState>
+                <AuthenticationState>
+                  <Router> 
+                    <Switch>
+                      <Route exact path="/" component={Login}/>
+                      <Route exact path="/actividades" component={Activities}/>
+                      <Route exact path="/actividades/denuncias" component={Denunciations}/>
+                      <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
+                    </Switch>
+                  </Router>
+                </AuthenticationState>
+              </CimexState>
+            </InspectionState>
+          </DenunciationState>
+        </CsvState>
+      </AlertaState>
+    </SpinnerState>
   );
 }
 

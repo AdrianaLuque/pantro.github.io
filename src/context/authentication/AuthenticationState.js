@@ -5,12 +5,13 @@ import authReducer from './AuthenticationReducer';
 import ClienteAxios from "../../config/axios";
 //import tokenAuth from "../../config/tokenAuth";
 import { 
-    LOGIN_EXIT,
+    LOGIN_INTO,
     LOGIN_ERROR,
     LOGIN_END
 } from '../../types';
 import CsvContext from "../csv/CsvContext";
 import InspectionContext from "../inspection/InspectionContext";
+import SpinnerContext from "../spinner/SpinnerContext";
 
 const AuthenticationState = props => {
     
@@ -30,6 +31,9 @@ const AuthenticationState = props => {
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
     const { GetInspections } = InspectionsContext;
+    //Cambiar estado de spinner
+    const SpinnersContext = useContext(SpinnerContext);
+    const { ChangeSpinner } = SpinnersContext;
 
     //Cuando el usuario inicia sesion
     const Login = async datos => {
@@ -46,9 +50,11 @@ const AuthenticationState = props => {
             await GetInspections();
             
             dispatch({
-                type: LOGIN_EXIT,
+                type: LOGIN_INTO,
                 payload: respuesta.data
             });
+            //Cambiando estado de spinner
+            ChangeSpinner();
             
         } catch (error) {
             console.log(error.response.data.msg);

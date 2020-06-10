@@ -1,12 +1,12 @@
 import { 
-    LOGIN_EXIT,
+    LOGIN_INTO,
     LOGIN_ERROR,
     LOGIN_END
 } from '../../types';
 
 export default (state, action) => {
     switch (action.type) {
-        case LOGIN_EXIT:
+        case LOGIN_INTO:
             //localStorage.setItem('token', action.payload.token);
             return{
                 ...state,

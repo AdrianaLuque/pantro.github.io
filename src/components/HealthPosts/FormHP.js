@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import React, {useState, useContext} from 'react';
+import { Col, Form, Button } from 'react-bootstrap';
 import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
 import 'primereact/resources/primereact.min.css';//Fecha
@@ -32,19 +32,6 @@ const FormHP = (props) => {
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
     const { inspection } = InspectionsContext;
-
-    /*const authsContext = useContext(authContext);
-    const { mensaje } = authsContext;*/
-    
-    //En caso de que el passwors o usuario no exista
-    /*useEffect(() => {
-        
-        if (mensaje) {
-            MostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
-        //Para evitar que mande error por que sabemos que esta bien
-        // eslint-disable-next-line
-    }, [mensaje, autenticado, props.history]);*/
     
     //validacion
     const { register, handleSubmit, errors } = useForm();

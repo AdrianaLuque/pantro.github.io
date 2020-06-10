@@ -1,11 +1,10 @@
-import React from "react";
-import { Map, TileLayer, Popup, CircleMarker } from "react-leaflet";
+import React, {lazy, Suspense} from "react";
+import { Map, TileLayer } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
 import CircleHouses from "./CircleHouses";
 import MarkerParticipantsInmune from "./MarkerParticipantsInmune";
 import MarkerHealthPosts from "./MarkerHealthPosts";
-//import Logic from "../../Logic";
 
 const MyMap = props => {
 

@@ -2,10 +2,15 @@ import React, {useState, useContext, useEffect} from 'react';
 import { Container, Col, Form, Button } from 'react-bootstrap';
 
 import AuthenticationContext from "../../context/authentication/AuthenticationContext";
+import SpinnerContext from '../../context/spinner/SpinnerContext';
 import alertaContext from '../../context/alertas/alertaContext';
+import Spinner from '../Spinner';
 
 const Login = (props) => {
         
+    //Extraer los valores del context
+    const SpinnersContext = useContext(SpinnerContext);
+    const { spinner, ChangeSpinner } = SpinnersContext;
     //Extraer los valores del context
     const alertasContext = useContext(alertaContext);
     const { alerta, MostrarAlerta } = alertasContext;
@@ -44,16 +49,20 @@ const Login = (props) => {
 
     const onSubmit = e => {
         e.preventDefault();
+        ChangeSpinner();
+        console.log(spinner);
         //Validar que no haya campos vacios
         if (username.trim() === '' || password.trim() === '') {
             MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
         }
         //Pasarlo al action
         Login({ username, password });
+        
     }
-
+    
     return (
         <>
+            { spinner ? (<Spinner/>) : null }
             { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
             <Container className="p-4">
                 <Col md={{ span: 4, offset: 4 }} className="text-center">

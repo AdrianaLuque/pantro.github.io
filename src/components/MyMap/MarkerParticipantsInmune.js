@@ -39,7 +39,7 @@ const MarkerParticipantsInmune = () => {
     }
     //Icono
     const customMarker = L.icon({ 
-      iconUrl: require('../../icons/icon-participants-inmune.png'), 
+      iconUrl: require('../../img/icon-participants-inmune.png'), 
       iconSize: new L.Point(30, 34),//iconSize: [30, 40]
     });
     

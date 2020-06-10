@@ -15,7 +15,7 @@ export const UPDATE_HOUSES = 'UPDATE_HOUSES';
 export const CSV_CLEAN = 'CSV_CLEAN';
 
 //Login
-export const LOGIN_EXIT = 'LOGIN_EXIT';
+export const LOGIN_INTO = 'LOGIN_EXIT';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_END = 'LOGIN_END';
 
@@ -31,3 +31,5 @@ export const ADD_INSPECTION = 'ADD_INSPECTION';
 //Cimex
 export const ADD_CIMEX = 'ADD_CIMEX';
 
+//Snipper
+export const CHANGE_SPINNER = 'CHANGE_SPINNER';
