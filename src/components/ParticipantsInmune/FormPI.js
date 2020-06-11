@@ -10,17 +10,7 @@ import { useForm } from "react-hook-form";//Validar
 import AlertContext from '../../context/alert/AlertContext';
 import InspectionContext from '../../context/inspection/InspectionContext';
 import MyModal from "../Modal/MyModal";
-import { DateFull } from "../../Functions";
-
-//Fecha en español
-const es = {
-    firstDayOfWeek: 1,
-    dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
-    dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
-    dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
-    monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
-    monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
-};
+import { es, DateFull } from "../../Resources";
 
 //Formulario de denuncia
 const FormHP = (props) => {

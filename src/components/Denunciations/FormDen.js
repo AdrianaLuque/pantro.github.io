@@ -7,14 +7,12 @@ import 'primeicons/primeicons.css';//Fecha
 import {FileUpload} from 'primereact/fileupload';//Imagen
 import { useForm } from "react-hook-form";//Validar
 
-import AlertContext from '../../../context/alert/AlertContext';
-import AuthenticationContext from "../../../context/authentication/AuthenticationContext";
-import DenunciationContext from '../../../context/denunciation/DenunciationContext';
-import MyModal from "../../Modal/MyModal";
-import {provincias_aqp, distritos_aqp} from './Ubigeo';
+import AlertContext from '../../context/alert/AlertContext';
+import AuthenticationContext from "../../context/authentication/AuthenticationContext";
+import DenunciationContext from '../../context/denunciation/DenunciationContext';
+import MyModal from "../Modal/MyModal";
 //Recursos
-import { DateFull } from "../../../Functions";
-import {es} from '../../../Functions';
+import { es, provincias_aqp, distritos_aqp, DateFull } from "../../Resources";
 
 //Formulario de denuncia
 const FormDen = (props) => {

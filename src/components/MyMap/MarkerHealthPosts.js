@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
 import FormHP from "../HealthPosts/FormHP";
-import { Merge } from "../../Functions";
+import { Merge } from "../../Resources";
 
 const MarkerHealthPosts = () => {
 

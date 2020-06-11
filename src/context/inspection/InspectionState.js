@@ -7,7 +7,6 @@ import {
     GET_INSPECTIONS,
     ADD_INSPECTION
 } from '../../types';
-import { DateFull } from "../../Functions";
 import SpinnerContext from "../spinner/SpinnerContext";
 
 const InspectionState = props => {

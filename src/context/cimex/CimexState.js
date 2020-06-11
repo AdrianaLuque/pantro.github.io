@@ -6,7 +6,7 @@ import CimexReducer from './CimexReducer';
 import { 
     ADD_CIMEX
 } from '../../types';
-import { DateFull } from "../../Functions";
+import { DateFull } from "../../Resources";
 
 const CimexState = props => {
     
