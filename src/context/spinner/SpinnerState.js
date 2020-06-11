@@ -3,7 +3,8 @@ import React, {useReducer} from 'react';
 import SpinnerContext from './SpinnerContext';
 import SpinnerReducer from './SpinnerReducer';
 import { 
-    CHANGE_SPINNER
+    SHOW_SPINNER,
+    HIDE_SPINNER
 } from '../../types';
 
 const SpinnerState = props => {
@@ -16,9 +17,14 @@ const SpinnerState = props => {
     const [state, dispatch] = useReducer(SpinnerReducer, initialState);
 
     //Funciones
-    const ChangeSpinner = () => {
+    const ShowSpinner = () => {
         dispatch({
-            type: CHANGE_SPINNER
+            type: SHOW_SPINNER
+        });
+    }
+    const HideSpinner = () => {
+        dispatch({
+            type: HIDE_SPINNER
         });
     }
 
@@ -26,7 +32,8 @@ const SpinnerState = props => {
         <SpinnerContext.Provider
             value={{
                 spinner: state.spinner,
-                ChangeSpinner
+                ShowSpinner,
+                HideSpinner
             }}
         >
             {props.children}

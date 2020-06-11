@@ -33,13 +33,14 @@ const AuthenticationState = props => {
     const { GetInspections } = InspectionsContext;
     //Cambiar estado de spinner
     const SpinnersContext = useContext(SpinnerContext);
-    const { ChangeSpinner } = SpinnersContext;
+    const { HideSpinner } = SpinnersContext;
 
     //Cuando el usuario inicia sesion
     const Login = async datos => {
         try {
             //Comprobando que el username y password sean correctos
             const respuesta = await ClienteAxios.post('/api/acceder', datos);
+            debugger;
             //Almacenando el username que se logio
             await ClienteAxios.post('/api/visitas-app', datos);
             
@@ -53,8 +54,6 @@ const AuthenticationState = props => {
                 type: LOGIN_INTO,
                 payload: respuesta.data
             });
-            //Cambiando estado de spinner
-            ChangeSpinner();
             
         } catch (error) {
             console.log(error.response.data.msg);
@@ -68,6 +67,8 @@ const AuthenticationState = props => {
                 payload: alerta
             });
         }
+        //Cambiando estado de spinner
+        HideSpinner();
     }
 
     //Cierra la sesion del usuario

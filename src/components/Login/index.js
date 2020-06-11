@@ -1,19 +1,19 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Container, Col, Form, Button } from 'react-bootstrap';
+import { Container, Col, Form, Button, Alert } from 'react-bootstrap';
 
 import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import SpinnerContext from '../../context/spinner/SpinnerContext';
-import alertaContext from '../../context/alertas/alertaContext';
 import Spinner from '../Spinner';
+import AlertContext from '../../context/alert/AlertContext';
 
 const Login = (props) => {
         
-    //Extraer los valores del context
+    //Spinner
     const SpinnersContext = useContext(SpinnerContext);
-    const { spinner, ChangeSpinner } = SpinnersContext;
+    const { spinner, ShowSpinner } = SpinnersContext;
     //Extraer los valores del context
-    const alertasContext = useContext(alertaContext);
-    const { alerta, MostrarAlerta } = alertasContext;
+    const AlertsContext = useContext(AlertContext);
+    const { alert, ShowAlert } = AlertsContext;
 
     const AuthenticationsContext = useContext(AuthenticationContext);
     const { mensaje, authenticated, Login } = AuthenticationsContext;
@@ -25,7 +25,7 @@ const Login = (props) => {
         }
         
         if (mensaje) {
-            MostrarAlerta(mensaje.msg, mensaje.categoria);
+            ShowAlert(mensaje.msg, mensaje.categoria);
         }
         //Para evitar que mande error por que sabemos que esta bien
         // eslint-disable-next-line
@@ -47,23 +47,21 @@ const Login = (props) => {
         })
     }
 
-    const onSubmit = e => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        ChangeSpinner();
-        console.log(spinner);
         //Validar que no haya campos vacios
         if (username.trim() === '' || password.trim() === '') {
-            MostrarAlerta('Todos los campos son obligatorios', 'alerta-error');
+            ShowAlert('Todos los campos son obligatorios', 'alerta-error');
         }
         //Pasarlo al action
         Login({ username, password });
-        
+        ShowSpinner();
     }
     
     return (
         <>
             { spinner ? (<Spinner/>) : null }
-            { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
+            { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
             <Container className="p-4">
                 <Col md={{ span: 4, offset: 4 }} className="text-center">
                     <h3>Vigilancia Integrada</h3>

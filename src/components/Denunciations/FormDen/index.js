@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import React, {useState, useContext} from 'react';
+import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
 import 'primereact/resources/primereact.min.css';//Fecha
@@ -8,7 +8,7 @@ import {FileUpload} from 'primereact/fileupload';//Imagen
 import { useForm } from "react-hook-form";//Validar
 
 //import authContext from "../../../context/auth/authContext";
-import alertaContext from '../../../context/alertas/alertaContext';
+import AlertContext from '../../../context/alert/AlertContext';
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 import {provincias_aqp, distritos_aqp} from './Ubigeo';
@@ -28,8 +28,8 @@ const es = {
 const FormDen = (props) => {
   
     //Extraer los valores del context
-    const alertasContext = useContext(alertaContext);
-    const { alerta, MostrarAlerta } = alertasContext;
+    const AlertsContext = useContext(AlertContext);
+    const { alert, ShowAlert } = AlertsContext;
 
     /*const authsContext = useContext(authContext);
     const { mensaje } = authsContext;*/
@@ -118,7 +118,7 @@ const FormDen = (props) => {
     
     return (
         <MyModal modal={props.modal} ChangeModal={props.ChangeModal} formTitle={props.formTitle}>
-            { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
+            { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
             <Form
                 onSubmit={handleSubmit(OnSubmit)}
             >

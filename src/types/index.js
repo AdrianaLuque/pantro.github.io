@@ -1,11 +1,9 @@
 export const FORMULARIO_PROYECTO = 'FORMULARIO_PROYECTO';
 export const VALIDAR_FORMULARIO = 'VALIDAR_FORMULARIO';
 
-export const MOSTRAR_ALERTA = 'MOSTRAR_ALERTA';
-export const OCULTAR_ALERTA = 'OCULTAR_ALERTA';
-
-export const SHOW_MODAL = 'SHOW_MODAL';
-export const CLOSE_MODAL = 'CLOSE_MODAL';
+//Alertas
+export const SHOW_ALERT = 'SHOW_ALERT';
+export const HIDE_ALERT = 'HIDE_ALERT';
 
 //Csv
 export const CSV_HOUSES = 'CSV_HOUSES';
@@ -32,4 +30,5 @@ export const ADD_INSPECTION = 'ADD_INSPECTION';
 export const ADD_CIMEX = 'ADD_CIMEX';
 
 //Snipper
-export const CHANGE_SPINNER = 'CHANGE_SPINNER';
+export const SHOW_SPINNER = 'SHOW_SPINNER';
+export const HIDE_SPINNER = 'HIDE_SPINNER';

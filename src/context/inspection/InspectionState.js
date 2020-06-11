@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import ClienteAxios from "../../config/axios";
 
 import InspectionContext from './InspectionContext';
@@ -8,6 +8,7 @@ import {
     ADD_INSPECTION
 } from '../../types';
 import { DateFull } from "../../Functions";
+import SpinnerContext from "../spinner/SpinnerContext";
 
 const InspectionState = props => {
     
@@ -56,7 +57,10 @@ const InspectionState = props => {
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(InspectionReducer, initialState);
-    
+    //Cambiar estado de spinner
+    const SpinnersContext = useContext(SpinnerContext);
+    const { HideSpinner } = SpinnersContext;
+
     //FUNCIONES
     //* Obtener denuncias
     const GetInspections = async () => {
@@ -68,6 +72,7 @@ const InspectionState = props => {
                 type: GET_INSPECTIONS,
                 payload: resultado.data
             });
+            await HideSpinner();
             
         } catch (error) {
             console.log(error);

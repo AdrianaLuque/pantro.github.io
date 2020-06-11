@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react";
+import React from "react";
 import { Map, TileLayer } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
@@ -7,7 +7,7 @@ import MarkerParticipantsInmune from "./MarkerParticipantsInmune";
 import MarkerHealthPosts from "./MarkerHealthPosts";
 
 const MyMap = props => {
-
+  
   //Variales del mapa
   let center = [-16.4040494,-71.574117];
   const zoom = 10;

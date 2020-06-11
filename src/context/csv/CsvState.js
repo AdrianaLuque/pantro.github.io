@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer} from 'react';
 import * as d3 from 'd3';
 
 import CsvContext from './CsvContext';

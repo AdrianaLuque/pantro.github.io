@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import { Col, Form, Button } from 'react-bootstrap';
+import { Col, Form, Button, Alert } from 'react-bootstrap';
 import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
 import 'primereact/resources/primereact.min.css';//Fecha
@@ -7,7 +7,7 @@ import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
 //import authContext from "../../../context/auth/authContext";
-import alertaContext from '../../context/alertas/alertaContext';
+import AlertContext from '../../context/alert/AlertContext';
 import InspectionContext from '../../context/inspection/InspectionContext';
 import MyModal from "../Modal/MyModal";
 import { DateFull } from "../../Functions";
@@ -26,8 +26,8 @@ const es = {
 const FormHP = (props) => {
   
     //Extraer los valores del context
-    const alertasContext = useContext(alertaContext);
-    const { alerta, MostrarAlerta } = alertasContext;
+    const AlertsContext = useContext(AlertContext);
+    const { alert, ShowAlert } = AlertsContext;
 
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
@@ -95,7 +95,7 @@ const FormHP = (props) => {
     
     return (
         <MyModal modal={props.modal} ChangeModal={props.ChangeModal} formTitle={props.formTitle}>
-            { alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>) : null }
+            { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
             <Form
                 onSubmit={handleSubmit(OnSubmit)}
             >   

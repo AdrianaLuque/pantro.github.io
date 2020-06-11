@@ -1,12 +1,17 @@
 import { 
-    CHANGE_SPINNER
+    SHOW_SPINNER,
+    HIDE_SPINNER
 } from '../../types';
 
 export default (state, action) => {
     switch (action.type) {
-        case CHANGE_SPINNER:
+        case SHOW_SPINNER:
             return{
-                spinner: !state.spinner
+                spinner: true
+            }
+        case HIDE_SPINNER:
+            return{
+                spinner: false
             }
         default:
             return state;

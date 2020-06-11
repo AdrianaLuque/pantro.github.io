@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import MyMap from "./components/MyMap";
 import Activities from "./components/Activities";
 import Denunciations from "./components/Denunciations";
-import AlertaState from './context/alertas/alertaState';
+import AlertState from './context/alert/AlertState';
 import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';
 import InspectionState from './context/inspection/InspectionState';
@@ -17,7 +17,7 @@ import SpinnerState from './context/spinner/SpinnerState';
 function App() {
   return (
     <SpinnerState>
-      <AlertaState>
+      <AlertState>
         <CsvState>
           <DenunciationState>
             <InspectionState>
@@ -36,7 +36,7 @@ function App() {
             </InspectionState>
           </DenunciationState>
         </CsvState>
-      </AlertaState>
+      </AlertState>
     </SpinnerState>
   );
 }

@@ -4,10 +4,12 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../Header";
 
 const Activities = (props) => {
+    
     const GoDenunciations = () => {
         props.history.push('/actividades/denuncias');
     }
-    const GoInsActive = () => {
+    const GoInsActive = (e) => {
+        e.preventDefault();
         props.history.push('/actividades/inspecciones-activas');
     }
     return (
