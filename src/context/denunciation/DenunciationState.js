@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useContext} from 'react';
 import ClienteAxios from "../../config/axios";
 
 import DenunciationContext from './DenunciationContext';
@@ -8,6 +8,7 @@ import {
     ADD_DENUNCIATION,
     UPDATE_DENUNCIATION
 } from '../../types';
+import SpinnerContext from "../spinner/SpinnerContext";
 
 const DenunciationState = props => {
     
@@ -36,6 +37,9 @@ const DenunciationState = props => {
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(DenunciationReducer, initialState);
+    //Cambiar estado de spinner
+    const SpinnersContext = useContext(SpinnerContext);
+    const { HideSpinner } = SpinnersContext;
 
     //FUNCIONES
     //* Obtener denuncias
@@ -51,8 +55,9 @@ const DenunciationState = props => {
             });
             
         } catch (error) {
-            console.log(error);
+            console.log("Error al obtener las denuncias: s"+error);
         }
+        await HideSpinner();
     }
 
     //* Agregar denuncias

@@ -7,22 +7,14 @@ import 'primeicons/primeicons.css';//Fecha
 import {FileUpload} from 'primereact/fileupload';//Imagen
 import { useForm } from "react-hook-form";//Validar
 
-//import authContext from "../../../context/auth/authContext";
 import AlertContext from '../../../context/alert/AlertContext';
+import AuthenticationContext from "../../../context/authentication/AuthenticationContext";
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 import {provincias_aqp, distritos_aqp} from './Ubigeo';
+//Recursos
 import { DateFull } from "../../../Functions";
-
-//Fecha en español
-const es = {
-    firstDayOfWeek: 1,
-    dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
-    dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
-    dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
-    monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
-    monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
-};
+import {es} from '../../../Functions';
 
 //Formulario de denuncia
 const FormDen = (props) => {
@@ -30,23 +22,12 @@ const FormDen = (props) => {
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
     const { alert, ShowAlert } = AlertsContext;
-
-    /*const authsContext = useContext(authContext);
-    const { mensaje } = authsContext;*/
-
-    //Obtener el state de Alerta
+    //Variables de usuario
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const { user } = AuthenticationsContext;
+    //Obtener variables de denuncias
     const DenunciationsContext = useContext(DenunciationContext);
     const { denunciation, AddDenunciation, EditDenunciation } = DenunciationsContext;
-    
-    //En caso de que el passwors o usuario no exista
-    /*useEffect(() => {
-        
-        if (mensaje) {
-            MostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
-        //Para evitar que mande error por que sabemos que esta bien
-        // eslint-disable-next-line
-    }, [mensaje, autenticado, props.history]);*/
     
     //validacion
     const { register, handleSubmit, errors } = useForm();
@@ -101,7 +82,7 @@ const FormDen = (props) => {
             }
         }
         return (result);
-    }
+    };
 
     const MyUploader = () => {
         console.log("se subio la imagen");

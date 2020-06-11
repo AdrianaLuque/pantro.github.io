@@ -3,13 +3,18 @@ import React, { useContext } from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 import DenunciationContext from "../../context/denunciation/DenunciationContext";
+import SpinnerContext from '../../context/spinner/SpinnerContext';
+import Spinner from '../Spinner';
 
 const MyTable = ({ register }) => {
 
-    //Obtener el state de Alerta
+  //Spinner
+  const SpinnersContext = useContext(SpinnerContext);
+  const { spinner } = SpinnersContext;
+  //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
   const { UpdateDenunciation } = DenunciationsContext;
-  
+    
   const onRowSelect = (row, isSelected) => {
     if ( isSelected ) {
       let obj = {};
@@ -40,6 +45,8 @@ const MyTable = ({ register }) => {
   };
 
   return (
+    <>
+      { spinner ? (<Spinner/>) : null }
       <BootstrapTable 
           keyField="DEN_ID_CUSTOM"
           data={ register } 
@@ -63,6 +70,7 @@ const MyTable = ({ register }) => {
           <TableHeaderColumn width='150' dataField='DEN_REFERENCIA'>REFERENCIA</TableHeaderColumn>
           <TableHeaderColumn width='300' dataField='DEN_FECHA_PROBABLE_INSPECCION'>FECHAS PROBABLE INSPECCIÓN</TableHeaderColumn>
       </BootstrapTable>
+    </>
   );
 }
 

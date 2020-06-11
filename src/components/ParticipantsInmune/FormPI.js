@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
 import 'primereact/resources/primereact.min.css';//Fecha
@@ -27,7 +27,7 @@ const FormHP = (props) => {
   
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
-    const { Alert, ShowAlert } = AlertsContext;
+    const { alert, ShowAlert } = AlertsContext;
 
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);

@@ -1,11 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 import Header from "../Header";
+import SpinnerContext from '../../context/spinner/SpinnerContext';
 
 const Activities = (props) => {
+    //Spinner
+    const SpinnersContext = useContext(SpinnerContext);
+    const { ShowSpinner } = SpinnersContext;
     
     const GoDenunciations = () => {
+        ShowSpinner();
         props.history.push('/actividades/denuncias');
     }
     const GoInsActive = (e) => {

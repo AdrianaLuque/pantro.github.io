@@ -10,7 +10,7 @@ const Login = (props) => {
         
     //Spinner
     const SpinnersContext = useContext(SpinnerContext);
-    const { spinner, ShowSpinner } = SpinnersContext;
+    const { spinner, ShowSpinner, HideSpinner } = SpinnersContext;
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
     const { alert, ShowAlert } = AlertsContext;
@@ -49,13 +49,15 @@ const Login = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        ShowSpinner();
         //Validar que no haya campos vacios
         if (username.trim() === '' || password.trim() === '') {
             ShowAlert('Todos los campos son obligatorios', 'alerta-error');
+            HideSpinner();
+        } else {
+            //Pasarlo al action
+            Login({ username, password });    
         }
-        //Pasarlo al action
-        Login({ username, password });
-        ShowSpinner();
     }
     
     return (

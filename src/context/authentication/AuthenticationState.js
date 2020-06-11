@@ -40,7 +40,7 @@ const AuthenticationState = props => {
         try {
             //Comprobando que el username y password sean correctos
             const respuesta = await ClienteAxios.post('/api/acceder', datos);
-            debugger;
+            
             //Almacenando el username que se logio
             await ClienteAxios.post('/api/visitas-app', datos);
             
@@ -56,6 +56,7 @@ const AuthenticationState = props => {
             });
             
         } catch (error) {
+            
             console.log(error.response.data.msg);
             const alerta = {
                 msg: error.response.data.msg,
