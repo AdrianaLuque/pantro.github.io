@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Button } from 'react-bootstrap';
 
-import DenunciationContext from "../../context/denunciation/DenunciationContext";
+import DenunciationContext from "../../../context/denunciation/DenunciationContext";
 import FormDen from "./FormDen";
 import MyTable from "./MyTable";
 

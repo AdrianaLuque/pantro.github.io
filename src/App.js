@@ -5,7 +5,7 @@ import './App.css';
 import Login from "./components/Login";
 import MyMap from "./components/MyMap";
 import Activities from "./components/Activities";
-import Denunciations from "./components/Denunciations";
+import Denunciations from "./components/Activities/Denunciations";
 import AlertState from './context/alert/AlertState';
 import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';

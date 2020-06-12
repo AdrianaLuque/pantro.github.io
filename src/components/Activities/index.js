@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
-import Header from "../Header";
+import Header from "../../layouts/Header";
 import SpinnerContext from '../../context/spinner/SpinnerContext';
 
 const Activities = (props) => {

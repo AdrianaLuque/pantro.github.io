@@ -4,7 +4,7 @@ import L from "leaflet";
 import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
-import FormHP from "../HealthPosts/FormHP";
+import FormHP from "../Activities/Inspections/FormHP";
 import { Merge } from "../../Resources";
 
 const MarkerHealthPosts = () => {

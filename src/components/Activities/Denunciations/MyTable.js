@@ -2,9 +2,9 @@
 import React, { useContext } from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-import DenunciationContext from "../../context/denunciation/DenunciationContext";
-import SpinnerContext from '../../context/spinner/SpinnerContext';
-import Spinner from '../Spinner';
+import DenunciationContext from "../../../context/denunciation/DenunciationContext";
+import SpinnerContext from '../../../context/spinner/SpinnerContext';
+import Spinner from '../../Spinner';
 
 const MyTable = ({ register }) => {
 

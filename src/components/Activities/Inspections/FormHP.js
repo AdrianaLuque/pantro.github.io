@@ -6,11 +6,10 @@ import 'primereact/resources/primereact.min.css';//Fecha
 import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
-//import authContext from "../../../context/auth/authContext";
-import AlertContext from '../../context/alert/AlertContext';
-import InspectionContext from '../../context/inspection/InspectionContext';
-import MyModal from "../Modal/MyModal";
-import { es, DateFull } from "../../Resources";
+import AlertContext from '../../../context/alert/AlertContext';
+import InspectionContext from '../../../context/inspection/InspectionContext';
+import MyModal from "../../Modal/MyModal";
+import { es, DateFull } from "../../../Resources";
 
 //Formulario de denuncia
 const FormHP = (props) => {

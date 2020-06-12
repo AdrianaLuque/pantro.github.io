@@ -4,7 +4,7 @@ import L from "leaflet";
 import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
-import FormPI from "../ParticipantsInmune/FormPI";
+import FormPI from "../Activities/Inspections/FormPI";
 import { Merge } from "../../Resources";
 
 const MarkerParticipantsInmune = () => {

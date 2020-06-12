@@ -1,7 +1,7 @@
 import React from "react";
 
 import Points from './Points';
-import SignOut from '../Login/SignOut';
+import SignOut from '../../components/Login/SignOut';
 
 const Header = () => {
     return(
