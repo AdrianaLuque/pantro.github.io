@@ -10,7 +10,7 @@ import AlertContext from '../../../context/alert/AlertContext';
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import CimexContext from '../../../context/cimex/CimexContext';
 import MyModal from "../../Modal/MyModal";
-import { es, DateFull } from "../../../Resources";
+import { es, DateFull } from "../../../resources";
 
 //Formulario de denuncia
 const FormInps = (props) => {

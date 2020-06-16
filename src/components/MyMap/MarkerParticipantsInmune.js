@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
 import FormPI from "../Activities/Inspections/FormPI";
-import { Merge } from "../../Resources";
+import { Merge } from "../../resources";
 
 const MarkerParticipantsInmune = () => {
 

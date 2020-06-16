@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import {Calendar} from 'primereact/calendar';//Fecha
 import 'primereact/resources/themes/nova-light/theme.css';//Fecha
@@ -12,14 +12,14 @@ import AuthenticationContext from "../../../context/authentication/Authenticatio
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 //Recursos
-import { es, provincias_aqp, distritos_aqp, DateFull } from "../../../Resources";
+import { es, provincias_aqp, distritos_aqp, DateFull } from "../../../resources";
 
 //Formulario de denuncia
 const FormDen = (props) => {
   
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
-    const { alert, ShowAlert } = AlertsContext;
+    const { alert } = AlertsContext;
     //Variables de usuario
     const AuthenticationsContext = useContext(AuthenticationContext);
     const { user } = AuthenticationsContext;
@@ -29,10 +29,16 @@ const FormDen = (props) => {
     
     //validacion
     const { register, handleSubmit, errors } = useForm();
-    
     //State para denuncias
     const [currentDenunciation, setCurrentDenunciation] = useState( denunciation );
-    
+    useEffect(() => {
+        setCurrentDenunciation(denunciation);
+        // eslint-disable-next-line
+    }, [denunciation]);
+    //Poner usuario y microred
+    currentDenunciation.usu_cuenta = user.USU_CUENTA.toUpperCase();
+    currentDenunciation.usu_microred = user.USU_MICRORED;
+        
     //Extraer de usuario
     const {  
         den_id_custom,
@@ -90,7 +96,7 @@ const FormDen = (props) => {
         //Obteniendo solo la fecha en campos calendar
         currentDenunciation.den_fecha_recepcion = DateFull(currentDenunciation.den_fecha_recepcion);
         currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
-
+        
         AddDenunciation(currentDenunciation);
         props.ChangeModal();
     };
@@ -104,7 +110,7 @@ const FormDen = (props) => {
                 <Form.Group controlId="den_id_custom">
                     <Form.Label >Identificador de denuncia</Form.Label>
                     <Form.Control 
-                        //readOnly
+                        readOnly
                         type='text'
                         name='den_id_custom'
                         value={den_id_custom}
@@ -131,15 +137,16 @@ const FormDen = (props) => {
                         name= 'den_medio'
                         value= {den_medio}
                         onChange= {OnChange}
+                        ref={register({ required: true })}
                     >
-                        <option>Seleccione...</option>
+                        <option value="">Seleccione...</option>
                         <option value="establecimiento">En establecimiento</option>
                         <option value="calle">En la calle</option>
                         <option value="telefono">Por teléfono</option>
                         <option value="agente">A través de agente</option>
                         <option value="whatsapp">Whatsapp</option>
                     </Form.Control>
-                    
+                    {errors.den_medio && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
 
                 { den_medio==="agente" ? (
@@ -357,9 +364,9 @@ const FormDen = (props) => {
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
                     <Form.Check 
-                        type="checkbox" 
-                        name="den_otro_telefono"
-                        label="Otro teléfono adicional"
+                        type='checkbox' 
+                        name='den_otro_telefono'
+                        label='Otro teléfono adicional'
                         checked={ den_otro_telefono }
                         onChange={OnChangeCheck}
                     />

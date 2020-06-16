@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";//Validar
 import AlertContext from '../../../context/alert/AlertContext';
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import MyModal from "../../Modal/MyModal";
-import { es, DateFull } from "../../../Resources";
+import { es, DateFull } from "../../../resources";
 
 //Formulario de denuncia
 const FormHP = (props) => {

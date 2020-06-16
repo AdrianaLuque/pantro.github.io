@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
 import InspectionContext from "../../context/inspection/InspectionContext";
-import { InnerJoin } from "../../Resources";
+import { InnerJoin } from "../../resources";
 import FormInsp from "../Activities/Inspections/FormInsp";
 
 const CircleHouses = () => {

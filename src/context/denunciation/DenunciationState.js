@@ -6,7 +6,9 @@ import DenunciationReducer from './DenunciationReducer';
 import { 
     GET_DENUNCIATIONS,
     ADD_DENUNCIATION,
-    UPDATE_DENUNCIATION
+    UPDATE_DENUNCIATION,
+    INIT_DENUNCIATION,
+    DISABLE_EDIT_DENUNCIATION
 } from '../../types';
 import SpinnerContext from "../spinner/SpinnerContext";
 
@@ -14,25 +16,29 @@ const DenunciationState = props => {
     
     const initialState = {
         denunciation: {
-            den_id_custom: '',
+            den_id_custom: 'DEN-XXXXXX',
+            usu_cuenta: '',
+            usu_microred: '',
             den_fecha_recepcion: new Date(),
             den_medio: '',
             den_agente_nombre:'',
             den_tipo: '',
             den_insecto: '',
             den_insecto_otro:'',
+            //-falta variable imagen
             den_habitante_nombre:'',
             den_habitante_telefono1:'',
             den_otro_telefono:false,
             den_habitante_telefono2:'',
-            den_provincia: "",
+            den_provincia: '',
             den_distrito:'',
             den_localidad:'',
             den_direccion:'',
             den_referencia:'',
             den_fecha_probable_inspeccion: null
         },
-        denunciations: []
+        denunciations: [],
+        editDen: false
     }
 
     //Dispatch para ejecutar las acciones
@@ -55,7 +61,7 @@ const DenunciationState = props => {
             });
             
         } catch (error) {
-            console.log("Error al obtener las denuncias: s"+error);
+            console.log("Error al obtener las denuncias: "+error);
         }
         await HideSpinner();
     }
@@ -101,16 +107,31 @@ const DenunciationState = props => {
             console.log(error);
         }
     }
+    //* Inicializar denuncia
+    const InitDenunciation = () => {
+        dispatch({
+            type: INIT_DENUNCIATION
+        });
+    }
+    //*Cambiar a falso variable editDen
+    const DisableEditDen = () => {
+        dispatch({
+            type: DISABLE_EDIT_DENUNCIATION
+        });
+    }
 
     return(
         <DenunciationContext.Provider
             value={{
                 denunciation: state.denunciation,
                 denunciations: state.denunciations,
+                editDen: state.editDen,
                 GetDenunciations,
                 AddDenunciation,
                 UpdateDenunciation,
-                EditDenunciation
+                EditDenunciation,
+                InitDenunciation,
+                DisableEditDen
             }}
         >
             {props.children}

@@ -185,13 +185,13 @@ export const Merge = (data0, data1, field) => {
     var result = [];
     for (var i = 0; i < data0.length; i++) {
     for (var j = 0; j < data1.length; j++) {
-        if (data0[i][field] == data1[j][field]) {
+        if (data0[i][field] === data1[j][field]) {
         var obj = {};
-        for (var key in data0[i])
-            obj[key] = data0[i][key];
-        for (var key in data1[j]) {
-            if (key != field)
-            obj[key] = data1[j][key];
+        for (var key1 in data0[i])
+            obj[key1] = data0[i][key1];
+        for (var key2 in data1[j]) {
+            if (key2 !== field)
+            obj[key2] = data1[j][key2];
         }
         result.push(obj);
         break;

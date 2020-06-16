@@ -141,3 +141,7 @@ header{
   width: 100%;
   text-align: center;
 }
+
+.btn-edit {
+  margin: 0 5px;
+}

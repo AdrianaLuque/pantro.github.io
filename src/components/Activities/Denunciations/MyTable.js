@@ -13,7 +13,7 @@ const MyTable = ({ register }) => {
   const { spinner } = SpinnersContext;
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
-  const { UpdateDenunciation } = DenunciationsContext;
+  const { UpdateDenunciation, DisableEditDen } = DenunciationsContext;
     
   const onRowSelect = (row, isSelected) => {
     if ( isSelected ) {
@@ -24,15 +24,21 @@ const MyTable = ({ register }) => {
         } else if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
           let obj = [];
           let aux = row[prop];
-          aux = aux.split('&');
-          for (let i = 1; i < aux.length; i++) {
-            obj.push(new Date(aux[i]));
-          }
+          if (aux.length > 0) {
+            aux = aux.split('&');
+            for (let i = 1; i < aux.length; i++) {
+              obj.push(new Date(aux[i]));
+            }
+          } else {
+            obj = "";
+          } 
           row[prop] = obj;
         }
         obj[prop.toLowerCase()]=row[prop];
       }
       UpdateDenunciation(obj);
+    } else {
+      DisableEditDen();
     }
   }
 
