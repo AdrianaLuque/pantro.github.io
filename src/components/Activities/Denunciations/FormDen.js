@@ -363,8 +363,8 @@ const FormDen = (props) => {
                     {errors.den_habitante_telefono1?.type === "maxLength" && <span className='alert-custom'>*Maximo 9 numeros</span>}
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
-                    <Form.Check 
-                        type='checkbox' 
+                    <Form.Check
+                        type="checkbox"
                         name='den_otro_telefono'
                         label='Otro teléfono adicional'
                         checked={ den_otro_telefono }

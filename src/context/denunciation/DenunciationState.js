@@ -11,32 +11,12 @@ import {
     DISABLE_EDIT_DENUNCIATION
 } from '../../types';
 import SpinnerContext from "../spinner/SpinnerContext";
+import { initDenunciation } from '../../resources';
 
 const DenunciationState = props => {
     
     const initialState = {
-        denunciation: {
-            den_id_custom: 'DEN-XXXXXX',
-            usu_cuenta: '',
-            usu_microred: '',
-            den_fecha_recepcion: new Date(),
-            den_medio: '',
-            den_agente_nombre:'',
-            den_tipo: '',
-            den_insecto: '',
-            den_insecto_otro:'',
-            //-falta variable imagen
-            den_habitante_nombre:'',
-            den_habitante_telefono1:'',
-            den_otro_telefono:false,
-            den_habitante_telefono2:'',
-            den_provincia: '',
-            den_distrito:'',
-            den_localidad:'',
-            den_direccion:'',
-            den_referencia:'',
-            den_fecha_probable_inspeccion: null
-        },
+        denunciation: initDenunciation,
         denunciations: [],
         editDen: false
     }

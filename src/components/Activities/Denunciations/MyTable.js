@@ -33,6 +33,11 @@ const MyTable = ({ register }) => {
             obj = "";
           } 
           row[prop] = obj;
+        } else if (prop === 'DEN_OTRO_TELEFONO') {
+          if(row[prop] === '1')
+            row[prop] = true;
+          else 
+            row[prop] = false;
         }
         obj[prop.toLowerCase()]=row[prop];
       }
