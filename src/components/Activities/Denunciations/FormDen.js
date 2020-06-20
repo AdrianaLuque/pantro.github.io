@@ -16,7 +16,6 @@ import { es, provincias_aqp, distritos_aqp, DateFull } from "../../../resources"
 
 //Formulario de denuncia
 const FormDen = (props) => {
-  
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
     const { alert } = AlertsContext;
@@ -25,16 +24,21 @@ const FormDen = (props) => {
     const { user } = AuthenticationsContext;
     //Obtener variables de denuncias
     const DenunciationsContext = useContext(DenunciationContext);
-    const { denunciation, AddDenunciation, EditDenunciation } = DenunciationsContext;
+    const { valueAddDen, valueEditDen, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
     //validacion
     const { register, handleSubmit, errors } = useForm();
     //State para denuncias
-    const [currentDenunciation, setCurrentDenunciation] = useState( denunciation );
+    const [currentDenunciation, setCurrentDenunciation] = useState( valueAddDen );
+    console.log(props.btnPressed);
+    console.log(currentDenunciation);
     useEffect(() => {
-        setCurrentDenunciation(denunciation);
+        if ( props.btnPressed === "edit" )
+            setCurrentDenunciation(valueEditDen);
+        else 
+            setCurrentDenunciation(valueAddDen);
         // eslint-disable-next-line
-    }, [denunciation]);
+    }, [valueEditDen, valueAddDen, props.btnPressed]);
     //Poner usuario y microred
     currentDenunciation.usu_cuenta = user.USU_CUENTA.toUpperCase();
     currentDenunciation.usu_microred = user.USU_MICRORED;

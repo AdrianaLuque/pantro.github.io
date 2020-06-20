@@ -16,9 +16,10 @@ import { initDenunciation } from '../../resources';
 const DenunciationState = props => {
     
     const initialState = {
-        denunciation: initDenunciation,
+        valueAddDen: initDenunciation,
+        valueEditDen: {},
         denunciations: [],
-        editDen: false
+        boolEdit: false
     }
 
     //Dispatch para ejecutar las acciones
@@ -87,12 +88,6 @@ const DenunciationState = props => {
             console.log(error);
         }
     }
-    //* Inicializar denuncia
-    const InitDenunciation = () => {
-        dispatch({
-            type: INIT_DENUNCIATION
-        });
-    }
     //*Cambiar a falso variable editDen
     const DisableEditDen = () => {
         dispatch({
@@ -103,14 +98,14 @@ const DenunciationState = props => {
     return(
         <DenunciationContext.Provider
             value={{
-                denunciation: state.denunciation,
+                valueAddDen: state.valueAddDen,
+                valueEditDen: state.valueEditDen,
                 denunciations: state.denunciations,
-                editDen: state.editDen,
+                boolEdit: state.boolEdit,
                 GetDenunciations,
                 AddDenunciation,
                 UpdateDenunciation,
                 EditDenunciation,
-                InitDenunciation,
                 DisableEditDen
             }}
         >

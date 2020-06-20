@@ -14,8 +14,8 @@ const MyTable = ({ register }) => {
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
   const { UpdateDenunciation, DisableEditDen } = DenunciationsContext;
-    
-  const onRowSelect = (row, isSelected) => {
+  
+  const onRowSelect = (row, isSelected, rowIndex, e) => {
     if ( isSelected ) {
       let obj = {};
       for(var prop in row){
@@ -46,7 +46,6 @@ const MyTable = ({ register }) => {
       DisableEditDen();
     }
   }
-
   const selectRowProp = {
     mode: 'radio',
     bgColor: '#5bc0de', // you should give a bgcolor, otherwise, you can't regonize which row has been selected

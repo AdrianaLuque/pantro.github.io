@@ -1,8 +1,8 @@
 import { 
     GET_DENUNCIATIONS,
     ADD_DENUNCIATION,
+    EDIT_DENUNCIATION,
     UPDATE_DENUNCIATION,
-    INIT_DENUNCIATION,
     DISABLE_EDIT_DENUNCIATION
 } from '../../types';
 import { initDenunciation } from '../../resources';
@@ -17,24 +17,20 @@ export default (state, action) => {
         case ADD_DENUNCIATION:
             return{
                 ...state,
-                denunciations: [...state.denunciations, action.payload]
+                denunciations: [...state.denunciations, action.payload],
+                valueAddDen : initDenunciation
             };
         case UPDATE_DENUNCIATION:
             return{
                 ...state,
-                denunciation : action.payload,
-                editDen: true
+                valueEditDen : action.payload,
+                boolEdit: true
 
-            };
-        case INIT_DENUNCIATION:
-            return{
-                ...state,
-                denunciation: initDenunciation
             };
         case DISABLE_EDIT_DENUNCIATION:
             return{
                 ...state,
-                editDen: false
+                boolEdit: false
 
             };
 
