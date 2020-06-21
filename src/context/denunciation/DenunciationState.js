@@ -7,19 +7,20 @@ import {
     GET_DENUNCIATIONS,
     ADD_DENUNCIATION,
     UPDATE_DENUNCIATION,
-    INIT_DENUNCIATION,
-    DISABLE_EDIT_DENUNCIATION
+    DISABLE_EDIT_DENUNCIATION,
+    BTN_ADD_DENUNCIATION,
+    BTN_EDIT_DENUNCIATION
 } from '../../types';
 import SpinnerContext from "../spinner/SpinnerContext";
-import { initDenunciation } from '../../resources';
 
 const DenunciationState = props => {
     
     const initialState = {
-        valueAddDen: initDenunciation,
         valueEditDen: {},
         denunciations: [],
-        boolEdit: false
+        selectEdit: false,
+        statusBtnAdd: false,
+        statusBtnEdit: false
     }
 
     //Dispatch para ejecutar las acciones
@@ -94,19 +95,34 @@ const DenunciationState = props => {
             type: DISABLE_EDIT_DENUNCIATION
         });
     }
+    //*Canmbiar boton presionado add
+    const PressBtnAddDen = () => {
+        dispatch({
+            type: BTN_ADD_DENUNCIATION
+        });
+    }
+    //*Canmbiar boton presionado edit
+    const PressBtnEditDen = () => {
+        dispatch({
+            type: BTN_EDIT_DENUNCIATION
+        });
+    }
 
     return(
         <DenunciationContext.Provider
             value={{
-                valueAddDen: state.valueAddDen,
                 valueEditDen: state.valueEditDen,
                 denunciations: state.denunciations,
-                boolEdit: state.boolEdit,
+                selectEdit: state.selectEdit,
+                statusBtnAdd: state.statusBtnAdd,
+                statusBtnEdit: state.statusBtnEdit,
                 GetDenunciations,
                 AddDenunciation,
                 UpdateDenunciation,
                 EditDenunciation,
-                DisableEditDen
+                DisableEditDen,
+                PressBtnAddDen,
+                PressBtnEditDen
             }}
         >
             {props.children}

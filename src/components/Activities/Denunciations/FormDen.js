@@ -12,7 +12,7 @@ import AuthenticationContext from "../../../context/authentication/Authenticatio
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 //Recursos
-import { es, provincias_aqp, distritos_aqp, DateFull } from "../../../resources";
+import { es, provincias_aqp, distritos_aqp, DateFull, initDenunciation } from "../../../resources";
 
 //Formulario de denuncia
 const FormDen = (props) => {
@@ -24,25 +24,24 @@ const FormDen = (props) => {
     const { user } = AuthenticationsContext;
     //Obtener variables de denuncias
     const DenunciationsContext = useContext(DenunciationContext);
-    const { valueAddDen, valueEditDen, AddDenunciation, EditDenunciation } = DenunciationsContext;
+    const { valueEditDen, statusBtnEdit, statusBtnAdd, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
     //validacion
     const { register, handleSubmit, errors } = useForm();
     //State para denuncias
-    const [currentDenunciation, setCurrentDenunciation] = useState( valueAddDen );
-    console.log(props.btnPressed);
-    console.log(currentDenunciation);
+    const [currentDenunciation, setCurrentDenunciation] = useState( initDenunciation );
+    
     useEffect(() => {
-        if ( props.btnPressed === "edit" )
+        if ( statusBtnEdit ) {
             setCurrentDenunciation(valueEditDen);
-        else 
-            setCurrentDenunciation(valueAddDen);
+        } else if ( statusBtnAdd ) {
+            setCurrentDenunciation(initDenunciation);
+        }
         // eslint-disable-next-line
-    }, [valueEditDen, valueAddDen, props.btnPressed]);
+    }, [statusBtnEdit, statusBtnAdd, valueEditDen]);
     //Poner usuario y microred
     currentDenunciation.usu_cuenta = user.USU_CUENTA.toUpperCase();
     currentDenunciation.usu_microred = user.USU_MICRORED;
-        
     //Extraer de usuario
     const {  
         den_id_custom,
@@ -102,6 +101,7 @@ const FormDen = (props) => {
         currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
         
         AddDenunciation(currentDenunciation);
+        setCurrentDenunciation(initDenunciation);
         props.ChangeModal();
     };
     
@@ -129,7 +129,7 @@ const FormDen = (props) => {
                         locale={es} 
                         dateFormat="yy-mm-dd" 
                         name = 'den_fecha_recepcion'
-                        value={den_fecha_recepcion} 
+                        value={new Date(den_fecha_recepcion)} 
                         onChange={OnChange}
                     />
                 </Form.Group>

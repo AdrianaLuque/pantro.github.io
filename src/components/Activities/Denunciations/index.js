@@ -9,14 +9,12 @@ const Denunciations = () => {
 
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
-  const { denunciations, GetDenunciations, boolEdit } = DenunciationsContext;
+  let { denunciations, GetDenunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
 
   //Modal
   const [modal, setModal] = useState(false);
   //Titulo del formulario
   const [formTitle, setFormTitle] = useState(null);
-  //Titulo del formulario
-  const [btnPressed, setBtnPressed] = useState(null);
 
   useEffect(() => {
       GetDenunciations();
@@ -27,12 +25,12 @@ const Denunciations = () => {
   const HandleAdd = () => {
     setFormTitle("Nuevo registro de denuncias");
     ChangeModal();
-    setBtnPressed("add");
+    PressBtnAddDen();
   }
   const HandleEdit = () => {
     setFormTitle("Editar registro de denuncias");
     ChangeModal();
-    setBtnPressed("edit");
+    PressBtnEditDen();
   }
   const ChangeModal = () => {
     setModal(!modal);
@@ -42,8 +40,8 @@ const Denunciations = () => {
       <Container>
         <h2>Información de Denuncias</h2>
         <Button onClick={HandleAdd}>Agregar</Button>
-        <Button className="btn-edit" onClick={HandleEdit} disabled={!boolEdit}>Editar</Button>
-        <FormDen modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} btnPressed={btnPressed}/>
+        <Button className="btn-edit" onClick={HandleEdit} disabled={!selectEdit}>Editar</Button>
+        <FormDen modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} />
         <MyTable register={denunciations}/>
       </Container>
   );

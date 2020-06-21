@@ -3,9 +3,10 @@ import {
     ADD_DENUNCIATION,
     EDIT_DENUNCIATION,
     UPDATE_DENUNCIATION,
-    DISABLE_EDIT_DENUNCIATION
+    DISABLE_EDIT_DENUNCIATION,
+    BTN_ADD_DENUNCIATION,
+    BTN_EDIT_DENUNCIATION
 } from '../../types';
-import { initDenunciation } from '../../resources';
 
 export default (state, action) => {
     switch (action.type) {
@@ -17,23 +18,31 @@ export default (state, action) => {
         case ADD_DENUNCIATION:
             return{
                 ...state,
-                denunciations: [...state.denunciations, action.payload],
-                valueAddDen : initDenunciation
+                denunciations: [...state.denunciations, action.payload]
             };
         case UPDATE_DENUNCIATION:
             return{
                 ...state,
                 valueEditDen : action.payload,
-                boolEdit: true
-
+                selectEdit: true
             };
         case DISABLE_EDIT_DENUNCIATION:
             return{
                 ...state,
-                boolEdit: false
-
+                selectEdit: false
             };
-
+        case BTN_ADD_DENUNCIATION:
+            return {
+                ...state,
+                statusBtnAdd: true,
+                statusBtnEdit: false
+            }
+        case BTN_EDIT_DENUNCIATION:
+            return {
+                ...state,
+                statusBtnAdd: false,
+                statusBtnEdit: true
+            }
         default:
             return state;
     }
