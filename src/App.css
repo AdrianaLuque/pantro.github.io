@@ -72,7 +72,6 @@
   z-index: 400;
   position: absolute;
   right: 0;
-  margin: 10px 2px;
 }
 header{
   position: relative;
@@ -142,6 +141,9 @@ header{
   text-align: center;
 }
 
-.btn-edit {
-  margin: 0 5px;
+.btn {
+  margin: 10px 2px;
+}
+.group-btn {
+  position: relative;
 }

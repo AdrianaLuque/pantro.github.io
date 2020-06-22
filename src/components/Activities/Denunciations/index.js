@@ -4,12 +4,13 @@ import { Container, Button } from 'react-bootstrap';
 import DenunciationContext from "../../../context/denunciation/DenunciationContext";
 import FormDen from "./FormDen";
 import MyTable from "./MyTable";
+import BtnReturn from "../../BtnReturn";
 
-const Denunciations = () => {
+const Denunciations = props => {
 
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
-  let { denunciations, GetDenunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
+  const { denunciations, GetDenunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
 
   //Modal
   const [modal, setModal] = useState(false);
@@ -39,8 +40,11 @@ const Denunciations = () => {
   return(
       <Container>
         <h2>Información de Denuncias</h2>
-        <Button onClick={HandleAdd}>Agregar</Button>
-        <Button className="btn-edit" onClick={HandleEdit} disabled={!selectEdit}>Editar</Button>
+        <div className='group-btn'>
+          <Button onClick={HandleAdd}>Agregar</Button>
+          <Button className="btn-edit" onClick={HandleEdit} disabled={!selectEdit}>Editar</Button>
+          <BtnReturn props={props}/>
+        </div>
         <FormDen modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} />
         <MyTable register={denunciations}/>
       </Container>

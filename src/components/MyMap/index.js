@@ -1,20 +1,16 @@
 import React from "react";
 import { Map, TileLayer } from "react-leaflet";
-import { Button } from 'react-bootstrap';
 
 import CircleHouses from "./CircleHouses";
 import MarkerParticipantsInmune from "./MarkerParticipantsInmune";
 import MarkerHealthPosts from "./MarkerHealthPosts";
+import BtnReturn from "../BtnReturn";
 
 const MyMap = props => {
   
   //Variales del mapa
   let center = [-16.4040494,-71.574117];
   const zoom = 10;
-
-  const BtnReturn = () => {
-      props.history.goBack();
-  }
     
   return (
     <>
@@ -23,7 +19,7 @@ const MyMap = props => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Button className="btn-back" variant="primary" onClick={BtnReturn}>Atrás</Button>
+        <BtnReturn props={props}/>
         <CircleHouses/>
         <MarkerParticipantsInmune/>
         <MarkerHealthPosts/>
