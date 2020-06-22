@@ -28,7 +28,7 @@ function App() {
                       <Route exact path="/" component={Login}/>
                       <Route exact path="/actividades" component={Activities}/>
                       <Route exact path="/actividades/denuncias" component={Denunciations}/>
-                      <Route exact path="/actividades/inspecciones-activas" component={MyMap}/>
+                      <Route exact path="/actividades/mapa" component={MyMap}/>
                     </Switch>
                   </Router>
                 </AuthenticationState>

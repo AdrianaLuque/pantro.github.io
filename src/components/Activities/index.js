@@ -3,19 +3,23 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 
 import Header from "../../layouts/Header";
 import SpinnerContext from '../../context/spinner/SpinnerContext';
+import InspectionContext from '../../context/inspection/InspectionContext';
 
 const Activities = (props) => {
     //Spinner
     const SpinnersContext = useContext(SpinnerContext);
     const { ShowSpinner } = SpinnersContext;
+    //Extraer los valores del context
+    const InspectionsContext = useContext(InspectionContext);
+    const { PressBtnInspection } = InspectionsContext;
     
     const GoDenunciations = () => {
         ShowSpinner();
         props.history.push('/actividades/denuncias');
     }
-    const GoInsActive = (e) => {
-        e.preventDefault();
-        props.history.push('/actividades/inspecciones-activas');
+    const GoMap = (btnPress) => {
+        PressBtnInspection(btnPress);
+        props.history.push('/actividades/mapa');
     }
     return (
         <>
@@ -29,8 +33,8 @@ const Activities = (props) => {
                         </div>
                         <div id="wrap-button-ins" className="wrap-button">
                             <label id='title-button-ins' className='title-button'>Inspecciones</label>
-                            <Button id="btn_actInspeccionesPasivas" disabled variant="danger">Inspecciones por Denuncia</Button>
-                            <Button id="btn_actInspeccionesActivas" variant="danger" onClick={GoInsActive}>Inspecciones Activas</Button>
+                            <Button id="btn_actInspeccionesPasivas" variant="danger" onClick={()=>GoMap("inspPasive")}>Inspecciones por Denuncia</Button>
+                            <Button id="btn_actInspeccionesActivas" variant="danger" onClick={()=>GoMap("inspActive")}>Inspecciones Activas</Button>
                         </div>
                         <div id="wrap-button-roc" className="wrap-button">
                             <label id='title-button-roc' className='title-button'>Rociados</label>

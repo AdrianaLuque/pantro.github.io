@@ -29,6 +29,7 @@ export const BTN_EDIT_DENUNCIATION = 'BTN_EDIT_DENUNCIATION';
 //Inspeccion
 export const GET_INSPECTIONS = 'GET_INSPECTIONS';
 export const ADD_INSPECTION = 'ADD_INSPECTION';
+export const BTN_INSPECTION = 'BTN_INSPECTION';
 
 //Cimex
 export const ADD_CIMEX = 'ADD_CIMEX';

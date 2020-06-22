@@ -5,7 +5,8 @@ import InspectionContext from './InspectionContext';
 import InspectionReducer from './InspectionReducer';
 import { 
     GET_INSPECTIONS,
-    ADD_INSPECTION
+    ADD_INSPECTION,
+    BTN_INSPECTION
 } from '../../types';
 import SpinnerContext from "../spinner/SpinnerContext";
 
@@ -52,6 +53,8 @@ const InspectionState = props => {
         inspections: [],
         newInspections: [],
         newHealthPosts: [],
+        inspPasive: false,
+        inspActive: false
     }
 
     //Dispatch para ejecutar las acciones
@@ -95,6 +98,14 @@ const InspectionState = props => {
         }
     }
 
+    //* Boton presionado
+    const PressBtnInspection = (btnName) => {
+        dispatch({
+            type: BTN_INSPECTION,
+            payload: btnName
+        });
+    }
+
     return(
         <InspectionContext.Provider
             value={{
@@ -102,8 +113,11 @@ const InspectionState = props => {
                 inspections: state.inspections,
                 newInspections: state.newInspections,
                 newHealthPosts: state.newHealthPosts,
+                inspPasive: state.inspPasive,
+                inspActive: state.inspActive,
                 GetInspections,
-                AddInspection
+                AddInspection,
+                PressBtnInspection
             }}
         >
             {props.children}
