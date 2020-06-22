@@ -20,6 +20,11 @@ export default (state, action) => {
                 ...state,
                 denunciations: [...state.denunciations, action.payload]
             };
+        case EDIT_DENUNCIATION:
+            return{
+                ...state,
+                denunciations: state.denunciations.map( denunciation => denunciation.DEN_ID_CUSTOM === action.payload.DEN_ID_CUSTOM ? action.payload : denunciation)
+            };
         case UPDATE_DENUNCIATION:
             return{
                 ...state,

@@ -22,13 +22,13 @@ const MyTable = ({ register }) => {
         if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
           let obj = [];
           let aux = row[prop];
-          if (aux.length > 0) {
+          if (aux !== null && aux !== "NA" && aux.length > 0) {
             aux = aux.split('&');
             for (let i = 1; i < aux.length; i++) {
               obj.push(new Date(aux[i]));
             }
           } else {
-            obj = "";
+            obj = null;
           } 
           row[prop] = obj;
         } else if (prop === 'DEN_OTRO_TELEFONO') {

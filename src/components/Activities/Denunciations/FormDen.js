@@ -97,11 +97,15 @@ const FormDen = (props) => {
 
     const OnSubmit = () => {
         //Obteniendo solo la fecha en campos calendar
-        currentDenunciation.den_fecha_recepcion = DateFull(currentDenunciation.den_fecha_recepcion);
-        currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
-        
-        AddDenunciation(currentDenunciation);
-        setCurrentDenunciation(initDenunciation);
+        currentDenunciation.den_fecha_recepcion = DateFull(new Date(currentDenunciation.den_fecha_recepcion));
+        //currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
+        //Verificar si es ADD o EDIT
+        if ( statusBtnEdit ) {
+            EditDenunciation(currentDenunciation);
+        } else if ( statusBtnAdd ) {
+            AddDenunciation(currentDenunciation);
+            setCurrentDenunciation(initDenunciation);
+        }
         props.ChangeModal();
     };
     

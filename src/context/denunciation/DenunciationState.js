@@ -6,6 +6,7 @@ import DenunciationReducer from './DenunciationReducer';
 import { 
     GET_DENUNCIATIONS,
     ADD_DENUNCIATION,
+    EDIT_DENUNCIATION,
     UPDATE_DENUNCIATION,
     DISABLE_EDIT_DENUNCIATION,
     BTN_ADD_DENUNCIATION,
@@ -77,11 +78,11 @@ const DenunciationState = props => {
     const EditDenunciation = async ( denunciation ) => {
         
         try {
-            const resultado = await ClienteAxios.post('/api/denuncias', denunciation);
+            const resultado = await ClienteAxios.put(`/api/denuncias/${denunciation.den_id}`, denunciation);
             //console.log(resultado);
-
+            debugger;
             dispatch({
-                type: ADD_DENUNCIATION,
+                type: EDIT_DENUNCIATION,
                 payload: resultado.data
             });
             
