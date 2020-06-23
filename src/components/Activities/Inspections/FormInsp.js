@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
 import AlertContext from '../../../context/alert/AlertContext';
+import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import CimexContext from '../../../context/cimex/CimexContext';
 import MyModal from "../../Modal/MyModal";
@@ -18,10 +19,13 @@ const FormInps = (props) => {
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
     const { alert, ShowAlert } = AlertsContext;
+    //Obtener variables de denuncias
+    const DenunciationsContext = useContext(DenunciationContext);
+    const { denunciations } = DenunciationsContext;
 
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
-    const { inspection } = InspectionsContext;
+    const { inspection, inspPasive } = InspectionsContext;
 
     //Extraer los valores del context
     const CimexsContext = useContext(CimexContext);
@@ -38,6 +42,7 @@ const FormInps = (props) => {
     //Extraer de valores de inspeccion
     const {  
         user_name,
+        den_id_custom,
         unicode,
         code_locality,
         obs_unicode,
@@ -151,7 +156,24 @@ const FormInps = (props) => {
             { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
             <Form
                 onSubmit={handleSubmit(OnSubmit)}
-            >
+            >   { inspPasive ?
+                    <>
+                        {/* den_id_custom */}
+                        <Form.Group controlId="den_id_custom">
+                            <Form.Control 
+                                as="select"
+                                name= 'den_id_custom'
+                                value= {den_id_custom}
+                                onChange= {OnChange}
+                            >
+                                <option>Seleccione...</option>
+                                {denunciations.map( denunciation => 
+                                    <option key={denunciation.DEN_ID_CUSTOM} value={denunciation.DEN_ID_CUSTOM}>{denunciation.DEN_ID_CUSTOM}</option>
+                                )}
+                            </Form.Control>
+                        </Form.Group>
+                    </> : null
+                }
                 <Form.Group controlId="unicode">
                     <Form.Label >Código de Vivienda</Form.Label>
                     <Form.Control 

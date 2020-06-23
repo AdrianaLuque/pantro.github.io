@@ -5,6 +5,7 @@ import CircleHouses from "./CircleHouses";
 import MarkerParticipantsInmune from "./MarkerParticipantsInmune";
 import MarkerHealthPosts from "./MarkerHealthPosts";
 import BtnReturn from "../BtnReturn";
+import InformationDen from "../Activities/Denunciations/InformationDen";
 
 const MyMap = props => {
   
@@ -20,6 +21,7 @@ const MyMap = props => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
         <BtnReturn props={props}/>
+        <InformationDen/>
         <CircleHouses/>
         <MarkerParticipantsInmune/>
         <MarkerHealthPosts/>

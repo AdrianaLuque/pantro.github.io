@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Button } from 'react-bootstrap';
 
 import DenunciationContext from "../../../context/denunciation/DenunciationContext";
@@ -10,18 +10,12 @@ const Denunciations = props => {
 
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
-  const { denunciations, GetDenunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
+  const { denunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
 
   //Modal
   const [modal, setModal] = useState(false);
   //Titulo del formulario
   const [formTitle, setFormTitle] = useState(null);
-
-  useEffect(() => {
-      GetDenunciations();
-      //Eliminamos advertencia por que sabemos que esta bien
-      // eslint-disable-next-line
-  }, []);
 
   const HandleAdd = () => {
     setFormTitle("Nuevo registro de denuncias");

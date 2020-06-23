@@ -14,7 +14,7 @@ const CircleHouses = () => {
     let { houses, UpdateHouses } = CsvsContext;
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
-    const { inspections } = InspectionsContext;
+    const { inspections, inspPasive } = InspectionsContext;
     //Modal
     const [modal, setModal] = useState(false);
     //Titulo del formulario
@@ -66,7 +66,7 @@ const CircleHouses = () => {
           <CircleMarker 
             key = {element.UNICODE}
             center={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
-            fillColor = {element.color}
+            fillColor = { inspPasive? "gray" : element.color}
             radius = {6}
             //// = {true}
             color = "black"

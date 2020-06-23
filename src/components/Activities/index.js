@@ -2,22 +2,18 @@ import React, {useContext} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 import Header from "../../layouts/Header";
-import SpinnerContext from '../../context/spinner/SpinnerContext';
 import InspectionContext from '../../context/inspection/InspectionContext';
 
 const Activities = (props) => {
-    //Spinner
-    const SpinnersContext = useContext(SpinnerContext);
-    const { ShowSpinner } = SpinnersContext;
+    
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
     const { PressBtnInspection } = InspectionsContext;
     
     const GoDenunciations = () => {
-        ShowSpinner();
         props.history.push('/actividades/denuncias');
     }
-    const GoMap = (btnPress) => {
+    const GoMap = ( btnPress ) => {
         PressBtnInspection(btnPress);
         props.history.push('/actividades/mapa');
     }

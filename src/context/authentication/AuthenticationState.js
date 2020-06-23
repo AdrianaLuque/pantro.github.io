@@ -10,6 +10,7 @@ import {
     LOGIN_END
 } from '../../types';
 import CsvContext from "../csv/CsvContext";
+import DenunciationContext from "../denunciation/DenunciationContext";
 import InspectionContext from "../inspection/InspectionContext";
 import SpinnerContext from "../spinner/SpinnerContext";
 
@@ -28,6 +29,9 @@ const AuthenticationState = props => {
     //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
     let { CsvHouses, CsvHealthPosts, CsvParticipantsInmune, CsvClean } = CsvsContext;
+    //Obtener el denuncias
+    const DenunciationsContext = useContext(DenunciationContext);
+    const { GetDenunciations } = DenunciationsContext;
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
     const { GetInspections } = InspectionsContext;
@@ -46,6 +50,7 @@ const AuthenticationState = props => {
             
             //Cargando datos que se necesitaran
             await CsvHouses(respuesta.data.USU_CATCHMENT_AREA);
+            await GetDenunciations();
             await CsvHealthPosts();
             await CsvParticipantsInmune();
             await GetInspections();

@@ -1,4 +1,4 @@
-import React, {useReducer, useContext} from 'react';
+import React, {useReducer} from 'react';
 import ClienteAxios from "../../config/axios";
 
 import DenunciationContext from './DenunciationContext';
@@ -12,7 +12,6 @@ import {
     BTN_ADD_DENUNCIATION,
     BTN_EDIT_DENUNCIATION
 } from '../../types';
-import SpinnerContext from "../spinner/SpinnerContext";
 
 const DenunciationState = props => {
     
@@ -26,10 +25,7 @@ const DenunciationState = props => {
 
     //Dispatch para ejecutar las acciones
     const [state, dispatch] = useReducer(DenunciationReducer, initialState);
-    //Cambiar estado de spinner
-    const SpinnersContext = useContext(SpinnerContext);
-    const { HideSpinner } = SpinnersContext;
-
+    
     //FUNCIONES
     //* Obtener denuncias
     const GetDenunciations = async () => {
@@ -46,7 +42,6 @@ const DenunciationState = props => {
         } catch (error) {
             console.log("Error al obtener las denuncias: "+error);
         }
-        await HideSpinner();
     }
 
     //* Agregar denuncias
@@ -80,7 +75,6 @@ const DenunciationState = props => {
         try {
             const resultado = await ClienteAxios.put(`/api/denuncias/${denunciation.den_id}`, denunciation);
             //console.log(resultado);
-            debugger;
             dispatch({
                 type: EDIT_DENUNCIATION,
                 payload: resultado.data

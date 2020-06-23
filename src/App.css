@@ -147,3 +147,17 @@ header{
 .group-btn {
   position: relative;
 }
+
+/*Informacion de denuncias*/
+.btn-info-den {
+  z-index: 400;
+  position: absolute;
+  right: 0;
+  top: 44px;
+}
+.wrapper-info-den {
+  border-radius: 5px;
+  border: 1px solid blue;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
