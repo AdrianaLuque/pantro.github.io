@@ -16,7 +16,7 @@ const InformationDen = () => {
     const [formTitle, setFormTitle] = useState(null);
 
     const HandleInfoDen = () => {
-        setFormTitle("Informacion de las denuncias");
+        setFormTitle("Información de las denuncias");
         ChangeModal();
     }
     const ChangeModal = () => {
@@ -31,10 +31,10 @@ const InformationDen = () => {
                     <div className='wrapper-info-den' key={denunciation.DEN_ID_CUSTOM}>
                         <h5>{denunciation.DEN_ID_CUSTOM}</h5>
                         <div>
-                            <b>Nombre: </b><div>{denunciation.DEN_HABITANTE_NOMBRE}</div>
-                            <b>Teléfono: </b><div>{denunciation.DEN_HABITANTE_TELEFONO1}</div>
-                            <b>Dirección: </b><div>{denunciation.DEN_DIRECCION}</div>
-                            <b>Referencia: </b><div>{denunciation.DEN_REFERENCIA}</div>
+                            <div><b>Nombre: </b>{denunciation.DEN_HABITANTE_NOMBRE}</div>
+                            <div><b>Teléfono: </b>{denunciation.DEN_HABITANTE_TELEFONO1}</div>
+                            <div><b>Dirección: </b>{denunciation.DEN_DIRECCION}</div>
+                            <div><b>Referencia: </b>{denunciation.DEN_REFERENCIA}</div>
                         </div>
                     </div>
                 )}

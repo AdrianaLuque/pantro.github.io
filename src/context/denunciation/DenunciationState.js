@@ -28,12 +28,12 @@ const DenunciationState = props => {
     
     //FUNCIONES
     //* Obtener denuncias
-    const GetDenunciations = async () => {
+    const GetDenunciations = async ( microred ) => {
         
         try {
-            const resultado = await ClienteAxios.get('/api/denuncias');
-            //console.log(resultado);
-
+            //const resultado = await ClienteAxios.get('/api/denuncias');
+            const resultado = await ClienteAxios.post(`/api/denuncias/${microred}`);
+            
             dispatch({
                 type: GET_DENUNCIATIONS,
                 payload: resultado.data

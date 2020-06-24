@@ -159,6 +159,7 @@ const FormInps = (props) => {
             >   { inspPasive ?
                     <>
                         {/* den_id_custom */}
+                        <Form.Label>Denuncia a la cual pertenece esta inspección* </Form.Label>
                         <Form.Group controlId="den_id_custom">
                             <Form.Control 
                                 as="select"

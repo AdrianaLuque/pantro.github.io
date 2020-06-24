@@ -41,6 +41,7 @@ const AuthenticationState = props => {
 
     //Cuando el usuario inicia sesion
     const Login = async datos => {
+
         try {
             //Comprobando que el username y password sean correctos
             const respuesta = await ClienteAxios.post('/api/acceder', datos);
@@ -50,7 +51,7 @@ const AuthenticationState = props => {
             
             //Cargando datos que se necesitaran
             await CsvHouses(respuesta.data.USU_CATCHMENT_AREA);
-            await GetDenunciations();
+            await GetDenunciations(respuesta.data.USU_MICRORED);
             await CsvHealthPosts();
             await CsvParticipantsInmune();
             await GetInspections();
