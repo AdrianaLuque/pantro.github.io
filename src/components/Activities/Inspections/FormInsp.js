@@ -154,9 +154,8 @@ const FormInps = (props) => {
     return (
         <MyModal modal={props.modal} ChangeModal={props.ChangeModal} formTitle={props.formTitle}>
             { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
-            <Form
-                onSubmit={handleSubmit(OnSubmit)}
-            >   { inspPasive ?
+            <Form onSubmit={handleSubmit(OnSubmit)}>   
+                { inspPasive ?
                     <>
                         {/* den_id_custom */}
                         <Form.Label>Denuncia a la cual pertenece esta inspección* </Form.Label>
@@ -167,7 +166,7 @@ const FormInps = (props) => {
                                 value= {den_id_custom}
                                 onChange= {OnChange}
                             >
-                                <option>Seleccione...</option>
+                                <option value="">Seleccione...</option>
                                 {denunciations.map( denunciation => 
                                     <option key={denunciation.DEN_ID_CUSTOM} value={denunciation.DEN_ID_CUSTOM}>{denunciation.DEN_ID_CUSTOM}</option>
                                 )}

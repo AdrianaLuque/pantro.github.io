@@ -27,7 +27,7 @@ const FormDen = (props) => {
     const { valueEditDen, statusBtnEdit, statusBtnAdd, AddDenunciation, EditDenunciation } = DenunciationsContext;
     
     //validacion
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, reset } = useForm();
     //State para denuncias
     const [currentDenunciation, setCurrentDenunciation] = useState( initDenunciation );
     
@@ -36,6 +36,7 @@ const FormDen = (props) => {
             setCurrentDenunciation(valueEditDen);
         } else if ( statusBtnAdd ) {
             setCurrentDenunciation(initDenunciation);
+            reset(initDenunciation);
         }
         // eslint-disable-next-line
     }, [statusBtnEdit, statusBtnAdd, valueEditDen]);
@@ -62,8 +63,10 @@ const FormDen = (props) => {
         den_referencia,
         den_fecha_probable_inspeccion
     } = currentDenunciation;
-        
+    console.log(currentDenunciation);
     const OnChange = e => {
+        console.log(e.target.name);
+        console.log(e.target.value);
         setCurrentDenunciation({
             ...currentDenunciation,
             [e.target.name] : e.target.value
@@ -165,7 +168,7 @@ const FormDen = (props) => {
                             <Form.Control 
                                 type="text"
                                 name= 'den_agente_nombre'
-                                value= {den_agente_nombre}
+                                defaultValue= {den_agente_nombre}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
@@ -325,7 +328,7 @@ const FormDen = (props) => {
                                 <Form.Control 
                                     type="text"
                                     name= 'den_insecto_otro'
-                                    value= {den_insecto_otro}
+                                    defaultValue= {den_insecto_otro}
                                     placeholder = "Especificar ..."
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -345,13 +348,13 @@ const FormDen = (props) => {
                     </>
                     ):null
                 }
-                {/* DEN_HABITANTE_NOMBRE */}
+                {/* DEN_HABITANTE_NOMBRE*/}
                 <Form.Group controlId="den_habitante_nombre">
                     <Form.Label>Nombre del habitante*</Form.Label>
                     <Form.Control 
                         type='text'
                         name='den_habitante_nombre'
-                        value={den_habitante_nombre}
+                        defaultValue={den_habitante_nombre}
                         onChange={OnChange}
                         ref={register({ required: true })}
                     />
@@ -363,7 +366,7 @@ const FormDen = (props) => {
                     <Form.Control 
                         type='number'
                         name='den_habitante_telefono1'
-                        value={den_habitante_telefono1}
+                        defaultValue={den_habitante_telefono1}
                         onChange={OnChange}
                         ref={register({ required: true, maxLength: 9 })}
                     />
@@ -386,7 +389,7 @@ const FormDen = (props) => {
                             <Form.Control 
                                 type='number'
                                 name='den_habitante_telefono2'
-                                value={den_habitante_telefono2}
+                                defaultValue={den_habitante_telefono2}
                                 onChange={OnChange}
                                 ref={register({ required: true, maxLength: 9 })}
                             />
@@ -431,7 +434,7 @@ const FormDen = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_localidad'
-                        value={den_localidad}
+                        defaultValue={den_localidad}
                         onChange={OnChange}
                     />
                 </Form.Group>
@@ -441,7 +444,7 @@ const FormDen = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_direccion'
-                        value={den_direccion}
+                        defaultValue={den_direccion}
                         onChange={OnChange}
                         ref={register({ required: true })}
                     />
@@ -453,7 +456,7 @@ const FormDen = (props) => {
                     <Form.Control 
                         type='text'
                         name='den_referencia'
-                        value={den_referencia}
+                        defaultValue={den_referencia}
                         onChange={OnChange}
                         ref={register({ required: true })}
                     />
