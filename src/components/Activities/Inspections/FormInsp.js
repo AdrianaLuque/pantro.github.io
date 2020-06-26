@@ -11,7 +11,7 @@ import DenunciationContext from '../../../context/denunciation/DenunciationConte
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import CimexContext from '../../../context/cimex/CimexContext';
 import MyModal from "../../Modal/MyModal";
-import { es, DateFull } from "../../../resources";
+import { es, DateFull, initInspection } from "../../../resources";
 
 //Formulario de denuncia
 const FormInps = (props) => {
@@ -25,7 +25,7 @@ const FormInps = (props) => {
 
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
-    const { inspection, inspPasive } = InspectionsContext;
+    const { inspPasive } = InspectionsContext;
 
     //Extraer los valores del context
     const CimexsContext = useContext(CimexContext);
@@ -35,18 +35,18 @@ const FormInps = (props) => {
     const { register, handleSubmit, errors } = useForm();
     
     //State para inspecciones
-    const [currentInspection, setCurrentInspection] = useState( inspection );
+    const [currentInspection, setCurrentInspection] = useState( initInspection );
     //State para cimex
     const [currentCimex, setCurrentCimex] = useState( cimex );
     
     //Extraer de valores de inspeccion
     const {  
-        user_name,
         den_id_custom,
-        unicode,
-        code_locality,
+        observaciones,//No DB
         obs_unicode,
-        obs_text,
+        obs_text1,//No DB
+        obs_text2,//No DB
+        //obs_text,
         fecha,
         caract_predio,
         tipo_lp,
@@ -55,6 +55,7 @@ const FormInps = (props) => {
         motivo_volver,
         fecha_volver,
         renuente,
+        renuente_otro,//No DB
         intra_inspeccion,
         intra_chiris,
         intra_rastros,
@@ -62,39 +63,25 @@ const FormInps = (props) => {
         peri_chiris,
         peri_rastros,
         personas_predio,
+        perros,
         cant_perros,
+        gatos,
         cant_gatos,
+        aves_corral,
         cant_aves_corral,
+        cuyes,
         cant_cuyes,
+        conejos,
         cant_conejos,
+        otros,
         text_otros,
-        cant_otros,
-        hora_inicio,
-        hora_fin,
-        inspection_flag,
-        predicted_probab,
-        predicted_probab_mean,
-        risk_color,
-        lat,
-        lng,
+        cant_otros
     } = currentInspection;
     //Extraer de valores de inspeccion
     const {  
         cimex_alguien_picado_casa_ultimo_anio
     } = currentCimex;
-    
-    const [observaciones, setObservaciones] = useState( false );
-    const [obs_text1, setObs_text1] = useState( '' );
-    const [obs_text2, setObs_text2] = useState( '' );
-    const [renuente_otro, setRenuente_otro] = useState( '' );
-    //Animales
-    const [perros, setPerros] = useState( false );
-    const [gatos, setGatos] = useState( false );
-    const [aves_corral, setAves_corral] = useState( false );
-    const [cuyes, setCuyes] = useState( false );
-    const [conejos, setConejos] = useState( false );
-    const [otros, setOtros] = useState( false );
-    
+        
     const OnChange = e => {
         setCurrentInspection({
             ...currentInspection,
@@ -103,26 +90,10 @@ const FormInps = (props) => {
     };
 
     const OnChangeCheck = e => {
-        if (e.target.name==="observaciones") {
-            setObservaciones(e.target.checked);
-        } else if (e.target.name==="perros") {
-            setPerros(e.target.checked);
-        } else if (e.target.name==="gatos") {
-            setGatos(e.target.checked);
-        } else if (e.target.name==="aves_corral") {
-            setAves_corral(e.target.checked);
-        } else if (e.target.name==="cuyes") {
-            setCuyes(e.target.checked);
-        } else if (e.target.name==="conejos") {
-            setConejos(e.target.checked);
-        } else if (e.target.name==="otros") {
-            setOtros(e.target.checked);
-        } else {
-            setCurrentInspection({
-                ...currentInspection,
-                [e.target.name] : e.target.checked
-            });
-        }
+        setCurrentInspection({
+            ...currentInspection,
+            [e.target.name] : e.target.checked
+        });
     };
 
     //Funcion para obtener los datos de fecha de probable inspeccion
@@ -146,7 +117,10 @@ const FormInps = (props) => {
     const OnSubmit = () => {
         //Obteniendo solo la fecha en campos calendar
         currentInspection.fecha = DateFull(currentInspection.fecha);
-
+        //Obteniendo hora de inicio
+        currentInspection.hora_inicio = props.startTime;
+        //Obteniendo hora de fin
+        currentInspection.hora_fin = new Date();
         //AddDenunciation(currentDenunciation);
         props.ChangeModal();
     };
@@ -158,19 +132,21 @@ const FormInps = (props) => {
                 { inspPasive ?
                     <>
                         {/* den_id_custom */}
-                        <Form.Label>Denuncia a la cual pertenece esta inspección* </Form.Label>
+                        <Form.Label>Denuncia a la cual pertenece esta inspección*</Form.Label>
                         <Form.Group controlId="den_id_custom">
                             <Form.Control 
                                 as="select"
                                 name= 'den_id_custom'
                                 value= {den_id_custom}
                                 onChange= {OnChange}
+                                ref={register({ required: true })}
                             >
                                 <option value="">Seleccione...</option>
                                 {denunciations.map( denunciation => 
                                     <option key={denunciation.DEN_ID_CUSTOM} value={denunciation.DEN_ID_CUSTOM}>{denunciation.DEN_ID_CUSTOM}</option>
                                 )}
                             </Form.Control>
+                            {errors.den_id_custom && <span className='alert-custom'>*Campo obligatorio</span>}
                         </Form.Group>
                     </> : null
                 }
@@ -181,7 +157,7 @@ const FormInps = (props) => {
                         type='text'
                         name='unicode'
                         value={props.unicode}
-                        onChange={OnChange}
+                        //onChange={OnChange}
                     />
                 </Form.Group>
                 <Form.Group controlId="observaciones">
@@ -189,6 +165,7 @@ const FormInps = (props) => {
                         type="checkbox" 
                         name="observaciones"
                         label="Observaciones sobre unicode"
+                        value = {observaciones}
                         onChange={OnChangeCheck}
                     />
                 </Form.Group>
@@ -202,7 +179,7 @@ const FormInps = (props) => {
                                 value= {obs_unicode}
                                 onChange= {OnChange}
                             >
-                                <option>Seleccione...</option>
+                                <option value="">Seleccione...</option>
                                 <option value="vivienda_con_mas_un_unicode">1) Una vivienda con mas de un unicode</option>
                                 <option value="vivienda_sin_unicode_localidad_nueva">2) Vivienda sin unicode (localidad nueva)</option>
                                 <option value="vivienda_sin_unicode_manzana_nueva">3) Vivienda sin unicode (en una localidad antigua pero con manzana nueva)</option>
@@ -213,6 +190,7 @@ const FormInps = (props) => {
                                 <option value="unicode_en_campo_no_mapa">8) Unicode en campo que no se encuentra en el mapa</option>
                                 <option value="otro">9) Otro</option>
                             </Form.Control>
+                            {errors.obs_unicode && <span className='alert-custom'>*Campo obligatorio</span>}
                         </Form.Group>
                         {(obs_unicode==='vivienda_sin_unicode_localidad_nueva' || obs_unicode==='vivienda_sin_unicode_manzana_nueva')? (
                             <>
@@ -221,7 +199,7 @@ const FormInps = (props) => {
                                     <Form.Control 
                                         type="text"
                                         name= 'obs_text1'
-                                        value= {obs_text1}
+                                        defaultValue= {obs_text1}
                                         placeholder = "Ingrese la dirección de la vivienda ..."
                                         onChange= {OnChange}
                                         ref={register({ required: true })}
@@ -237,7 +215,7 @@ const FormInps = (props) => {
                                     <Form.Control 
                                         type="text"
                                         name= 'obs_text2'
-                                        value= {obs_text2}
+                                        defaultValue= {obs_text2}
                                         placeholder = "Describa su opción ..."
                                         onChange= {OnChange}
                                         ref={register({ required: true })}
@@ -284,7 +262,7 @@ const FormInps = (props) => {
                             <Form.Control 
                                 type="text"
                                 name= 'tipo_lp'
-                                value= {tipo_lp}
+                                defaultValue= {tipo_lp}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />
@@ -356,12 +334,28 @@ const FormInps = (props) => {
                                     <Form.Control 
                                         type="text"
                                         name= 'motivo_volver'
-                                        value= {motivo_volver}
+                                        defaultValue= {motivo_volver}
                                         onChange= {OnChange}
                                         placeholder = "Escribe aqui el motivo ..."
                                         ref={register({ required: true })}
                                     />
                                     {errors.motivo_volver && <span className='alert-custom'>*Campo obligatorio</span>}
+                                </Form.Group>
+                                {/* FECHA_VOLVER*/}
+                                <Form.Group controlId="fecha_volver">
+                                    <Form.Label >Fecha probable para volver: </Form.Label>
+                                    <Calendar 
+                                        minDate = { new Date() }
+                                        maxDateCount = {3}
+                                        showIcon={true} 
+                                        locale={es} 
+                                        dateFormat="dd/mm/yy" 
+                                        value={fecha_volver} 
+                                        name= 'fecha_volver'
+                                        onChange={ OnChange } 
+                                        selectionMode="multiple" 
+                                        readOnlyInput={true} 
+                                    />
                                 </Form.Group>
                             </>
                         ):null}
@@ -374,7 +368,9 @@ const FormInps = (props) => {
                                         name= 'renuente'
                                         value= {renuente}
                                         onChange= {OnChange}
+                                        ref={register({ required: true })}
                                     >
+                                        <option value="">Seleccione...</option>
                                         <option value="R1">R1) No tiene tiempo trabaja</option>
                                         <option value="R2">R2) Desconfianza</option>
                                         <option value="R3">R3) Casa limpia</option>
@@ -382,6 +378,7 @@ const FormInps = (props) => {
                                         <option value="R5">R5) No da ningun motivo</option>
                                         <option value="R6">R6) Otro</option>
                                     </Form.Control>
+                                    {errors.renuente && <span className='alert-custom'>*Campo obligatorio</span>}
                                 </Form.Group>
                                 {(renuente === 'R6')? (
                                     <>
@@ -390,7 +387,7 @@ const FormInps = (props) => {
                                             <Form.Control 
                                                 type="text"
                                                 name= 'renuente_otro'
-                                                value= {renuente_otro}
+                                                defaultValue= {renuente_otro}
                                                 onChange= {OnChange}
                                                 placeholder = "Describa su opción ..."
                                                 ref={register({ required: true })}
@@ -414,31 +411,34 @@ const FormInps = (props) => {
                                 <Row>
                                     <Col>INTRA</Col>
                                     <Col>
-                                        {/* LUGAR_INSPECCION_INTRA */}
-                                        <Form.Group controlId="lugar_inspeccion_intra">
+                                        {/* INTRA_INSPECCION */}
+                                        <Form.Group controlId="intra_inspeccion">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="lugar_inspeccion_intra"
+                                                name="intra_inspeccion"
+                                                value={intra_inspeccion}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
                                     </Col>
                                     <Col>
-                                        {/* CHIRIS_INTRA */}
-                                        <Form.Group controlId="chiris_intra">
+                                        {/* INTRA_CHIRIS */}
+                                        <Form.Group controlId="intra_chiris">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="chiris_intra"
+                                                name="intra_chiris"
+                                                value= {intra_chiris}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
                                     </Col>
                                     <Col>
-                                        {/* RASTROS_INTRA */}
-                                        <Form.Group controlId="rastros_intra">
+                                        {/* INTRA_RASTROS */}
+                                        <Form.Group controlId="intra_rastros">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="rastros_intra"
+                                                name="intra_rastros"
+                                                value={intra_rastros}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
@@ -447,31 +447,34 @@ const FormInps = (props) => {
                                 <Row>
                                     <Col>PERI</Col>
                                     <Col>
-                                        {/* LUGAR_INSPECCION_PERI */}
-                                        <Form.Group controlId="lugar_inspeccion_peri">
+                                        {/* PERI_INSPECCION */}
+                                        <Form.Group controlId="peri_inspeccion">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="lugar_inspeccion_peri"
+                                                name="peri_inspeccion"
+                                                value={peri_inspeccion}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
                                     </Col>
                                     <Col>
-                                        {/* CHIRIS_PERI */}
-                                        <Form.Group controlId="chiris_peri">
+                                        {/* PERI_CHIRIS */}
+                                        <Form.Group controlId="peri_chiris">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="chiris_peri"
+                                                name="peri_chiris"
+                                                value={peri_chiris}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
                                     </Col>
                                     <Col>
                                         {/* RASTROS_PERI */}
-                                        <Form.Group controlId="rastros_peri">
+                                        <Form.Group controlId="peri_rastros">
                                             <Form.Check 
                                                 type="checkbox" 
-                                                name="rastros_peri"
+                                                name="peri_rastros"
+                                                value={peri_rastros}
                                                 onChange={OnChangeCheck}
                                             />
                                         </Form.Group>
@@ -658,7 +661,7 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type="text"
                                                     name= 'text_otros'
-                                                    value= {text_otros}
+                                                    defaultValue= {text_otros}
                                                     onChange= {OnChange}
                                                     placeholder = "Indique otro ..."
                                                     ref={register({ required: true })}
@@ -730,7 +733,7 @@ const FormInps = (props) => {
                     {errors.cimex_alguien_picado_casa_ultimo_anio && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
 
-                <Button disabled type='submit'>Guardar</Button> 
+                <Button type='submit'>Guardar</Button> 
             </Form>
         </MyModal>
     );

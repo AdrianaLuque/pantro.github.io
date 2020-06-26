@@ -63,7 +63,7 @@ const FormDen = (props) => {
         den_referencia,
         den_fecha_probable_inspeccion
     } = currentDenunciation;
-    console.log(currentDenunciation);
+    
     const OnChange = e => {
         console.log(e.target.name);
         console.log(e.target.value);
@@ -125,7 +125,7 @@ const FormDen = (props) => {
                         type='text'
                         name='den_id_custom'
                         value={den_id_custom}
-                        onChange={OnChange}
+                        //onChange={OnChange}
                     />
                 </Form.Group>
                 {/* DEN_FECHA_RECEPCION */}

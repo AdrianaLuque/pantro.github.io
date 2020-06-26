@@ -172,6 +172,51 @@ export const initDenunciation = {
     den_fecha_probable_inspeccion: null
 };
 
+export const initInspection = {
+    den_id_custom:'',
+    unicode: '',
+    code_locality: '',
+    observaciones: false,//No DB
+    obs_unicode: '',
+    obs_text1: '',//No DB
+    obs_text2: '',//No DB
+    obs_text: '',
+    fecha: new Date(),
+    caract_predio: 'casa_regular',
+    tipo_lp: '',
+    status_inspeccion: 'C',
+    entrevista: '',
+    motivo_volver: '',
+    fecha_volver: '',
+    renuente: '',
+    renuente_otro: '',//No DB
+    intra_inspeccion: false,
+    intra_chiris: false,
+    intra_rastros: false,
+    peri_inspeccion: false,
+    peri_chiris: false,
+    peri_rastros: false,
+    personas_predio: '',
+    perros: false,//No DB
+    cant_perros: '',
+    gatos: false,//No DB
+    cant_gatos: '',
+    aves_corral: false,//No DB
+    cant_aves_corral: '',
+    cuyes: false,//No DB
+    cant_cuyes: '',
+    conejos: false,//No DB
+    cant_conejos: '',
+    otros: false,//No DB
+    text_otros: '',
+    cant_otros: '',
+    hora_inicio: '',
+    hora_fin: '',
+    risk_color: '',
+    lat: '',
+    lng: '',
+};
+
 /*********************
 - FUNCIONES GLOBALES -
 **********************/

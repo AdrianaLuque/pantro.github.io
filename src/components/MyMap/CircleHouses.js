@@ -3,29 +3,32 @@ import { Popup, CircleMarker } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
-import InspectionContext from "../../context/inspection/InspectionContext";
 import { InnerJoin } from "../../resources";
 import FormInsp from "../Activities/Inspections/FormInsp";
 
-const CircleHouses = () => {
+const CircleHouses = (props) => {
 
     //Obtener viviendas
     const CsvsContext = useContext(CsvContext);
     let { houses, UpdateHouses } = CsvsContext;
-    //Obtener el inspecciones
-    const InspectionsContext = useContext(InspectionContext);
-    const { inspections, inspPasive } = InspectionsContext;
     //Modal
     const [modal, setModal] = useState(false);
     //Titulo del formulario
     const [formTitle, setFormTitle] = useState(null);
     //Titulo del formulario
     const [unicode, setUnicode] = useState(null);
+    //Hora de inicio
+    const [startTime, setStartTime] = useState(new Date());
+    //Inspecciones que vienen desde el padre
+    const inspections = props.inspections;
+    //Si es inspeccion pasiva que viene del padre
+    const inspPasive = props.inspPasive;
             
     const HandleAdd = ( valUnicode ) => {
       setUnicode(valUnicode);
       setFormTitle("Ingresar registro de inspecciones");
       ChangeModal();
+      setStartTime(new Date());
     }
 
     const ChangeModal = () => {
@@ -80,7 +83,7 @@ const CircleHouses = () => {
               </Popup>
           </CircleMarker>
         ))}
-        <FormInsp modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} unicode={unicode}/>
+        <FormInsp modal={modal} ChangeModal={ChangeModal} formTitle={formTitle} unicode={unicode} startTime={startTime}/>
       </>
     );
 }
