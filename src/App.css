@@ -159,7 +159,27 @@ header{
 }
 .wrapper-info-den {
   border-radius: 5px;
-  border: 1px solid blue;
+  border: 2px solid #007ad9;
   padding: 5px 10px;
   margin-bottom: 10px;
+}
+
+/**Boton para llamar **/
+/* selector CSS por atributo */
+a[href^="tel:"] {
+  display: inline-block;
+  color: #ffffff;
+  background-color: #007ad9;
+  padding: 2px 10px;
+  border-radius: 5px;
+}
+/* añadiendo icono como pseudoelemento CSS */
+a[href^="tel:"]::before {
+  content: "\260e";
+  margin-right: 0.5em;
+}
+a[href^="tel:"]:active,
+a[href^="tel:"]:hover {
+  color: black;  
+  text-decoration:none;
 }
