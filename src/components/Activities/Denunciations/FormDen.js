@@ -99,6 +99,7 @@ const FormDen = (props) => {
     };
 
     const OnSubmit = () => {
+        debugger;
         //Obteniendo solo la fecha en campos calendar
         currentDenunciation.den_fecha_recepcion = DateFull(new Date(currentDenunciation.den_fecha_recepcion));
         //currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
@@ -362,16 +363,13 @@ const FormDen = (props) => {
                 </Form.Group>
                 {/* DEN_HABITANTE_TELEFONO1 */}
                 <Form.Group controlId="den_habitante_telefono1">
-                    <Form.Label>Teléfono del Habitante*</Form.Label>
+                    <Form.Label>Teléfono del Habitante</Form.Label>
                     <Form.Control 
                         type='number'
                         name='den_habitante_telefono1'
                         defaultValue={den_habitante_telefono1}
                         onChange={OnChange}
-                        ref={register({ required: true, maxLength: 9 })}
                     />
-                    {errors.den_habitante_telefono1?.type === "required" && <span className='alert-custom'>*Campo obligatorio</span>}
-                    {errors.den_habitante_telefono1?.type === "maxLength" && <span className='alert-custom'>*Maximo 9 numeros</span>}
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
                     <Form.Check
