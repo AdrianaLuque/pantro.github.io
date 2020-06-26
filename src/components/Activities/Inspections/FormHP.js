@@ -109,6 +109,7 @@ const FormHP = (props) => {
                             label="Visita mensual programada"
                             name="visita_ps_motivo"
                             value="visita_mensual_programada"
+                            id="visita_mensual_programada"
                             checked={ visita_ps_motivo=== "visita_mensual_programada"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -118,6 +119,7 @@ const FormHP = (props) => {
                             label="Llamado de inspector"
                             name="visita_ps_motivo"
                             value="llamado_inspector"
+                            id="llamado_inspector"
                             checked={ visita_ps_motivo=== "llamado_inspector"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -127,6 +129,7 @@ const FormHP = (props) => {
                             label="Otro"
                             name="visita_ps_motivo"
                             value="otro"
+                            id="otro"
                             checked={ visita_ps_motivo=== "otro"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -161,6 +164,7 @@ const FormHP = (props) => {
                                 label="Reporte de chinches de cama"
                                 name="visita_ps_motivo_llamado"
                                 value="reporte_chinchescama"
+                                id="reporte_chinchescama"
                                 checked={ visita_ps_motivo_llamado=== "reporte_chinchescama"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -170,6 +174,7 @@ const FormHP = (props) => {
                                 label="Reporte de chirimachas"
                                 name="visita_ps_motivo_llamado"
                                 value="reporte_chirimachas"
+                                id="reporte_chirimachas"
                                 checked={ visita_ps_motivo_llamado=== "reporte_chirimachas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -179,6 +184,7 @@ const FormHP = (props) => {
                                 label="Llamado para que haga recojo de datos"
                                 name="visita_ps_motivo_llamado"
                                 value="llamado_recojo_datos"
+                                id="llamado_recojo_datos"
                                 checked={ visita_ps_motivo_llamado=== "llamado_recojo_datos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -188,6 +194,7 @@ const FormHP = (props) => {
                                 label="Otro"
                                 name="visita_ps_motivo_llamado"
                                 value="otro"
+                                id="otro"
                                 checked={ visita_ps_motivo_llamado=== "otro"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -222,6 +229,7 @@ const FormHP = (props) => {
                             label="Si, de chirimachas"
                             name="visita_ps_nuevas_denuncias"
                             value="chirimachas"
+                            id="chirimachas"
                             checked={ visita_ps_nuevas_denuncias=== "chirimachas"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -231,6 +239,7 @@ const FormHP = (props) => {
                             label="Si, de chinches de cama"
                             name="visita_ps_nuevas_denuncias"
                             value="chinchescama"
+                            id="chinchescama"
                             checked={ visita_ps_nuevas_denuncias=== "chinchescama"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -240,6 +249,7 @@ const FormHP = (props) => {
                             label="Si, chirimachas y chinches de cama"
                             name="visita_ps_nuevas_denuncias"
                             value="chirimachas_chinchescama"
+                            id="chirimachas_chinchescama"
                             checked={ visita_ps_nuevas_denuncias=== "chirimachas_chinchescama"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -249,6 +259,7 @@ const FormHP = (props) => {
                             label="No"
                             name="visita_ps_nuevas_denuncias"
                             value="no"
+                            id="no"
                             checked={ visita_ps_nuevas_denuncias=== "no"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -267,6 +278,7 @@ const FormHP = (props) => {
                                     label="Personal de admisión"
                                     name="visita_ps_quien_dio_informacion"
                                     value="personal_admision"
+                                    id="personal_admision"
                                     checked={ visita_ps_quien_dio_informacion=== "personal_admision"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -276,6 +288,7 @@ const FormHP = (props) => {
                                     label="Personal de laboratorio"
                                     name="visita_ps_quien_dio_informacion"
                                     value="personal_laboratorio"
+                                    id="personal_laboratorio"
                                     checked={ visita_ps_quien_dio_informacion=== "personal_laboratorio"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -285,6 +298,7 @@ const FormHP = (props) => {
                                     label="Inspector sanitario o veterinario"
                                     name="visita_ps_quien_dio_informacion"
                                     value="inspectorsanitario_o_veterinario"
+                                    id="inspectorsanitario_o_veterinario"
                                     checked={ visita_ps_quien_dio_informacion=== "inspectorsanitario_o_veterinario"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -294,6 +308,7 @@ const FormHP = (props) => {
                                     label="Otro"
                                     name="visita_ps_quien_dio_informacion"
                                     value="otro"
+                                    id="otro"
                                     checked={ visita_ps_quien_dio_informacion=== "otro"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -326,6 +341,7 @@ const FormHP = (props) => {
                                     label="Si, aún estaba vivo"
                                     name="visita_ps_encontro_insecto"
                                     value="si_aun_vivo"
+                                    id="si_aun_vivo"
                                     checked={ visita_ps_encontro_insecto=== "si_aun_vivo"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -335,6 +351,7 @@ const FormHP = (props) => {
                                     label="Si, pero ya muerto"
                                     name="visita_ps_encontro_insecto"
                                     value="si_muerto"
+                                    id="si_muerto"
                                     checked={ visita_ps_encontro_insecto=== "si_muerto"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -344,6 +361,7 @@ const FormHP = (props) => {
                                     label="No, solo denuncias verbal"
                                     name="visita_ps_encontro_insecto"
                                     value="no_denuncia_verbal"
+                                    id="no_denuncia_verbal"
                                     checked={ visita_ps_encontro_insecto=== "no_denuncia_verbal"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}
@@ -353,6 +371,7 @@ const FormHP = (props) => {
                                     label="No, lo habían perdido"
                                     name="visita_ps_encontro_insecto"
                                     value="no_habian_perdido"
+                                    id="no_habian_perdido"
                                     checked={ visita_ps_encontro_insecto=== "no_habian_perdido"}
                                     onChange= {OnChange}
                                     ref={register({ required: true })}

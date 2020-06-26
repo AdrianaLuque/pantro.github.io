@@ -299,6 +299,7 @@ const FormInps = (props) => {
                                             label="Cree que no tiene"
                                             name="entrevista"
                                             value="cree_no_tiene"
+                                            id="cree_no_tiene"
                                             checked={ entrevista=== "cree_no_tiene"}
                                             onChange= {OnChange}
                                             ref={register({ required: true })}
@@ -308,6 +309,7 @@ const FormInps = (props) => {
                                             label="Cree que si tiene"
                                             name="entrevista"
                                             value="cree_si_tiene"
+                                            id="cree_si_tiene"
                                             checked={ entrevista=== "cree_si_tiene"}
                                             onChange= {OnChange}
                                             ref={register({ required: true })}
@@ -317,6 +319,7 @@ const FormInps = (props) => {
                                             label="No sabe"
                                             name="entrevista"
                                             value="no_sabe"
+                                            id="no_sabe"
                                             checked={ entrevista=== "no_sabe"}
                                             onChange= {OnChange}
                                             ref={register({ required: true })}
@@ -707,6 +710,7 @@ const FormInps = (props) => {
                             label="Sí"
                             name="cimex_alguien_picado_casa_ultimo_anio"
                             value="1"
+                            id="1"
                             checked={ cimex_alguien_picado_casa_ultimo_anio=== "1"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -716,6 +720,7 @@ const FormInps = (props) => {
                             label="No"
                             name="cimex_alguien_picado_casa_ultimo_anio"
                             value="0"
+                            id="0"
                             checked={ cimex_alguien_picado_casa_ultimo_anio=== "0"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -725,6 +730,7 @@ const FormInps = (props) => {
                             label="No sabe"
                             name="cimex_alguien_picado_casa_ultimo_anio"
                             value="NS"
+                            id="NS"
                             checked={ cimex_alguien_picado_casa_ultimo_anio=== "NS"}
                             onChange= {OnChange}
                             ref={register({ required: true })}

@@ -118,6 +118,7 @@ const FormHP = (props) => {
                             label="Visita programada"
                             name="visita_agente_motivo"
                             value="visita_programada"
+                            id="visita_programada"
                             checked={ visita_agente_motivo=== "visita_programada"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -127,6 +128,7 @@ const FormHP = (props) => {
                             label="Llamado de agente"
                             name="visita_agente_motivo"
                             value="llamado_agente"
+                            id="llamado_agente"
                             checked={ visita_agente_motivo=== "llamado_agente"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -145,6 +147,7 @@ const FormHP = (props) => {
                                 label="Reporte de chinches de cama"
                                 name="visita_agente_motivo_llamado"
                                 value="reporte_chinchescama"
+                                id="reporte_chinchescama"
                                 checked={ visita_agente_motivo_llamado=== "reporte_chinchescama"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -154,6 +157,7 @@ const FormHP = (props) => {
                                 label="Reporte de chirimachas"
                                 name="visita_agente_motivo_llamado"
                                 value="reporte_chirimachas"
+                                id="reporte_chirimachas"
                                 checked={ visita_agente_motivo_llamado=== "reporte_chirimachas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -163,6 +167,7 @@ const FormHP = (props) => {
                                 label="Llamado para que haga recojo de datos"
                                 name="visita_agente_motivo_llamado"
                                 value="llamado_recojo_datos"
+                                id="llamado_recojo_datos"
                                 checked={ visita_agente_motivo_llamado=== "llamado_recojo_datos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -172,6 +177,7 @@ const FormHP = (props) => {
                                 label="Otro"
                                 name="visita_agente_motivo_llamado"
                                 value="otro"
+                                id="otro"
                                 checked={ visita_agente_motivo_llamado=== "otro"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -206,6 +212,7 @@ const FormHP = (props) => {
                             label="Si"
                             name="visita_agente_datos_nuevos"
                             value="1"
+                            id="1"
                             checked={ visita_agente_datos_nuevos=== "1"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -215,6 +222,7 @@ const FormHP = (props) => {
                             label="No"
                             name="visita_agente_datos_nuevos"
                             value="0"
+                            id="0"
                             checked={ visita_agente_datos_nuevos=== "0"}
                             onChange= {OnChange}
                             ref={register({ required: true })}

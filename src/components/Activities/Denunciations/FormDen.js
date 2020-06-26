@@ -179,7 +179,7 @@ const FormDen = (props) => {
                     ) : null
                 }
                 {/* DEN_TIPO */}
-                <Form.Group>
+                <Form.Group >
                     <Form.Label>Tipo de denuncia*</Form.Label>
                     <Col sm={10}>
                         <Form.Check
@@ -187,6 +187,7 @@ const FormDen = (props) => {
                             label="Verbal"
                             name="den_tipo"
                             value="verbal"
+                            id="verbal"
                             checked={ den_tipo=== "verbal"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -196,6 +197,7 @@ const FormDen = (props) => {
                             label="Con insecto"
                             name="den_tipo"
                             value="con_insecto"
+                            id="con_insecto"
                             checked={ den_tipo=== "con_insecto"}
                             onChange= {OnChange}
                             ref={register({ required: true })}
@@ -206,8 +208,8 @@ const FormDen = (props) => {
                 {den_tipo==="verbal" || den_tipo==="con_insecto"?
                     (<>
                     {/* DEN_INSECTO */}
-                    <Form.Group as={Row}>
-                        <Form.Label as="legend" column sm={2}>
+                    <Form.Group>
+                        <Form.Label>
                             {den_tipo==="verbal"?"¿Qué cree que es?":"¿Qué insecto es?"}
                         </Form.Label>
                         <Col sm={10}> 
@@ -216,6 +218,7 @@ const FormDen = (props) => {
                                 label="Chinches de Cama"
                                 name="den_insecto"
                                 value="chinches_cama"
+                                id="chinches_cama"
                                 checked={ den_insecto=== "chinches_cama"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -225,6 +228,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Chirimachas"
                                 value="chirimachas"
+                                id="chirimachas"
                                 checked={ den_insecto=== "chirimachas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -234,6 +238,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Garrapatas"
                                 value="garrapatas"
+                                id="garrapatas"
                                 checked={ den_insecto=== "garrapatas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -243,6 +248,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Mosquitos"
                                 value="mosquitos"
+                                id="mosquitos"
                                 checked={ den_insecto=== "mosquitos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -252,6 +258,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Fitófagos"
                                 value="fitofagos"
+                                id="fitofagos"
                                 checked={ den_insecto=== "fitofagos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -261,6 +268,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Grillos"
                                 value="grillos"
+                                id="grillos"
                                 checked={ den_insecto=== "grillos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -270,6 +278,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Cucarachas"
                                 value="cucarachas"
+                                id="cucarachas"
                                 checked={ den_insecto=== "cucarachas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -279,6 +288,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Escarabajos"
                                 value="escarabajos"
+                                id="escarabajos"
                                 checked={ den_insecto=== "escarabajos"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -288,6 +298,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Pulgones"
                                 value="pulgones"
+                                id="pulgones"
                                 checked={ den_insecto=== "pulgones"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -297,6 +308,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Pulgas"
                                 value="pulgas"
+                                id="pulgas"
                                 checked={ den_insecto=== "pulgas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -306,6 +318,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Hitas"
                                 value="hitas"
+                                id="hitas"
                                 checked={ den_insecto=== "hitas"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
@@ -315,6 +328,7 @@ const FormDen = (props) => {
                                 name="den_insecto"
                                 label="Otro"
                                 value="otro"
+                                id="otro"
                                 checked={ den_insecto=== "otro"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
