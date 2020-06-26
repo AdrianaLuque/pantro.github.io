@@ -32,7 +32,7 @@ const InformationDen = () => {
                         <h5>{denunciation.DEN_ID_CUSTOM}</h5>
                         <div>
                             <div><b>Nombre: </b>{denunciation.DEN_HABITANTE_NOMBRE}</div>
-                            <div><b>Teléfono: </b>{denunciation.DEN_HABITANTE_TELEFONO1}</div>
+                            <div><b>Teléfono: </b><a href="tel:+51959078710">{denunciation.DEN_HABITANTE_TELEFONO1}</a></div>
                             <div><b>Dirección: </b>{denunciation.DEN_DIRECCION}</div>
                             <div><b>Referencia: </b>{denunciation.DEN_REFERENCIA}</div>
                         </div>
