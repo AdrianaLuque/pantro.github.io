@@ -22,9 +22,12 @@ const MyTable = ({ register }) => {
         if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
           let obj = [];
           let aux = row[prop];
-          if (aux !== null && aux !== "NA" && aux.length > 0) {
+          //Identificando si es un array de fechas o si es el string de la base de datos (&)
+          if (Array.isArray(aux)){
+            obj = aux;
+          } else if (aux !== null && aux !== "NA") {
             aux = aux.split('&');
-            for (let i = 1; i < aux.length; i++) {
+            for (let i = 0; i < aux.length; i++) {
               obj.push(new Date(aux[i]));
             }
           } else {

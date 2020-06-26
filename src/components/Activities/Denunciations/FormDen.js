@@ -12,7 +12,7 @@ import AuthenticationContext from "../../../context/authentication/Authenticatio
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 //Recursos
-import { es, provincias_aqp, distritos_aqp, DateFull, initDenunciation } from "../../../resources";
+import { es, provincias_aqp, distritos_aqp, DateFull, SeveralDates, initDenunciation } from "../../../resources";
 
 //Formulario de denuncia
 const FormDen = (props) => {
@@ -65,8 +65,6 @@ const FormDen = (props) => {
     } = currentDenunciation;
     
     const OnChange = e => {
-        console.log(e.target.name);
-        console.log(e.target.value);
         setCurrentDenunciation({
             ...currentDenunciation,
             [e.target.name] : e.target.value
@@ -80,29 +78,16 @@ const FormDen = (props) => {
         });
     };
 
-    //Funcion para obtener los datos de fecha de probable inspeccion
-    const DateSome = ( arrayDate ) => {
-        let result = 'NA';
-        if ( arrayDate!== null) {
-            result = DateFull(arrayDate[0]);
-            if (arrayDate.length > 1) {
-                for (let i = 1; i < arrayDate.length; i++) {
-                    result = result +'&'+ DateFull(arrayDate[i]);
-                }
-            }
-        }
-        return (result);
-    };
-
     const MyUploader = () => {
         console.log("se subio la imagen");
     };
 
     const OnSubmit = () => {
-        debugger;
+        
         //Obteniendo solo la fecha en campos calendar
         currentDenunciation.den_fecha_recepcion = DateFull(new Date(currentDenunciation.den_fecha_recepcion));
-        //currentDenunciation.den_fecha_probable_inspeccion = DateSome(currentDenunciation.den_fecha_probable_inspeccion);
+        currentDenunciation.den_fecha_probable_inspeccion = SeveralDates(currentDenunciation.den_fecha_probable_inspeccion);
+        debugger;
         //Verificar si es ADD o EDIT
         if ( statusBtnEdit ) {
             EditDenunciation(currentDenunciation);
@@ -383,7 +368,9 @@ const FormDen = (props) => {
                         name='den_habitante_telefono1'
                         defaultValue={den_habitante_telefono1}
                         onChange={OnChange}
+                        ref={register({ maxLength: 9 })}
                     />
+                    {errors.den_habitante_telefono1?.type === 'maxLength' && <span className='alert-custom'>*Maximo 9 numeros</span>}
                 </Form.Group>
                 <Form.Group controlId="den_otro_telefono">
                     <Form.Check

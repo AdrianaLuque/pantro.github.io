@@ -233,7 +233,23 @@ export const DateFull = ( date ) => {
     }
     return(`${year}-${month}-${day}`);
 }
+//Funcion para obtener los datos de fecha de probable inspeccion
+export const SeveralDates= ( arrayDate ) => {
+    let result = 'NA';
+    if ( arrayDate!== null) {
+        result = DateFull(arrayDate[0]);
+        if (arrayDate.length > 1) {
+            for (let i = 1; i < arrayDate.length; i++) {
+                result = result +'&'+ DateFull(arrayDate[i]);
+            }
+        }
+    }
+    return (result);
+};
+//Funcion para convertir a varias fechas cuando estan separados por '&'
+export const ConvertStringDate = ( stringDates ) => {
 
+}
 //Funcion para realizar un innerjoin con dos arreglos y sus respectivos nombres de columnas a comparar
 export const InnerJoin = (array1, array2, nameCol1, nameCol2 ) => {
     let result = [];
