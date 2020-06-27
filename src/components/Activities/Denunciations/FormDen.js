@@ -12,7 +12,7 @@ import AuthenticationContext from "../../../context/authentication/Authenticatio
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import MyModal from "../../Modal/MyModal";
 //Recursos
-import { es, provincias_aqp, distritos_aqp, DateFull, SeveralDates, initDenunciation } from "../../../resources";
+import { es, provincias_aqp, distritos_aqp, DateFull, PutNA, SeveralDates, initDenunciation } from "../../../resources";
 
 //Formulario de denuncia
 const FormDen = (props) => {
@@ -87,7 +87,17 @@ const FormDen = (props) => {
         //Obteniendo solo la fecha en campos calendar
         currentDenunciation.den_fecha_recepcion = DateFull(new Date(currentDenunciation.den_fecha_recepcion));
         currentDenunciation.den_fecha_probable_inspeccion = SeveralDates(currentDenunciation.den_fecha_probable_inspeccion);
-        debugger;
+        
+        //Haciendo verificaciones de campos
+        if ( currentDenunciation.den_medio !== "agente")
+            currentDenunciation.den_agente_nombre = "NA";
+        if ( currentDenunciation.den_insecto !== "otro")
+            currentDenunciation.den_insecto_otro = "NA";
+        if ( !currentDenunciation.den_otro_telefono )
+            currentDenunciation.den_habitante_telefono2 = "NA";
+        //Cambiando vacios por NA
+        PutNA(currentDenunciation);
+        
         //Verificar si es ADD o EDIT
         if ( statusBtnEdit ) {
             EditDenunciation(currentDenunciation);

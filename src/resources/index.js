@@ -246,10 +246,14 @@ export const SeveralDates= ( arrayDate ) => {
     }
     return (result);
 };
-//Funcion para convertir a varias fechas cuando estan separados por '&'
-export const ConvertStringDate = ( stringDates ) => {
-
+//Funcion poner NA en donde sea ""
+export const PutNA = ( obj ) => {
+    for (const prop in obj) {
+        if ( obj[prop] === "")
+            obj[prop] = "NA";
+    }
 }
+
 //Funcion para realizar un innerjoin con dos arreglos y sus respectivos nombres de columnas a comparar
 export const InnerJoin = (array1, array2, nameCol1, nameCol2 ) => {
     let result = [];
