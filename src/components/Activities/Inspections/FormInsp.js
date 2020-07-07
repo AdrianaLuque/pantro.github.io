@@ -77,7 +77,8 @@ const FormInps = (props) => {
         text_otros,
         cant_otros
     } = currentInspection;
-    //Extraer de valores de inspeccion
+
+    //Extraer de valores para cimex de inspeccion
     const {  
         cimex_alguien_picado_casa_ultimo_anio
     } = currentCimex;
@@ -421,6 +422,7 @@ const FormInps = (props) => {
                                                 name="intra_inspeccion"
                                                 value={intra_inspeccion}
                                                 onChange={OnChangeCheck}
+                                                ref={register({ required: true })}
                                             />
                                         </Form.Group>
                                     </Col>
@@ -428,6 +430,7 @@ const FormInps = (props) => {
                                         {/* INTRA_CHIRIS */}
                                         <Form.Group controlId="intra_chiris">
                                             <Form.Check 
+                                                disabled={!intra_inspeccion}
                                                 type="checkbox" 
                                                 name="intra_chiris"
                                                 value= {intra_chiris}
@@ -439,6 +442,7 @@ const FormInps = (props) => {
                                         {/* INTRA_RASTROS */}
                                         <Form.Group controlId="intra_rastros">
                                             <Form.Check 
+                                                disabled={!intra_inspeccion}
                                                 type="checkbox" 
                                                 name="intra_rastros"
                                                 value={intra_rastros}
@@ -457,6 +461,7 @@ const FormInps = (props) => {
                                                 name="peri_inspeccion"
                                                 value={peri_inspeccion}
                                                 onChange={OnChangeCheck}
+                                                ref={register({ required: true })}
                                             />
                                         </Form.Group>
                                     </Col>
@@ -464,6 +469,7 @@ const FormInps = (props) => {
                                         {/* PERI_CHIRIS */}
                                         <Form.Group controlId="peri_chiris">
                                             <Form.Check 
+                                                disabled={!peri_inspeccion}
                                                 type="checkbox" 
                                                 name="peri_chiris"
                                                 value={peri_chiris}
@@ -475,6 +481,7 @@ const FormInps = (props) => {
                                         {/* RASTROS_PERI */}
                                         <Form.Group controlId="peri_rastros">
                                             <Form.Check 
+                                                disabled={!peri_inspeccion}
                                                 type="checkbox" 
                                                 name="peri_rastros"
                                                 value={peri_rastros}
@@ -484,6 +491,7 @@ const FormInps = (props) => {
                                     </Col>
                                 </Row>
                             </div>
+                            {errors.intra_inspeccion && errors.peri_inspeccion && <span className='alert-custom'>*Lugar de inspección es obligatorio</span>}
                             <hr/>
                             {/* PERSONAS_PREDIO*/}
                             <Form.Group controlId="personas_predio">

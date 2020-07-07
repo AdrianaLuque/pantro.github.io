@@ -12,7 +12,7 @@ export default (state, action) => {
                 ...state,
                 authenticated: true,
                 user: action.payload,
-                mensaje: null,
+                message: null,
                 cargando: false
             }
         case LOGIN_ERROR:
@@ -23,7 +23,7 @@ export default (state, action) => {
                 //token: null,
                 user: {},
                 authenticated: null,
-                mensaje: action.payload,
+                message: action.payload,
                 cargando: false
             }
         default:

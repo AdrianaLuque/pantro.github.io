@@ -20,7 +20,7 @@ const AuthenticationState = props => {
         //token: localStorage.getItem('token'),
         authenticated: false,
         user: {},
-        mensaje: null,
+        message: null,
         cargando: true
     }
 
@@ -63,10 +63,9 @@ const AuthenticationState = props => {
             
         } catch (error) {
             
-            console.log(error.response.data.msg);
             const alerta = {
                 msg: error.response.data.msg,
-                categoria: 'alerta-error'
+                category: 'danger'
             };
             
             dispatch({
@@ -93,7 +92,7 @@ const AuthenticationState = props => {
                 //token: state.token,
                 authenticated: state.authenticated,
                 user: state.user,
-                mensaje: state.mensaje,
+                message: state.message,
                 cargando: state.cargando,
                 Login,
                 Logout

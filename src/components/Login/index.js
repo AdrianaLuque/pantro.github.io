@@ -1,22 +1,23 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Container, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Col, Form, Button } from 'react-bootstrap';
 
-import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 import SpinnerContext from '../../context/spinner/SpinnerContext';
 import Spinner from '../Spinner';
+import MyAlert from "../MyAlert";
 import AlertContext from '../../context/alert/AlertContext';
+import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 
 const Login = (props) => {
         
     //Spinner
     const SpinnersContext = useContext(SpinnerContext);
     const { spinner, ShowSpinner, HideSpinner } = SpinnersContext;
-    //Extraer los valores del context
+    //Para enviar mensajes por pantalla
     const AlertsContext = useContext(AlertContext);
     const { alert, ShowAlert } = AlertsContext;
 
     const AuthenticationsContext = useContext(AuthenticationContext);
-    const { mensaje, authenticated, Login } = AuthenticationsContext;
+    const { message, authenticated, Login } = AuthenticationsContext;
 
     //En caso de que el passwors o usuario no exista
     useEffect(() => {
@@ -24,12 +25,12 @@ const Login = (props) => {
             props.history.push('/actividades');
         }
         
-        if (mensaje) {
-            ShowAlert(mensaje.msg, mensaje.categoria);
+        if (message) {
+            ShowAlert(message.msg, message.category);
         }
         //Para evitar que mande error por que sabemos que esta bien
         // eslint-disable-next-line
-    }, [mensaje, authenticated, props.history]);
+    }, [message, authenticated, props.history]);
     
     //State para iniciar sesión
     const [user, setUser] = useState({
@@ -52,7 +53,7 @@ const Login = (props) => {
         ShowSpinner();
         //Validar que no haya campos vacios
         if (username.trim() === '' || password.trim() === '') {
-            ShowAlert('Todos los campos son obligatorios', 'alerta-error');
+            ShowAlert('Todos los campos son obligatorios', 'danger');
             HideSpinner();
         } else {
             //Pasarlo al action
@@ -63,7 +64,7 @@ const Login = (props) => {
     return (
         <>
             { spinner ? (<Spinner/>) : null }
-            { alert ? (<Alert className='alert' variant='danger'>{alert.msg}</Alert>) : null }
+            { alert ? (<MyAlert msg={alert.msg} category={alert.category}/>) : null }
             <Container className="p-4">
                 <Col md={{ span: 4, offset: 4 }} className="text-center">
                     <h3>Vigilancia Integrada</h3>

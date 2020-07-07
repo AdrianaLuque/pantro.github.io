@@ -210,21 +210,21 @@ const FormDen = (props) => {
                         <Col sm={10}> 
                             <Form.Check
                                 type="radio"
-                                label="Chinches de Cama"
-                                name="den_insecto"
-                                value="chinches_cama"
-                                id="chinches_cama"
-                                checked={ den_insecto=== "chinches_cama"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
                                 name="den_insecto"
                                 label="Chirimachas"
                                 value="chirimachas"
                                 id="chirimachas"
                                 checked={ den_insecto=== "chirimachas"}
+                                onChange= {OnChange}
+                                ref={register({ required: true })}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Chinches de Cama"
+                                name="den_insecto"
+                                value="chinches_cama"
+                                id="chinches_cama"
+                                checked={ den_insecto=== "chinches_cama"}
                                 onChange= {OnChange}
                                 ref={register({ required: true })}
                             />

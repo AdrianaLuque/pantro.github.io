@@ -2,47 +2,57 @@
 import React, { useContext } from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
-import DenunciationContext from "../../../context/denunciation/DenunciationContext";
 import SpinnerContext from '../../../context/spinner/SpinnerContext';
 import Spinner from '../../Spinner';
+import MyAlert from "../../MyAlert";
+import AlertContext from '../../../context/alert/AlertContext';
+import DenunciationContext from "../../../context/denunciation/DenunciationContext";
 
 const MyTable = ({ register }) => {
 
   //Spinner
   const SpinnersContext = useContext(SpinnerContext);
   const { spinner } = SpinnersContext;
-  //Obtener el state de Alerta
+  //Para enviar mensajes por pantalla
+  const AlertsContext = useContext(AlertContext);
+  const { alert, ShowAlert } = AlertsContext;
+  //Obtener context de denuncias
   const DenunciationsContext = useContext(DenunciationContext);
   const { UpdateDenunciation, DisableEditDen } = DenunciationsContext;
   
   const onRowSelect = (row, isSelected, rowIndex, e) => {
     if ( isSelected ) {
-      let obj = {};
-      for(var prop in row){
-        if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
-          let obj = [];
-          let aux = row[prop];
-          //Identificando si es un array de fechas o si es el string de la base de datos (&)
-          if (Array.isArray(aux)){
-            obj = aux;
-          } else if (aux !== null && aux !== "NA") {
-            aux = aux.split('&');
-            for (let i = 0; i < aux.length; i++) {
-              obj.push(new Date(aux[i]));
-            }
-          } else {
-            obj = null;
-          } 
-          row[prop] = obj;
-        } else if (prop === 'DEN_OTRO_TELEFONO') {
-          if(row[prop] === '1')
-            row[prop] = true;
-          else 
-            row[prop] = false;
+      if ( row.DEN_ID_CUSTOM !== "DEN-XXXXXX") {
+        let obj = {};
+        for(var prop in row){
+          if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
+            let obj = [];
+            let aux = row[prop];
+            //Identificando si es un array de fechas o si es el string de la base de datos (&)
+            if (Array.isArray(aux)){
+              obj = aux;
+            } else if (aux !== null && aux !== "NA") {
+              aux = aux.split('&');
+              for (let i = 0; i < aux.length; i++) {
+                obj.push(new Date(aux[i]));
+              }
+            } else {
+              obj = null;
+            } 
+            row[prop] = obj;
+          } else if (prop === 'DEN_OTRO_TELEFONO') {
+            if(row[prop] === '1')
+              row[prop] = true;
+            else 
+              row[prop] = false;
+          }
+          obj[prop.toLowerCase()]=row[prop];
         }
-        obj[prop.toLowerCase()]=row[prop];
+        UpdateDenunciation(obj);
+      } else {
+        //Mensaje
+        ShowAlert("No se puede editar una denuncia recien ingresada", "danger");
       }
-      UpdateDenunciation(obj);
     } else {
       DisableEditDen();
     }
@@ -54,10 +64,11 @@ const MyTable = ({ register }) => {
     clickToSelect: true,  // you should enable clickToSelect, otherwise, you can't select column.
     onSelect: onRowSelect
   };
-
+  
   return (
     <>
       { spinner ? (<Spinner/>) : null }
+      { alert ? (<MyAlert msg={alert.msg} category={alert.category}/>) : null }
       <BootstrapTable 
           keyField="DEN_ID_CUSTOM"
           data={ register } 
