@@ -6,6 +6,9 @@ import Login from "./components/Login";
 import MyMap from "./components/MyMap";
 import Activities from "./components/Activities";
 import Denunciations from "./components/Activities/Denunciations";
+import Rociados from "./components/Activities/Rociados"
+
+
 import AlertState from './context/alert/AlertState';
 import AuthenticationState from './context/authentication/AuthenticationState';
 import DenunciationState from './context/denunciation/DenunciationState';
@@ -29,6 +32,7 @@ function App() {
                       <Route exact path="/actividades" component={Activities}/>
                       <Route exact path="/actividades/denuncias" component={Denunciations}/>
                       <Route exact path="/actividades/mapa" component={MyMap}/>
+                      <Route exact path="/actividades/rociados" component={Rociados} />
                     </Switch>
                   </Router>
                 </AuthenticationState>
