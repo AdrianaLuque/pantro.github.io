@@ -45,9 +45,16 @@ const MyTable = ({ register }) => {
               row[prop] = true;
             else 
               row[prop] = false;
+          } else if (prop === 'DEN_PROVINCIA') {
+            if(row[prop] === 'NA')
+              row[prop] = '';
+          } else if (prop === 'DEN_DISTRITO') {
+            if(row[prop] === 'NA')
+              row[prop] = '';
           }
           obj[prop.toLowerCase()]=row[prop];
         }
+        
         UpdateDenunciation(obj);
       } else {
         //Mensaje
@@ -82,6 +89,7 @@ const MyTable = ({ register }) => {
           <TableHeaderColumn width='150' dataField='DEN_AGENTE_NOMBRE'>AGENTE</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_INSECTO'>INSECTO</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_INSECTO_OTRO'>OTRO INSECTO</TableHeaderColumn>
+          <TableHeaderColumn width='150' dataField='DEN_INSECTO_OTRO2'>OTRO INSECTO 2</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_HABITANTE_NOMBRE'>HABITANTE</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO1'>TELEFONO</TableHeaderColumn>
           <TableHeaderColumn width='150' dataField='DEN_HABITANTE_TELEFONO2'>OTRO TELEFONO</TableHeaderColumn>

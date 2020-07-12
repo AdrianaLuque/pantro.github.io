@@ -159,6 +159,7 @@ export const initDenunciation = {
     den_tipo: '',
     den_insecto: '',
     den_insecto_otro:'',
+    den_insecto_otro2:'',
     //-falta variable imagen
     den_habitante_nombre:'',
     den_habitante_telefono1:'',

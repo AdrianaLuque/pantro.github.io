@@ -43,7 +43,7 @@ const FormDen = (props) => {
     //Poner usuario y microred
     currentDenunciation.usu_cuenta = user.USU_CUENTA.toUpperCase();
     currentDenunciation.usu_microred = user.USU_MICRORED;
-    //Extraer de usuario
+    //Extraer de denuncias
     const {  
         den_id_custom,
         den_fecha_recepcion,
@@ -52,6 +52,7 @@ const FormDen = (props) => {
         den_tipo,
         den_insecto,
         den_insecto_otro,
+        den_insecto_otro2,
         den_habitante_nombre,
         den_habitante_telefono1,
         den_otro_telefono,
@@ -87,12 +88,15 @@ const FormDen = (props) => {
         //Obteniendo solo la fecha en campos calendar
         currentDenunciation.den_fecha_recepcion = DateFull(new Date(currentDenunciation.den_fecha_recepcion));
         currentDenunciation.den_fecha_probable_inspeccion = SeveralDates(currentDenunciation.den_fecha_probable_inspeccion);
-        
+
         //Haciendo verificaciones de campos
         if ( currentDenunciation.den_medio !== "agente")
             currentDenunciation.den_agente_nombre = "NA";
-        if ( currentDenunciation.den_insecto !== "otro")
+        if ( currentDenunciation.den_insecto !== "otro"){
             currentDenunciation.den_insecto_otro = "NA";
+            currentDenunciation.den_insecto_otro2 = "NA";
+        } else if ( currentDenunciation.den_insecto_otro !== "otro")
+            currentDenunciation.den_insecto_otro2 = "NA";
         if ( !currentDenunciation.den_otro_telefono )
             currentDenunciation.den_habitante_telefono2 = "NA";
         //Cambiando vacios por NA
@@ -231,96 +235,6 @@ const FormDen = (props) => {
                             <Form.Check
                                 type="radio"
                                 name="den_insecto"
-                                label="Garrapatas"
-                                value="garrapatas"
-                                id="garrapatas"
-                                checked={ den_insecto=== "garrapatas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Mosquitos"
-                                value="mosquitos"
-                                id="mosquitos"
-                                checked={ den_insecto=== "mosquitos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Fitófagos"
-                                value="fitofagos"
-                                id="fitofagos"
-                                checked={ den_insecto=== "fitofagos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Grillos"
-                                value="grillos"
-                                id="grillos"
-                                checked={ den_insecto=== "grillos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Cucarachas"
-                                value="cucarachas"
-                                id="cucarachas"
-                                checked={ den_insecto=== "cucarachas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Escarabajos"
-                                value="escarabajos"
-                                id="escarabajos"
-                                checked={ den_insecto=== "escarabajos"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Pulgones"
-                                value="pulgones"
-                                id="pulgones"
-                                checked={ den_insecto=== "pulgones"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Pulgas"
-                                value="pulgas"
-                                id="pulgas"
-                                checked={ den_insecto=== "pulgas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
-                                label="Hitas"
-                                value="hitas"
-                                id="hitas"
-                                checked={ den_insecto=== "hitas"}
-                                onChange= {OnChange}
-                                ref={register({ required: true })}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="den_insecto"
                                 label="Otro"
                                 value="otro"
                                 id="otro"
@@ -334,19 +248,131 @@ const FormDen = (props) => {
                     {den_insecto==="otro"? (
                         <>
                             {/* DEN_INSECTO_OTRO */}
-                            <Form.Group controlId="den_insecto_otro">
-                                <Form.Control 
-                                    type="text"
-                                    name= 'den_insecto_otro'
-                                    defaultValue= {den_insecto_otro}
-                                    placeholder = "Especificar ..."
-                                    onChange= {OnChange}
-                                    ref={register({ required: true })}
-                                />
+                            <Form.Group>
+                                <Form.Label>Elija una opción</Form.Label>
+                                <Col sm={10}> 
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Garrapatas"
+                                        value="garrapatas"
+                                        id="garrapatas"
+                                        checked={ den_insecto_otro=== "garrapatas"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Mosquitos"
+                                        value="mosquitos"
+                                        id="mosquitos"
+                                        checked={ den_insecto_otro=== "mosquitos"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Fitófagos"
+                                        value="fitofagos"
+                                        id="fitofagos"
+                                        checked={ den_insecto_otro=== "fitofagos"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Grillos"
+                                        value="grillos"
+                                        id="grillos"
+                                        checked={ den_insecto_otro=== "grillos"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Cucarachas"
+                                        value="cucarachas"
+                                        id="cucarachas"
+                                        checked={ den_insecto_otro=== "cucarachas"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Escarabajos"
+                                        value="escarabajos"
+                                        id="escarabajos"
+                                        checked={ den_insecto_otro=== "escarabajos"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Pulgones"
+                                        value="pulgones"
+                                        id="pulgones"
+                                        checked={ den_insecto_otro=== "pulgones"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Pulgas"
+                                        value="pulgas"
+                                        id="pulgas"
+                                        checked={ den_insecto_otro=== "pulgas"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Itas"
+                                        value="itas"
+                                        id="itas"
+                                        checked={ den_insecto_otro=== "itas"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name="den_insecto_otro"
+                                        label="Otro"
+                                        value="otro"
+                                        id="otro2"
+                                        checked={ den_insecto_otro=== "otro"}
+                                        onChange= {OnChange}
+                                        ref={register({ required: true })}
+                                    />
+                                </Col>
                                 {errors.den_insecto_otro && <span className='alert-custom'>*Campo obligatorio</span>}
                             </Form.Group>
+                            {den_insecto_otro==="otro"? (
+                                <>
+                                    {/* DEN_INSECTO_OTRO */}
+                                    <Form.Group controlId="den_insecto_otro2">
+                                        <Form.Control 
+                                            type="text"
+                                            name= 'den_insecto_otro2'
+                                            defaultValue= {den_insecto_otro2}
+                                            placeholder = "Especificar ..."
+                                            onChange= {OnChange}
+                                            ref={register({ required: true })}
+                                        />
+                                        {errors.den_insecto_otro2 && <span className='alert-custom'>*Campo obligatorio</span>}
+                                    </Form.Group>
+                                </>
+                            ):null}
                         </>
                     ):null}
+                    
                     </>):null
                 }
                 { den_tipo==='con_insecto'? (
