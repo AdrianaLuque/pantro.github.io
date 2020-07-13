@@ -3,7 +3,7 @@ import { Popup, CircleMarker } from "react-leaflet";
 import { Button } from 'react-bootstrap';
 
 import CsvContext from "../../context/csv/CsvContext";
-import { InnerJoin } from "../../resources";
+import { COLOR_INSPECCION_POSITIVA, COLOR_INSPECCION_NEGATIVA, COLOR_SIN_INSPECCION, InnerJoin } from "../../resources";
 import FormInsp from "../Activities/Inspections/FormInsp";
 
 const CircleHouses = (props) => {
@@ -21,8 +21,10 @@ const CircleHouses = (props) => {
     const [startTime, setStartTime] = useState(new Date());
     //Inspecciones que vienen desde el padre
     const inspections = props.inspections;
-    //Si es inspeccion pasiva que viene del padre
+    //Si es inspeccion PASIVA que viene del padre
     const inspPasive = props.inspPasive;
+    //Si es inspeccion ACTIVA que viene del padre
+    const inspActive = props.inspActive;
             
     const HandleAdd = ( valUnicode ) => {
       setUnicode(valUnicode);
@@ -39,21 +41,33 @@ const CircleHouses = (props) => {
     //Para asegurar que ingresa una sola vez
     if (houses.length > 0) {
       //const codeLoc = [...new Set(total_ca.map(house => house.codeLoc))];
+      
+      //Recorriendo todas las viviendas para poner POPUP y color para entorno ROCIADO
+      houses.forEach(element => {
+        //element.inspectionText = `` ;
+        element.inspectionText = <div>
+                                  Ult. visita : --:--
+                                  </div>;
+        element.sprayed = COLOR_SIN_INSPECCION;
+      });
+
+      //Inspecciones
       if (inspections.length > 0) {
-        let visitedHousesInspection = InnerJoin(houses, inspections, "UNICODE", "UNICODE");    
+        let visitedHousesInspections = InnerJoin(houses, inspections, "UNICODE", "UNICODE");    
         
-        //Recorriendo todas las viviendas para poner popup
-        houses.forEach(element => {
-          //element.inspectionText = `` ;
-          element.inspectionText = <div>
-                                    Ult. visita : --:--
-                                   </div>;
-        });
         //Actualizar popup segun inspecciones
-        visitedHousesInspection.forEach(visited => {
+        visitedHousesInspections.forEach(visited => {
           houses.some(element => {
             if (visited.UNICODE === element.UNICODE) {
               element.inspectionText = <div>Ult. visita: <b>{visited.FECHA}</b><br/> Estado en Inspec: <b>{visited.STATUS_INSPECCION}</b></div>;
+              //Poner color a columna "sprayed"
+              if ( visited.STATUS_INSPECCION=== "inspeccion") {
+                if (1 === visited.INTRA_CHIRIS || 1 === visited.PERI_CHIRIS) {
+                  element.sprayed = COLOR_INSPECCION_POSITIVA;
+                } else {
+                  element.sprayed = COLOR_INSPECCION_NEGATIVA;
+                }
+              }
               return true;
             } else {
               return false;
@@ -69,9 +83,8 @@ const CircleHouses = (props) => {
           <CircleMarker 
             key = {element.UNICODE}
             center={[parseFloat(element.LATITUDE),parseFloat(element.LONGITUDE)]}
-            fillColor = { inspPasive? "gray" : element.color}
+            fillColor = { inspPasive? "gray" : (inspActive? element.color : element.sprayed)}
             radius = {6}
-            //// = {true}
             color = "black"
             weight = {0.2}
             fillOpacity = {1}

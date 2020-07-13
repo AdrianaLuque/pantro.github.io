@@ -12,7 +12,7 @@ const MyMap = props => {
   
   //Obtener el inspecciones
   const InspectionsContext = useContext(InspectionContext);
-  const { inspections, inspPasive } = InspectionsContext;
+  const { inspections, inspPasive, inspActive } = InspectionsContext;
   
   //Variales del mapa
   let center = [-16.4040494,-71.574117];
@@ -29,7 +29,7 @@ const MyMap = props => {
         {inspPasive? 
           <InformationDen/>:null
         }
-        <CircleHouses inspections={inspections} inspPasive={inspPasive}/>
+        <CircleHouses inspections={inspections} inspPasive={inspPasive} inspActive={inspActive}/>
         <MarkerParticipantsInmune/>
         <MarkerHealthPosts/>
       </Map>

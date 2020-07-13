@@ -34,7 +34,7 @@ const Activities = (props) => {
                         </div>
                         <div id="wrap-button-roc" className="wrap-button">
                             <label id='title-button-roc' className='title-button'>Rociados</label>
-                            <Button id="btn_actRociados" disabled variant="success">Rociado</Button>
+                            <Button id="btn_actRociados" variant="success" onClick={()=>GoMap("sprayed")}>Rociado</Button>
                         </div>
                     </Col>
                 </Row>
