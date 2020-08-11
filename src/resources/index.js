@@ -180,6 +180,25 @@ export const initDenunciation = {
     den_estado: 1
 };
 
+//estas variables son auxiliares, no van a la base de datos
+export const initAux = {
+    roc_techo:false,
+    roc_techo_perro:false,
+    roc_techo_gato:false,
+    roc_techo_ave:false,
+    roc_techo_cuy:false,
+    roc_techo_conejo:false,
+    roc_techo_animales_otro:false,
+    roc_patio:false,
+    roc_patio_perro:false,
+    roc_patio_gato:false,
+    roc_patio_ave:false,
+    roc_patio_cuy:false,
+    roc_patio_conejo:false,
+    roc_patio_animales_otro:false,
+    roc_observaciones:false
+};
+
 export const initInspection = {
     user_name: '',
     den_id_custom:'',
@@ -224,6 +243,78 @@ export const initInspection = {
     hora_inicio: '',
     hora_fin: ''
 };
+
+//Inicio Rociados
+export const inicioRociado = {
+
+    usu_cuenta: '',
+    usu_microred: '',
+    roc_unicode:'',
+    roc_fecha: new Date(),
+    roc_tratamiento_residual:'',
+    roc_deshabitada_rociada:'',
+    roc_nombre_rociador:'',
+    roc_nombre_insecticida:'',
+    roc_jefe_familia:'',
+    roc_cant_personas:'',
+    roc_intra_cant_ambientes:'',
+    roc_intra_ambientes_cerrados:'',
+    roc_intra_material_predominante: '',
+    roc_intra_grietas:'',
+    roc_intra_cant_capturados:'',
+    roc_peri_cant_ambientes:'',
+    roc_peri_material_predominante: '',
+    roc_peri_grietas:'',
+    roc_peri_cant_capturados:'',
+    roc_techo_cant_perros:'0',
+    roc_techo_cant_gatos:'0',
+    roc_techo_cant_aves_corral:'0',
+    roc_techo_cant_cuyes:'0',
+    roc_techo_cant_conejos:'0',
+    roc_techo_text_otros:'',
+    roc_techo_cant_otros:'',
+    roc_patio_cant_perros:'0',
+    roc_patio_cant_gatos:'0',
+    roc_patio_cant_aves_corral:'0',
+    roc_patio_cant_cuyes:'0',
+    roc_patio_cant_conejos:'0',
+    roc_patio_text_otros:'',
+    roc_patio_cant_otros:'',
+    roc_cant_insecticida:parseInt(0),
+    roc_superficie_tratada:parseInt(0)
+
+
+}
+/*********************
+- FUNCIONES PARA ROCIADO -
+**********************/
+
+export const MaterialIntra = (materialI) => {
+    const arr=[];
+    for (var item in materialI) {
+        if(materialI[item].isChecked === true) {
+            arr.push(materialI[item].value);
+            arr.push("-")
+        }
+    }
+    const arrToString = arr.toString();
+    const materialIntra = arrToString.replace(/,/g,"");
+    return materialIntra;
+}
+
+
+export const MaterialPeri = (materialP) => {
+    const arr=[];
+    for (var item in materialP) {
+        if(materialP[item].isChecked === true) {
+            arr.push(materialP[item].value);
+            arr.push("-");
+        }
+    }
+    const MPtoString = arr.toString();
+    const materialPeri = MPtoString.replace(/,/g,"");
+    return materialPeri;
+}
 
 /*********************
 - FUNCIONES GLOBALES -

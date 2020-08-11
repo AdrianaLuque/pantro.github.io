@@ -30,11 +30,17 @@ const FormDen = (props) => {
     const { register, handleSubmit, errors, reset } = useForm();
     //State para denuncias
     const [currentDenunciation, setCurrentDenunciation] = useState( initDenunciation );
+
+    //console.log("Desde FORM-DEN");
     
     useEffect(() => {
         if ( statusBtnEdit ) {
+            //console.log("este es el if");
+            //console.log(statusBtnEdit);
             setCurrentDenunciation(valueEditDen);
         } else if ( statusBtnAdd ) {
+            //console.log("este es el ifelse");
+            //console.log(statusBtnAdd);
             setCurrentDenunciation(initDenunciation);
             reset(initDenunciation);
         }
@@ -111,6 +117,19 @@ const FormDen = (props) => {
         }
         props.ChangeModal();
     };
+
+    //console.log("Alerta");
+    //console.log(alert);
+
+    //console.log("User");
+    //console.log(user);
+
+    //console.log("status-btn");
+    //console.log(statusBtnAdd);
+
+    //console.log("state- current denunciation");
+    //console.log(currentDenunciation);
+
     
     return (
         <MyModal modal={props.modal} ChangeModal={props.ChangeModal} formTitle={props.formTitle}>
