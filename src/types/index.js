@@ -38,3 +38,6 @@ export const ADD_CIMEX = 'ADD_CIMEX';
 //Snipper
 export const SHOW_SPINNER = 'SHOW_SPINNER';
 export const HIDE_SPINNER = 'HIDE_SPINNER';
+
+//Rociados
+export const BTN_ADD_ROCIADO = "BTN_ADD_ROCIADO";

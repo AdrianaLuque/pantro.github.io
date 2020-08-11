@@ -110,6 +110,10 @@ const DenunciationState = props => {
         });
     }
 
+    //console.log("Desde denunciation state");
+    //console.log(state);
+    //console.log(AddDenunciation);
+
     return(
         <DenunciationContext.Provider
             value={{
