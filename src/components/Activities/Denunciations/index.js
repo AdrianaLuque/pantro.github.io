@@ -12,6 +12,13 @@ const Denunciations = props => {
   const DenunciationsContext = useContext(DenunciationContext);
   const { denunciations, selectEdit, PressBtnAddDen, PressBtnEditDen, CleanBtnDen } = DenunciationsContext;
 
+  console.log("Desde index - Denunciations")
+  console.log("denunciations");
+  console.log(denunciations);
+  console.log(selectEdit);
+  console.log(PressBtnAddDen);
+  console.log(PressBtnEditDen);
+
   //Modal
   const [modal, setModal] = useState(false);
   //Titulo del formulario
@@ -35,6 +42,18 @@ const Denunciations = props => {
     }
     setModal(!modal);
   }
+
+  console.log("Estos son los props que recibe denunciations");
+  console.log(props)
+
+  console.log("state formTiltle");
+  console.log(formTitle);
+
+  console.log("state modal");
+  console.log(modal);
+
+  console.log("Press BTN ADD");
+  console.log(PressBtnAddDen);
 
   return(
       <Container>
