@@ -10,7 +10,7 @@ const Denunciations = props => {
 
   //Obtener el state de Alerta
   const DenunciationsContext = useContext(DenunciationContext);
-  const { denunciations, selectEdit, PressBtnAddDen, PressBtnEditDen } = DenunciationsContext;
+  const { denunciations, selectEdit, PressBtnAddDen, PressBtnEditDen, CleanBtnDen } = DenunciationsContext;
 
   //Modal
   const [modal, setModal] = useState(false);
@@ -28,6 +28,11 @@ const Denunciations = props => {
     PressBtnEditDen();
   }
   const ChangeModal = () => {
+    //Cuando se cierra el modal
+    if (modal) {
+      console.log("se cerro modal");  
+      CleanBtnDen();
+    }
     setModal(!modal);
   }
 

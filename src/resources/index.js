@@ -174,7 +174,10 @@ export const initDenunciation = {
     den_localidad:'',
     den_direccion:'',
     den_referencia:'',
-    den_fecha_probable_inspeccion: null
+    den_fecha_probable_inspeccion: null,
+    den_denunciante: 'NA',
+    den_cant_colindantes: 0,
+    den_estado: 1
 };
 
 export const initInspection = {
@@ -216,10 +219,7 @@ export const initInspection = {
     text_otros: '',
     cant_otros: '',
     hora_inicio: '',
-    hora_fin: '',
-    risk_color: '',
-    lat: '',
-    lng: '',
+    hora_fin: ''
 };
 
 /*********************

@@ -45,12 +45,11 @@ const InspectionState = props => {
     }
 
     //* Agregar denuncias
-    const AddInspection = async ( denunciation ) => {
-        denunciation.den_id = 0;
-        
+    const AddInspection = async ( inspection ) => {
+            
         try {
-            const resultado = await ClienteAxios.post('/api/denuncias', denunciation );
-
+            const resultado = await ClienteAxios.post('/api/inspecciones', inspection );
+            debugger;
             dispatch({
                 type: ADD_INSPECTION,
                 payload: resultado.data

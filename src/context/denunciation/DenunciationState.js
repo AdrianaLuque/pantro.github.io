@@ -10,7 +10,8 @@ import {
     UPDATE_DENUNCIATION,
     DISABLE_EDIT_DENUNCIATION,
     BTN_ADD_DENUNCIATION,
-    BTN_EDIT_DENUNCIATION
+    BTN_EDIT_DENUNCIATION,
+    CLEAN_BTN_DENUNCIATION
 } from '../../types';
 
 const DenunciationState = props => {
@@ -102,6 +103,12 @@ const DenunciationState = props => {
             type: BTN_EDIT_DENUNCIATION
         });
     }
+    //*Limpiar botones
+    const CleanBtnDen = () => {
+        dispatch({
+            type: CLEAN_BTN_DENUNCIATION
+        });
+    }
 
     return(
         <DenunciationContext.Provider
@@ -117,7 +124,8 @@ const DenunciationState = props => {
                 EditDenunciation,
                 DisableEditDen,
                 PressBtnAddDen,
-                PressBtnEditDen
+                PressBtnEditDen,
+                CleanBtnDen
             }}
         >
             {props.children}

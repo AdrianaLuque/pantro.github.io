@@ -5,7 +5,8 @@ import {
     UPDATE_DENUNCIATION,
     DISABLE_EDIT_DENUNCIATION,
     BTN_ADD_DENUNCIATION,
-    BTN_EDIT_DENUNCIATION
+    BTN_EDIT_DENUNCIATION,
+    CLEAN_BTN_DENUNCIATION
 } from '../../types';
 
 export default (state, action) => {
@@ -13,7 +14,12 @@ export default (state, action) => {
         case GET_DENUNCIATIONS:
             return{
                 ...state,
-                denunciations: action.payload
+                valueEditDen: {},
+                denunciations: action.payload,
+                selectEdit: false,
+                statusBtnAdd: false,
+                statusBtnEdit: false
+
             };
         case ADD_DENUNCIATION:
             return{
@@ -47,6 +53,12 @@ export default (state, action) => {
                 ...state,
                 statusBtnAdd: false,
                 statusBtnEdit: true
+            }
+        case CLEAN_BTN_DENUNCIATION:
+            return {
+                ...state,
+                statusBtnAdd: false,
+                statusBtnEdit: false
             }
         default:
             return state;

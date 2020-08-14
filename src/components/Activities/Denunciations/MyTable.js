@@ -25,6 +25,7 @@ const MyTable = ({ register }) => {
       if ( row.DEN_ID_CUSTOM !== "DEN-XXXXXX") {
         let obj = {};
         for(var prop in row){
+          
           if (prop === 'DEN_FECHA_PROBABLE_INSPECCION') {
             let obj = [];
             let aux = row[prop];
@@ -45,13 +46,9 @@ const MyTable = ({ register }) => {
               row[prop] = true;
             else 
               row[prop] = false;
-          } else if (prop === 'DEN_PROVINCIA') {
-            if(row[prop] === 'NA')
+          } 
+          if(row[prop] === 'NA')
               row[prop] = '';
-          } else if (prop === 'DEN_DISTRITO') {
-            if(row[prop] === 'NA')
-              row[prop] = '';
-          }
           obj[prop.toLowerCase()]=row[prop];
         }
         

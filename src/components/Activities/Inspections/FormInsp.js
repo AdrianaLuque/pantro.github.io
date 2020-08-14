@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
 import AlertContext from '../../../context/alert/AlertContext';
+import AuthenticationContext from "../../../context/authentication/AuthenticationContext";
 import DenunciationContext from '../../../context/denunciation/DenunciationContext';
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import CimexContext from '../../../context/cimex/CimexContext';
@@ -19,13 +20,16 @@ const FormInps = (props) => {
     //Extraer los valores del context
     const AlertsContext = useContext(AlertContext);
     const { alert, ShowAlert } = AlertsContext;
+    //Variables de usuario
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const { user } = AuthenticationsContext;
     //Obtener variables de denuncias
     const DenunciationsContext = useContext(DenunciationContext);
     const { denunciations } = DenunciationsContext;
 
     //Extraer los valores del context
     const InspectionsContext = useContext(InspectionContext);
-    const { inspPasive } = InspectionsContext;
+    const { inspPasive, AddInspection } = InspectionsContext;
 
     //Extraer los valores del context
     const CimexsContext = useContext(CimexContext);
@@ -111,18 +115,18 @@ const FormInps = (props) => {
         return (result);
     }
 
-    const MyUploader = () => {
-        console.log("se subio la imagen");
-    };
-
     const OnSubmit = () => {
+        //Poner usuario
+        currentInspection.usu_cuenta = user.USU_CUENTA.toUpperCase();
         //Obteniendo solo la fecha en campos calendar
         currentInspection.fecha = DateFull(currentInspection.fecha);
         //Obteniendo hora de inicio
         currentInspection.hora_inicio = props.startTime;
         //Obteniendo hora de fin
         currentInspection.hora_fin = new Date();
-        //AddDenunciation(currentDenunciation);
+        //Guardando registro de inspeccion
+        AddInspection(currentInspection);
+        //Cerrar modal
         props.ChangeModal();
     };
     
@@ -709,7 +713,7 @@ const FormInps = (props) => {
                 <hr/>
                 {/*******  FORMULARIO CIMEX *********/}
                 <h5>CHINCHES DE CAMA</h5>
-                {/* CIMEX_ALGUIEN_PICADO_CASA_ULTIMO_ANIO */}
+                {/* CIMEX_ALGUIEN_PICADO_CASA_ULTIMO_ANIO 
                 <Form.Group>
                     <Form.Label>1.- En el último año, ¿Algún miembro del hogar ha sido picado por insectos al interior de la vivienda?</Form.Label>
                     <Col sm={10}>
@@ -746,7 +750,7 @@ const FormInps = (props) => {
                     </Col>
                     {errors.cimex_alguien_picado_casa_ultimo_anio && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
-
+                */}
                 <Button type='submit'>Guardar</Button> 
             </Form>
         </MyModal>
