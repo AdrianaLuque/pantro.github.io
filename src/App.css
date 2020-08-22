@@ -112,8 +112,9 @@ header{
 .table-check {
   font-size: 15px;
 }
-.table-check > .row > .col {
-  padding: 0 5px;
+.table-check > .col {
+  display: inline-block;
+  width: 25%;
   text-align: center;
 }
 .animales-opt .form-check {

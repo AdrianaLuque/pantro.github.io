@@ -105,6 +105,14 @@ const FormInps = (props) => {
         });
     };
 
+    const OnChangeCheckMultiple = e => {
+        let name = e.target.value;
+        setCurrentInspection({
+            ...currentInspection,
+            [name] : e.target.checked
+        });
+    };
+
     //Funcion para obtener los datos de fecha de probable inspeccion
     const DateSome = ( arrayDate ) => {
         let result = 'NA';
@@ -521,92 +529,83 @@ const FormInps = (props) => {
                         <>
                             <hr/>
                             <div className="table-check">
-                                <Row>
-                                    <Col></Col>
-                                    <Col>Lugar inspección*</Col>
-                                    <Col>Halló Chiris </Col>
-                                    <Col>Halló Rastros</Col>
-                                </Row>
-                                <Row>
-                                    <Col>INTRA</Col>
-                                    <Col>
-                                        {/* INTRA_INSPECCION */}
-                                        <Form.Group controlId="intra_inspeccion">
-                                            <Form.Check 
-                                                type="checkbox" 
-                                                name="intra_inspeccion"
-                                                value={intra_inspeccion}
-                                                onChange={OnChangeCheck}
+                                <Col>
+                                    <Row></Row>
+                                    <Row>INTRA</Row>
+                                    <Row>PERI</Row>
+                                </Col>
+                                <Col>
+                                    <Row>Lugar inspección*</Row>
+                                    {/* DEN_TIPO */}
+                                    <Form.Group >
+                                        <Col sm={10}>
+                                            <Form.Check
+                                                type="checkbox"
+                                                name="multiplecheckbox"
+                                                value="intra_inspeccion"
+                                                id="intra_inspeccion"
+                                                onChange= {OnChangeCheckMultiple}
                                                 ref={register({ required: true })}
                                             />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        {/* INTRA_CHIRIS */}
-                                        <Form.Group controlId="intra_chiris">
-                                            <Form.Check 
-                                                disabled={!intra_inspeccion}
-                                                type="checkbox" 
-                                                name="intra_chiris"
-                                                value= {intra_chiris}
-                                                onChange={OnChangeCheck}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        {/* INTRA_RASTROS */}
-                                        <Form.Group controlId="intra_rastros">
-                                            <Form.Check 
-                                                disabled={!intra_inspeccion}
-                                                type="checkbox" 
-                                                name="intra_rastros"
-                                                value={intra_rastros}
-                                                onChange={OnChangeCheck}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>PERI</Col>
-                                    <Col>
-                                        {/* PERI_INSPECCION */}
-                                        <Form.Group controlId="peri_inspeccion">
-                                            <Form.Check 
-                                                type="checkbox" 
-                                                name="peri_inspeccion"
-                                                value={peri_inspeccion}
-                                                onChange={OnChangeCheck}
+                                            <Form.Check
+                                                type="checkbox"
+                                                name="multiplecheckbox"
+                                                value="peri_inspeccion"
+                                                id="peri_inspeccion"
+                                                onChange= {OnChangeCheckMultiple}
                                                 ref={register({ required: true })}
                                             />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        {/* PERI_CHIRIS */}
-                                        <Form.Group controlId="peri_chiris">
-                                            <Form.Check 
-                                                disabled={!peri_inspeccion}
-                                                type="checkbox" 
-                                                name="peri_chiris"
-                                                value={peri_chiris}
-                                                onChange={OnChangeCheck}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col>
-                                        {/* RASTROS_PERI */}
-                                        <Form.Group controlId="peri_rastros">
-                                            <Form.Check 
-                                                disabled={!peri_inspeccion}
-                                                type="checkbox" 
-                                                name="peri_rastros"
-                                                value={peri_rastros}
-                                                onChange={OnChangeCheck}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
+                                        </Col>
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Row>Halló Chiris</Row>
+                                    {/* INTRA_CHIRIS */}
+                                    <Form.Group controlId="intra_chiris">
+                                        <Form.Check 
+                                            disabled={!intra_inspeccion}
+                                            type="checkbox" 
+                                            name="intra_chiris"
+                                            value= {intra_chiris}
+                                            onChange={OnChangeCheck}
+                                        />
+                                    </Form.Group>
+                                    {/* PERI_CHIRIS */}
+                                    <Form.Group controlId="peri_chiris">
+                                        <Form.Check 
+                                            disabled={!peri_inspeccion}
+                                            type="checkbox" 
+                                            name="peri_chiris"
+                                            value={peri_chiris}
+                                            onChange={OnChangeCheck}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Row>Halló Rastros</Row>
+                                    {/* INTRA_RASTROS */}
+                                    <Form.Group controlId="intra_rastros">
+                                        <Form.Check 
+                                            disabled={!intra_inspeccion}
+                                            type="checkbox" 
+                                            name="intra_rastros"
+                                            value={intra_rastros}
+                                            onChange={OnChangeCheck}
+                                        />
+                                    </Form.Group>
+                                    {/* RASTROS_PERI */}
+                                    <Form.Group controlId="peri_rastros">
+                                        <Form.Check 
+                                            disabled={!peri_inspeccion}
+                                            type="checkbox" 
+                                            name="peri_rastros"
+                                            value={peri_rastros}
+                                            onChange={OnChangeCheck}
+                                        />
+                                    </Form.Group>
+                                </Col>                                
                             </div>
-                            {errors.intra_inspeccion && errors.peri_inspeccion && <span className='alert-custom'>*Lugar de inspección es obligatorio</span>}
+                            {errors.multiplecheckbox && <span className='alert-custom'>*Lugar de inspección es obligatorio</span>}
                             <hr/>
                             {/* PERSONAS_PREDIO*/}
                             <Form.Group controlId="personas_predio">
