@@ -12,7 +12,7 @@ import DenunciationContext from '../../../context/denunciation/DenunciationConte
 import InspectionContext from '../../../context/inspection/InspectionContext';
 import CimexContext from '../../../context/cimex/CimexContext';
 import MyModal from "../../Modal/MyModal";
-import { es, DateFull, initInspection } from "../../../resources";
+import { es, DateFull, initInspection, PutNA } from "../../../resources";
 
 //Formulario de denuncia
 const FormInps = (props) => {
@@ -42,10 +42,14 @@ const FormInps = (props) => {
     const [currentInspection, setCurrentInspection] = useState( initInspection );
     //State para cimex
     const [currentCimex, setCurrentCimex] = useState( cimex );
+    //Consulta si la vivienda inspeccionada es o no la vivienda que realizo la denuncia
+    let haveComplaint = false;
     
     //Extraer de valores de inspeccion
-    const {  
+    const {
         den_id_custom,
+        insp_den_colin,
+        unicode,
         observaciones,//No DB
         obs_unicode,
         obs_text1,//No DB
@@ -116,16 +120,84 @@ const FormInps = (props) => {
     }
 
     const OnSubmit = () => {
+        //Poner unicode
+        currentInspection.unicode = props.unicode;
         //Poner usuario
         currentInspection.usu_cuenta = user.USU_CUENTA.toUpperCase();
+        //Poner codigo de la localidad
+        let codeLocality = props.unicode.split(".");
+        currentInspection.code_locality = codeLocality[0]+"."+codeLocality[1]+"."+codeLocality[2];
         //Obteniendo solo la fecha en campos calendar
         currentInspection.fecha = DateFull(currentInspection.fecha);
         //Obteniendo hora de inicio
         currentInspection.hora_inicio = props.startTime;
         //Obteniendo hora de fin
         currentInspection.hora_fin = new Date();
+        //Si ya tiene "denunciante" por obligacion tiene que ser "colindante"
+        if (haveComplaint) {
+            currentInspection.insp_den_colin = "colindante";
+        }
+        
+        //*Haciendo verificaciones de campos
+        //Verificaciones en el campo "caract_predio"
+        if (currentInspection.status_inspeccion !== "LP" )
+            currentInspection.tipo_lp = "NA";
+        if (currentInspection.caract_predio === "LV")
+            currentInspection.status_inspeccion = "NA";
+        //Verificaciones en el campo "status_inspeccion"
+        if ( currentInspection.status_inspeccion === "NA" || currentInspection.status_inspeccion === "C" 
+            || currentInspection.status_inspeccion === "R" || currentInspection.status_inspeccion === "V"
+            || currentInspection.status_inspeccion === "inspeccion" ) {
+
+            currentInspection.entrevista = "NA";//A
+        }
+        if ( currentInspection.status_inspeccion === "NA" || currentInspection.status_inspeccion === "C" 
+            || currentInspection.status_inspeccion === "R" || currentInspection.status_inspeccion === "entrevista"
+            || currentInspection.status_inspeccion === "inspeccion" ) {
+                
+            currentInspection.motivo_volver = "NA";//B
+            currentInspection.fecha_volver = "NA";//B
+        }
+        if ( currentInspection.status_inspeccion === "NA" || currentInspection.status_inspeccion === "C" 
+            || currentInspection.status_inspeccion === "V" || currentInspection.status_inspeccion === "entrevista"
+            || currentInspection.status_inspeccion === "inspeccion" ) {
+                
+            currentInspection.renuente = "NA";//C
+            currentInspection.renuente_otro = "NA";//C
+        }
+        if ( currentInspection.status_inspeccion === "NA" || currentInspection.status_inspeccion === "C" 
+            || currentInspection.status_inspeccion === "V" || currentInspection.status_inspeccion === "entrevista"
+            || currentInspection.status_inspeccion === "entrevista" ) {
+            
+            currentInspection.intra_inspeccion = "NA";//D
+            currentInspection.intra_chiris = "NA";
+            currentInspection.intra_rastros = "NA";
+            currentInspection.peri_inspeccion = "NA";
+            currentInspection.peri_chiris = "NA";
+            currentInspection.peri_rastros = "NA";
+            currentInspection.personas_predio = "NA";
+            currentInspection.perros = "NA";
+            currentInspection.cant_perros = "NA";
+            currentInspection.gatos = "NA";
+            currentInspection.cant_gatos = "NA";
+            currentInspection.aves_corral = "NA";
+            currentInspection.cant_aves_corral = "NA";
+            currentInspection.cuyes = "NA";
+            currentInspection.cant_cuyes = "NA";
+            currentInspection.conejos = "NA";
+            currentInspection.cant_conejos = "NA";
+            currentInspection.otros = "NA";
+            currentInspection.text_otros = "NA";
+            currentInspection.cant_otros = "NA";
+        }
+        debugger;
+        //Cambiando vacios por NA
+        //PutNA(currentInspection);
+        
         //Guardando registro de inspeccion
         AddInspection(currentInspection);
+        //Actualizar la denuncia, en el backend esto se hace mediante procedimiento almacenado
+
         //Cerrar modal
         props.ChangeModal();
     };
@@ -153,16 +225,55 @@ const FormInps = (props) => {
                             </Form.Control>
                             {errors.den_id_custom && <span className='alert-custom'>*Campo obligatorio</span>}
                         </Form.Group>
+                        { den_id_custom !== "" ? (
+                            <>
+                                {/* INSP_DEN_COLIN */}
+                                {denunciations.some( denunciation => {
+                                    if (denunciation.DEN_ID_CUSTOM === den_id_custom && denunciation.DEN_DENUNCIANTE !== "NA" && denunciation.DEN_DENUNCIANTE !== "" ){
+                                        haveComplaint = true;
+                                        return true;
+                                    }
+                                })}
+                                <Form.Group >
+                                    <Form.Label>Seleccione que tipo de vivienda es:*</Form.Label>
+                                    <Col sm={10}>
+                                        <Form.Check
+                                            disabled = {haveComplaint}
+                                            type="radio"
+                                            label="Denunciante"
+                                            name="insp_den_colin"
+                                            value="denunciante"
+                                            id="denunciante"
+                                            checked={ insp_den_colin=== "denunciante"}
+                                            onChange= {OnChange}
+                                            ref={register({ required: true })}
+                                        />
+                                        <Form.Check
+                                            type="radio"
+                                            label="Colindante"
+                                            name="insp_den_colin"
+                                            value="colindante"
+                                            id="colindante"
+                                            checked={ insp_den_colin=== "colindante"}
+                                            onChange= {OnChange}
+                                            ref={register({ required: true })}
+                                        />
+                                    </Col>
+                                    {errors.insp_den_colin && <span className='alert-custom'>*Campo obligatorio</span>}
+                                </Form.Group>
+                            </>
+                            ) : null
+                        }
                     </> : null
                 }
-                <Form.Group controlId="unicode">
+                <Form.Group /*controlId="unicode"*/>
                     <Form.Label >Código de Vivienda</Form.Label>
                     <Form.Control 
                         readOnly
                         type='text'
-                        name='unicode'
+                        //name='unicode'
                         value={props.unicode}
-                        //onChange={OnChange}
+                        onChange={OnChange}
                     />
                 </Form.Group>
                 <Form.Group controlId="observaciones">
@@ -295,7 +406,7 @@ const FormInps = (props) => {
                         </Form.Group>
                         {(status_inspeccion === 'entrevista')? (
                             <>
-                                {/* DEN_TIPO */}
+                                {/* ENTREVISTA */}
                                 <Form.Group>
                                     <Form.Label>Entrevista</Form.Label>
                                     <Col sm={10}>
@@ -712,8 +823,8 @@ const FormInps = (props) => {
                 ):null}
                 <hr/>
                 {/*******  FORMULARIO CIMEX *********/}
-                <h5>CHINCHES DE CAMA</h5>
-                {/* CIMEX_ALGUIEN_PICADO_CASA_ULTIMO_ANIO 
+                {/*<h5>CHINCHES DE CAMA</h5>
+                 CIMEX_ALGUIEN_PICADO_CASA_ULTIMO_ANIO 
                 <Form.Group>
                     <Form.Label>1.- En el último año, ¿Algún miembro del hogar ha sido picado por insectos al interior de la vivienda?</Form.Label>
                     <Col sm={10}>

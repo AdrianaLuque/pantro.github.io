@@ -182,6 +182,7 @@ export const initDenunciation = {
 
 export const initInspection = {
     den_id_custom:'',
+    insp_den_colin: '',
     unicode: '',
     code_locality: '',
     observaciones: false,//No DB
