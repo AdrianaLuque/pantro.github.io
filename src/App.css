@@ -109,6 +109,7 @@ header{
   padding: 14px 2px;
   border-radius: 10px;
 }
+
 .table-check {
   font-size: 15px;
 }
@@ -117,6 +118,14 @@ header{
   width: 25%;
   text-align: center;
 }
+.table-check .title-label {
+  width: 50px;
+  margin: 0 auto;
+}
+.table-check .checkbox-end {
+  margin-top: 15px;
+}
+
 .animales-opt .form-check {
   display: inline-block;
   padding-top: 8px;

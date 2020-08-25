@@ -46,7 +46,7 @@ const InspectionState = props => {
 
     //* Agregar denuncias
     const AddInspection = async ( inspection ) => {
-        debugger;
+        
         try {
             const resultado = await ClienteAxios.post('/api/inspecciones', inspection );
             

@@ -181,6 +181,7 @@ export const initDenunciation = {
 };
 
 export const initInspection = {
+    user_name: '',
     den_id_custom:'',
     insp_den_colin: '',
     unicode: '',
@@ -199,6 +200,7 @@ export const initInspection = {
     fecha_volver: '',
     renuente: '',
     renuente_otro: '',//No DB
+    insp_habitante_telefono: '',
     intra_inspeccion: false,
     intra_chiris: false,
     intra_rastros: false,

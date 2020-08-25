@@ -44,12 +44,13 @@ const FormInps = (props) => {
     const [currentCimex, setCurrentCimex] = useState( cimex );
     //Consulta si la vivienda inspeccionada es o no la vivienda que realizo la denuncia
     let haveComplaint = false;
+    //Almacenando "den_cant_colindantes" que se tiene hasta ese momento
+    let denCantColindantes = 0;
     
     //Extraer de valores de inspeccion
     const {
         den_id_custom,
         insp_den_colin,
-        unicode,
         observaciones,//No DB
         obs_unicode,
         obs_text1,//No DB
@@ -64,6 +65,7 @@ const FormInps = (props) => {
         fecha_volver,
         renuente,
         renuente_otro,//No DB
+        insp_habitante_telefono,
         intra_inspeccion,
         intra_chiris,
         intra_rastros,
@@ -131,7 +133,7 @@ const FormInps = (props) => {
         //Poner unicode
         currentInspection.unicode = props.unicode;
         //Poner usuario
-        currentInspection.usu_cuenta = user.USU_CUENTA.toUpperCase();
+        currentInspection.user_name = user.USU_CUENTA.toUpperCase();
         //Poner codigo de la localidad
         let codeLocality = props.unicode.split(".");
         currentInspection.code_locality = codeLocality[0]+"."+codeLocality[1]+"."+codeLocality[2];
@@ -145,6 +147,8 @@ const FormInps = (props) => {
         if (haveComplaint) {
             currentInspection.insp_den_colin = "colindante";
         }
+        //Enviando el numero actual de la cantidad de colindantes de la denuncia
+        currentInspection.den_cant_colindantes = denCantColindantes;
         
         //*Haciendo verificaciones de campos
         //Verificaciones en el campo "caract_predio"
@@ -198,14 +202,29 @@ const FormInps = (props) => {
             currentInspection.text_otros = "NA";
             currentInspection.cant_otros = "NA";
         }
-        debugger;
+        
         //Cambiando vacios por NA
-        //PutNA(currentInspection);
+        PutNA(currentInspection);
         
         //Guardando registro de inspeccion
         AddInspection(currentInspection);
-        //Actualizar la denuncia, en el backend esto se hace mediante procedimiento almacenado
-
+        //Actualizar la denuncia (en el backend esto se hace mediante procedimiento almacenado)
+        if (currentInspection.insp_den_colin !== "NA") {
+            denunciations.some( denunciation => {
+                                if (denunciation.DEN_ID_CUSTOM === den_id_custom){
+                                    if (insp_den_colin === "denunciante") {
+                                        denunciation.DEN_DENUNCIANTE = currentInspection.unicode;
+                                        denunciation.DEN_ESTADO = 0;
+                                    } else //se poner else por que ya se pregunto que sea distinto a NA
+                                        denunciation.DEN_CANT_COLINDANTES = parseInt(denunciation.DEN_CANT_COLINDANTES)+1;
+                                    return true;
+                                }
+                            })
+        }
+        
+        //Inicializar inspeccion
+        setCurrentInspection(initInspection);
+        
         //Cerrar modal
         props.ChangeModal();
     };
@@ -238,6 +257,7 @@ const FormInps = (props) => {
                                 {/* INSP_DEN_COLIN */}
                                 {denunciations.some( denunciation => {
                                     if (denunciation.DEN_ID_CUSTOM === den_id_custom && denunciation.DEN_DENUNCIANTE !== "NA" && denunciation.DEN_DENUNCIANTE !== "" ){
+                                        denCantColindantes = denunciation.DEN_CANT_COLINDANTES;
                                         haveComplaint = true;
                                         return true;
                                     }
@@ -527,12 +547,24 @@ const FormInps = (props) => {
                         ):null}
                         {(status_inspeccion === 'inspeccion')? (
                         <>
+                            {/* INSP_HABITANTE_TELEFONO */}
+                            <Form.Group controlId="insp_habitante_telefono">
+                                <Form.Label>Teléfono del Habitante</Form.Label>
+                                <Form.Control 
+                                    type='number'
+                                    name='insp_habitante_telefono'
+                                    defaultValue={insp_habitante_telefono}
+                                    onChange={OnChange}
+                                    ref={register({ maxLength: 9 })}
+                                />
+                                {errors.insp_habitante_telefono?.type === 'maxLength' && <span className='alert-custom'>*Maximo 9 numeros</span>}
+                            </Form.Group>
                             <hr/>
                             <div className="table-check">
                                 <Col>
                                     <Row></Row>
                                     <Row>INTRA</Row>
-                                    <Row>PERI</Row>
+                                    <Row className="checkbox-end">PERI</Row>
                                 </Col>
                                 <Col>
                                     <Row>Lugar inspección*</Row>
@@ -547,7 +579,7 @@ const FormInps = (props) => {
                                                 onChange= {OnChangeCheckMultiple}
                                                 ref={register({ required: true })}
                                             />
-                                            <Form.Check
+                                            <Form.Check className="checkbox-end" 
                                                 type="checkbox"
                                                 name="multiplecheckbox"
                                                 value="peri_inspeccion"
@@ -559,7 +591,7 @@ const FormInps = (props) => {
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Row>Halló Chiris</Row>
+                                    <Row className="title-label">Halló Chiris</Row>
                                     {/* INTRA_CHIRIS */}
                                     <Form.Group controlId="intra_chiris">
                                         <Form.Check 
@@ -582,7 +614,7 @@ const FormInps = (props) => {
                                     </Form.Group>
                                 </Col>
                                 <Col>
-                                    <Row>Halló Rastros</Row>
+                                    <Row className="title-label">Halló Rastros</Row>
                                     {/* INTRA_RASTROS */}
                                     <Form.Group controlId="intra_rastros">
                                         <Form.Check 
@@ -609,15 +641,16 @@ const FormInps = (props) => {
                             <hr/>
                             {/* PERSONAS_PREDIO*/}
                             <Form.Group controlId="personas_predio">
-                                <Form.Label>Cuántas personas viven en el predio?</Form.Label>
+                                <Form.Label>Cuántas personas viven en el predio?*</Form.Label>
                                 <Form.Control 
                                     type='number'
                                     name='personas_predio'
-                                    value={personas_predio}
+                                    defaultValue={personas_predio}
                                     onChange={OnChange}
-                                    ref={register({ required: true, maxLength: 2 })}
+                                    ref={register({ required: true, min: 0, maxLength: 2 })}
                                 />
                                 {errors.personas_predio?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                {errors.personas_predio?.type === 'min' && <span className='alert-custom'>*No puede haber valor negativo</span>}
                                 {errors.personas_predio?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                             </Form.Group>
                             {/* ANIMALES */}
@@ -641,12 +674,13 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_perros'
-                                                    value={cant_perros}
+                                                    defaultValue={cant_perros}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_perros?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
-                                                {errors.can_perros?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
+                                                {errors.cant_perros?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
+                                                {errors.cant_perros?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
                                     ):null}
@@ -670,11 +704,12 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_gatos'
-                                                    value={cant_gatos}
+                                                    defaultValue={cant_gatos}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_gatos?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_gatos?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
                                                 {errors.cant_gatos?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
@@ -699,11 +734,12 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_aves_corral'
-                                                    value={cant_aves_corral}
+                                                    defaultValue={cant_aves_corral}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_aves_corral?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_aves_corral?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
                                                 {errors.cant_aves_corral?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
@@ -728,11 +764,12 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_cuyes'
-                                                    value={cant_cuyes}
+                                                    defaultValue={cant_cuyes}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_cuyes?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_cuyes?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
                                                 {errors.cant_cuyes?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
@@ -757,11 +794,12 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_conejos'
-                                                    value={cant_conejos}
+                                                    defaultValue={cant_conejos}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_conejos?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_conejos?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
                                                 {errors.cant_conejos?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
@@ -805,11 +843,12 @@ const FormInps = (props) => {
                                                 <Form.Control 
                                                     type='number'
                                                     name='cant_otros'
-                                                    value={cant_otros}
+                                                    defaultValue={cant_otros}
                                                     onChange={OnChange}
-                                                    ref={register({ required: true, maxLength: 2 })}
+                                                    ref={register({ required: true, min: 1, maxLength: 2 })}
                                                 />
                                                 {errors.cant_otros?.type === 'required' && <span className='alert-custom'>*Campo obligatorio</span>}
+                                                {errors.cant_otros?.type === 'min' && <span className='alert-custom'>*No puede haber valor menor que 1</span>}
                                                 {errors.cant_otros?.type === 'maxLength' && <span className='alert-custom'>*Máximo 99 personas</span>}
                                             </Form.Group>
                                         </Col>
