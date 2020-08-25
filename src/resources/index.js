@@ -246,7 +246,7 @@ export const initInspection = {
 export const inicioRociado = {
 
     usu_cuenta: '',
-    usu_microred: '',
+    //usu_microred: '',
     roc_unicode:'',
     roc_fecha: new Date(),
     roc_tratamiento_residual:'',
@@ -279,8 +279,8 @@ export const inicioRociado = {
     roc_patio_text_otros:'',
     roc_patio_cant_otros:'',
     roc_cant_insecticida:parseInt(0),
-    roc_superficie_tratada:parseInt(0)
-
+    roc_superficie_tratada:parseInt(0),
+    roc_observaciones_text:''
 
 }
 /*********************

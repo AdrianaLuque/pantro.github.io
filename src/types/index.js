@@ -41,3 +41,5 @@ export const HIDE_SPINNER = 'HIDE_SPINNER';
 
 //Rociados
 export const BTN_ADD_ROCIADO = "BTN_ADD_ROCIADO";
+export const DISABLED_BTN_ADD_ROCIADO = "DISABLED_BTN_ADD_ROCIADO";
+export const ADD_ROCIADO = "ADD_ROCIADO";

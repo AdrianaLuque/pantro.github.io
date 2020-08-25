@@ -3,7 +3,6 @@ import {useForm} from "react-hook-form";
 
 // estilos react bootstrap
 import {Form, Row, Col, Button} from 'react-bootstrap';
-import {Calendar} from 'primereact/calendar'; //Fecha
 
 // importar
 import MyModal from "../../Modal/MyModal";
@@ -13,10 +12,9 @@ import RociadoContext from "../../../context/rociados/RociadoContext";
 
 const FormRociado = (props) => {
 
-    //Extraer informacion de usuario logeado - 
-    //AUN NO PUEDO OBTENER EL USER PORQUE NO ESTA RELACIONADO CON EL BOTON DE LOGIN
-    //const AuthenticationsContext = useContext(AuthenticationContext);
-    //const {user} = AuthenticationsContext;
+    //Extraer informacion de usuario logeado
+    const AuthenticationsContext = useContext(AuthenticationContext);
+    const {user} = AuthenticationsContext;
 
     //State para crear variables de campo en vacio - inicio
     const [currentRociados, setCurrentRociados] = useState(inicioRociado);
@@ -77,7 +75,7 @@ const FormRociado = (props) => {
 
     //Extraer los datos que se enviaron desde context de Rociado
     const RociadosContext = useContext(RociadoContext);
-    const {statusBtnAddRoc} = RociadosContext;
+    const {statusBtnAddRoc, AddRociados, UnPressBtnAddRoc} = RociadosContext;
 
     //Validacion
     const { register, handleSubmit, errors, reset } = useForm();
@@ -94,6 +92,12 @@ const FormRociado = (props) => {
     },[statusBtnAddRoc])
 
     console.log("Desde Form Rociado");
+    console.log("Materiales Intra");
+    console.log(materialIntra);
+    console.log("Materiales Peri");
+    console.log(materialPeri);
+    console.log("USUARIO");
+    console.log(user.USU_CUENTA);
 
     const onChange = (e) => {
         //Para modificar el state currentRociado se utiliza su funcion
@@ -122,9 +126,6 @@ const FormRociado = (props) => {
                 categoria.isChecked = e.target.checked
             }
         })
-
-        //console.log(materialIntra)
-
     };
 
     const onChangeCheckPeri = (e) => {
@@ -136,14 +137,15 @@ const FormRociado = (props) => {
         })
     };
 
-    //Funcion para la operacion matematica
-
-
     const OnSubmit = () => {
+
+        //poner usuario
+        let usuario = user.USU_CUENTA;
+        currentRociados.usu_cuenta = usuario;
 
         //cambiando el formato de la fecha
         currentRociados.roc_fecha = DateFull(currentRociados.roc_fecha);
-        debugger
+        //debugger
 
         let materialesIntra = MaterialIntra(materialIntra);
         currentRociados.roc_intra_material_predominante = materialesIntra;
@@ -158,7 +160,7 @@ const FormRociado = (props) => {
             currentRociados.roc_superficie_tratada = superficieT;
         }
         else{
-            if(currentRociados.roc_superficie_tratada === "DES"){
+            if(currentRociados.roc_tratamiento_residual === "DES"){
                 if(currentRociados.roc_deshabitada_rociada === "1"){
                     let superficieT = (currentRociados.roc_cant_insecticida * 165).toString();
                     currentRociados.roc_superficie_tratada = superficieT;
@@ -196,13 +198,24 @@ const FormRociado = (props) => {
         console.log("entro al submit")
         console.log(currentRociados);
 
+        console.log("Status btn add")
+        console.log(statusBtnAddRoc);
+        console.log(props.modal);
+
         //Verificar si es ADD
         if(statusBtnAddRoc) {
-            //AddRociados(currentRociados);
-            setCurrentRociados(inicioRociado)
+            AddRociados(currentRociados);
+            setCurrentRociados(inicioRociado);
+            setAuxiliares(initAux);
+
+            console.log("Intra");
+            console.log(materialIntra);
+            console.log("Peri");
+            console.log(materialPeri);
         }
 
-        
+        UnPressBtnAddRoc();
+        props.ChangeModal();
 
     };
 
@@ -274,37 +287,39 @@ const FormRociado = (props) => {
                 </Form.Group>
                 
                 <Form.Group as={Col} controlId="roc_tratamiento_residual">
-                    <Form.Label>Tratamiento residual</Form.Label>
+                    <Form.Label>Tratamiento residual*</Form.Label>
                     <Form.Control
                         as="select"
                         name="roc_tratamiento_residual"
                         onChange={onChange}
                         value={roc_tratamiento_residual}
+                        ref={register({required: true})}
                     >
-                        <option>Seleccione...</option>
+                        <option value="">Seleccione...</option>
                         <option value="T">Tratamiento Integral</option>
                         <option value="R">Renuente</option>
                         <option value="C">Cerrada</option>
                         <option value="DES">Deshabitada</option>
-
                     </Form.Control>
+                    {errors.roc_tratamiento_residual && <span className='alert-custom'>*Campo obligatorio</span>}
                 </Form.Group>
 
                 {roc_tratamiento_residual === "DES" ?
                     (
                         <Form.Group as={Col} controlId="roc_deshabitada_rociada">
-                            <Form.Label>La vivienda fue rociada?</Form.Label>
+                            <Form.Label>La vivienda fue rociada?*</Form.Label>
                             <Form.Control
                                 as="select"
                                 name="roc_deshabitada_rociada"
                                 onChange={onChange}
                                 value={roc_deshabitada_rociada}
+                                ref={register({required: true})}
                             >
-                                <option>Seleccione...</option>
+                                <option value="">Seleccione...</option>
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
-
                             </Form.Control>
+                            {errors.roc_deshabitada_rociada && <span className='alert-custom'>*Campo Obligatorio</span>}
                         </Form.Group>
                     ):null
                 }
@@ -319,61 +334,74 @@ const FormRociado = (props) => {
                                     name="roc_nombre_rociador"
                                     onChange={onChange}
                                     value={roc_nombre_rociador}
+                                    ref={register({required: true})}
                                 />
+                                {errors.roc_nombre_rociador && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="roc_nombre_insecticida">
-                                <Form.Label>Que insecticida esta utilizando?</Form.Label>
-                                <Form.Check
-                                    type="radio"
-                                    label="Deltametrina"
-                                    name="roc_nombre_insecticida"
-                                    value="deltametrina"
-                                    id="deltametrina"
-                                    checked={roc_nombre_insecticida === "deltametrina"}
-                                    onChange={onChange}
-                                    //falta el ref - register
-                                />
-                                <Form.Check
-                                    type="radio"
-                                    label="Lambdacialotrina"
-                                    name="roc_nombre_insecticida"
-                                    value="lambdacialotrina"
-                                    id="lambdacialotrina"
-                                    checked={roc_nombre_insecticida === "lambdacialotrina"}
-                                    onChange={onChange}
-                                    //falta el ref - register
-                                />
+                                <Form.Label>Que insecticida esta utilizando?*</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Check
+                                        type="radio"
+                                        label="Deltametrina"
+                                        name="roc_nombre_insecticida"
+                                        value="deltametrina"
+                                        id="deltametrina"
+                                        checked={roc_nombre_insecticida === "deltametrina"}
+                                        onChange={onChange}
+                                        //falta el ref - register
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="Lambdacialotrina"
+                                        name="roc_nombre_insecticida"
+                                        value="lambdacialotrina"
+                                        id="lambdacialotrina"
+                                        checked={roc_nombre_insecticida === "lambdacialotrina"}
+                                        onChange={onChange}
+                                        //falta el ref - register
+                                    />
+                                </Col>
+                                {errors.roc_nombre_insecticida && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="roc_jefe_familia">
-                                <Form.Label>Nombre del jefe de familia</Form.Label>
+                                <Form.Label>Nombre del jefe de familia*</Form.Label>
                                 <Form.Control
                                     type="text"
                                     name="roc_jefe_familia"
                                     onChange={onChange}
                                     value={roc_jefe_familia}
+                                    ref={register({required: true})}
                                 />
+                                {errors.roc_jefe_familia && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
                             <Form.Group as={Col} controlId="roc_cant_personas">
-                                <Form.Label>Numero de personas</Form.Label>
+                                <Form.Label>Numero de personas*</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="roc_cant_personas"
                                     onChange={onChange}
                                     value={roc_cant_personas}
+                                    ref={register({required: true})}
                                 />
+                                {errors.roc_cant_personas && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
+
                             <strong>Division-Intra domicilio</strong>
+
                             <Form.Row>
                                 <Form.Group as={Col} controlId="roc_intra_cant_ambientes">
-                                    <Form.Label>Numero de ambientes</Form.Label>
+                                    <Form.Label>Numero de ambientes*</Form.Label>
                                     <Form.Control
                                         type="number"
                                         name="roc_intra_cant_ambientes"
                                         onChange={onChange}
                                         value={roc_intra_cant_ambientes}
+                                        ref={register({required: true})}
                                     />
+                                    {errors.roc_intra_cant_ambientes && <span className='alert-custom'>*Campo Obligatorio</span>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="roc_intra_ambientes_cerrados">
                                     <Form.Label>Numero de ambientes cerrados</Form.Label>
@@ -397,13 +425,12 @@ const FormRociado = (props) => {
                                             label = {material.etiqueta}
                                                 
                                         />
-
                                     ))}
                             </Form.Group>
                             <Form.Row>
                                 <Col>
                                     <Form.Group as={Col} controlId="roc_intra_grietas">
-                                        <Form.Label>Grietas</Form.Label>
+                                        <Form.Label>Grietas*</Form.Label>
                                         <Form.Check
                                             type="radio"
                                             label="Si"
@@ -412,7 +439,7 @@ const FormRociado = (props) => {
                                             id="si"
                                             checked={roc_intra_grietas === "1"}
                                             onChange={onChange}
-                                            //falta el ref - register
+                                            ref={register({required: true})}
                                         />
                                         <Form.Check
                                             type="radio"
@@ -422,32 +449,38 @@ const FormRociado = (props) => {
                                             id="no"
                                             checked={roc_intra_grietas === "0"}
                                             onChange={onChange}
-                                            //falta el ref - register
+                                            ref={register({required: true})}
                                         />
-                               
+                                        {errors.roc_intra_grietas && <span className='alert-custom'>*Campo Obligatorio</span>}
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group as={Col} controlId="roc_intra_cant_capturados">
-                                        <Form.Label>Numero de triatominos capturados</Form.Label>
+                                        <Form.Label>Numero de triatominos capturados*</Form.Label>
                                         <Form.Control
                                             type="number"
                                             name="roc_intra_cant_capturados"
                                             onChange={onChange}
                                             value={roc_intra_cant_capturados}
+                                            ref={register({required: true})}
                                         />
+                                        {errors.roc_intra_cant_capturados && <span className='alert-custom'>*Campo Obligatorio</span>}
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
+
                             <strong>Division-Peri domicilio</strong>
+
                             <Form.Group as={Col} controlId="roc_peri_cant_ambientes">
-                                <Form.Label>Numero de Ambientes</Form.Label>
+                                <Form.Label>Numero de Ambientes*</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="roc_peri_cant_ambientes"
                                     onChange={onChange}
                                     value={roc_peri_cant_ambientes}
+                                    ref={register({required: true})}
                                 />
+                                {errors.roc_peri_cant_ambientes && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
                             <Form.Group as={Col} >
                                 <Form.Label>Material Predominante</Form.Label>
@@ -458,16 +491,14 @@ const FormRociado = (props) => {
                                             //checked = {material.isChecked}
                                             value = {materialP.value}
                                             onChange = {onChangeCheckPeri}
-                                            label = {materialP.etiqueta}
-                                                
+                                            label = {materialP.etiqueta}     
                                         />
-
                                     ))}
                             </Form.Group>
                             <Form.Row>
                                 <Col>
                                     <Form.Group as={Col} controlId="roc_peri_grietas">
-                                        <Form.Label>Grietas</Form.Label>
+                                        <Form.Label>Grietas*</Form.Label>
                                         <Form.Check
                                             type="radio"
                                             label="Si"
@@ -476,34 +507,38 @@ const FormRociado = (props) => {
                                             id="si"
                                             checked={roc_peri_grietas === "1"}
                                             onChange={onChange}
-                                            //falta el ref - register
+                                            ref={register({required: true})}
                                         />
                                         <Form.Check
                                             type="radio"
                                             label="No"
                                             name="roc_peri_grietas"
-                                            value="2"
+                                            value="0"
                                             id="no"
-                                            checked={roc_peri_grietas === "2"}
+                                            checked={roc_peri_grietas === "0"}
                                             onChange={onChange}
-                                            //falta el ref - register
+                                            ref={register({required: true})}
                                         />
-                               
+                                        {errors.roc_peri_grietas && <span className='alert-custom'>*Campo Obligatorio</span>}
                                     </Form.Group>
                                 </Col>
                                 <Col>
                                     <Form.Group as={Col} controlId="roc_peri_cant_capturados">
-                                        <Form.Label>Numero de triatominos capturados</Form.Label>
+                                        <Form.Label>Numero de triatominos capturados*</Form.Label>
                                         <Form.Control
                                             type="number"
                                             name="roc_peri_cant_capturados"
                                             onChange={onChange}
                                             value={roc_peri_cant_capturados}
+                                            ref={register({required: true})}
                                         />
+                                        {errors.roc_peri_cant_capturados && <span className='alert-custom'>*Campo Obligatorio</span>}
                                     </Form.Group>
                                 </Col>
                             </Form.Row>
+
                             <strong>CRIANZA DE ANIMALES</strong>
+
                             <Form.Group as={Col} controlId="roc_techo">
                                 <Form.Check
                                     type="checkbox"
@@ -525,7 +560,6 @@ const FormRociado = (props) => {
                                                     label="Perros"
                                                     onChange={onChangeCheck}
                                                     //checked={roc_techo_perro}
-
                                                 />
                                             </Form.Group>
                                         </Col>
@@ -917,14 +951,16 @@ const FormRociado = (props) => {
                             }
                             
                             <Form.Group controlId="roc_cant_insecticida">
-                                <Form.Label>Consumo de insecticidas(Número de Cargas)</Form.Label>
+                                <Form.Label>Consumo de insecticidas(Número de Cargas)*</Form.Label>
                                 <Form.Control
                                     type="number"
                                     name="roc_cant_insecticida"
                                     onChange={onChange}
                                     min="0"
                                     defaultValue={roc_cant_insecticida}
+                                    ref={register({required: true})}
                                 />
+                                {errors.roc_cant_insecticida && <span className='alert-custom'>*Campo Obligatorio</span>}
                             </Form.Group>
                             <Form.Group controlId="roc_superficie_tratada">
                                 <Form.Label>Superficie tratada (1 Carga = 165 m2)</Form.Label>
@@ -943,17 +979,10 @@ const FormRociado = (props) => {
 
                 <Button type='submit'> Guardar </Button>
 
-                
-
-
-
-
-
             </Form>
 
         </MyModal>
        
-
     );
 
 }
