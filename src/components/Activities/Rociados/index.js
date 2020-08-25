@@ -37,6 +37,8 @@ const Rociados = (props) => {
     }
 
     console.log("Desde ROciados");
+    console.log(statusBtnAddRoc);
+    console.log(modal);
 
 
     return ( 
