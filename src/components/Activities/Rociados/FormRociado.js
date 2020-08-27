@@ -350,7 +350,7 @@ const FormRociado = (props) => {
                                         id="deltametrina"
                                         checked={roc_nombre_insecticida === "deltametrina"}
                                         onChange={onChange}
-                                        //falta el ref - register
+                                        ref={register({required: true})}
                                     />
                                     <Form.Check
                                         type="radio"
@@ -360,7 +360,7 @@ const FormRociado = (props) => {
                                         id="lambdacialotrina"
                                         checked={roc_nombre_insecticida === "lambdacialotrina"}
                                         onChange={onChange}
-                                        //falta el ref - register
+                                        ref={register({required: true})}
                                     />
                                 </Col>
                                 {errors.roc_nombre_insecticida && <span className='alert-custom'>*Campo Obligatorio</span>}
