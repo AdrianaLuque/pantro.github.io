@@ -17,6 +17,11 @@ const Activities = (props) => {
         PressBtnInspection(btnPress);
         props.history.push('/actividades/mapa');
     }
+
+    //Rociados
+    const GoRociados = () => {
+        props.history.push('/actividades/rociados');
+    }
     return (
         <>
             <Header/>
@@ -34,7 +39,8 @@ const Activities = (props) => {
                         </div>
                         <div id="wrap-button-roc" className="wrap-button">
                             <label id='title-button-roc' className='title-button'>Rociados</label>
-                            <Button id="btn_actRociados" variant="success" onClick={()=>GoMap("sprayed")}>Rociado</Button>
+                            {/*<Button id="btn_actRociados" variant="success" onClick={()=>GoMap("sprayed")}>Rociado</Button>*/}
+                            <Button id="btn_actRociados" variant="success" onClick={GoRociados}>Rociado</Button>
                         </div>
                     </Col>
                 </Row>
