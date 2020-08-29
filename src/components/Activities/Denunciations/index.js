@@ -30,7 +30,6 @@ const Denunciations = props => {
   const ChangeModal = () => {
     //Cuando se cierra el modal
     if (modal) {
-      console.log("se cerro modal");  
       CleanBtnDen();
     }
     setModal(!modal);

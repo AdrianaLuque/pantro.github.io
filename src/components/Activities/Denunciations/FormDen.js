@@ -34,6 +34,7 @@ const FormDen = (props) => {
     useEffect(() => {
         if ( statusBtnEdit ) {
             setCurrentDenunciation(valueEditDen);
+            reset(valueEditDen);
         } else if ( statusBtnAdd ) {
             setCurrentDenunciation(initDenunciation);
             reset(initDenunciation);
@@ -141,7 +142,6 @@ const FormDen = (props) => {
                     />
                 </Form.Group>
                 {/* DEN_MEDIO */}
-                {console.log(den_medio)}
                 <Form.Group controlId="den_medio">
                     <Form.Label >Medio de denuncia*</Form.Label>
                     <Form.Control 
@@ -386,7 +386,6 @@ const FormDen = (props) => {
                     ):null
                 }
                 {/* DEN_HABITANTE_NOMBRE*/}
-                {console.log(den_habitante_nombre)}
                 <Form.Group controlId="den_habitante_nombre">
                     <Form.Label>Nombre del habitante*</Form.Label>
                     <Form.Control 
