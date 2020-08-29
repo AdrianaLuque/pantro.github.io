@@ -21,8 +21,17 @@ const MyTable = ({ register }) => {
   const { UpdateDenunciation, DisableEditDen } = DenunciationsContext;
   
   const onRowSelect = (row, isSelected, rowIndex, e) => {
+    
     if ( isSelected ) {
-      if ( row.DEN_ID_CUSTOM !== "DEN-XXXXXX") {
+      if ( row.DEN_ESTADO==="0" ) {
+        DisableEditDen();
+        //Mensaje
+        ShowAlert("Esta denuncia esta inactiva, no se puede editar", "danger");
+      } else if ( row.DEN_ID_CUSTOM === "DEN-XXXXXX" ){
+        DisableEditDen();
+        //Mensaje
+        ShowAlert("No se puede editar una denuncia recien ingresada", "danger");
+      } else {
         let obj = {};
         for(var prop in row){
           
@@ -53,14 +62,12 @@ const MyTable = ({ register }) => {
         }
         
         UpdateDenunciation(obj);
-      } else {
-        //Mensaje
-        ShowAlert("No se puede editar una denuncia recien ingresada", "danger");
-      }
+      } 
     } else {
       DisableEditDen();
     }
   }
+  //Controla las selecciones de fila, funcion propia de bootstrap
   const selectRowProp = {
     mode: 'radio',
     bgColor: '#5bc0de', // you should give a bgcolor, otherwise, you can't regonize which row has been selected
@@ -68,7 +75,11 @@ const MyTable = ({ register }) => {
     clickToSelect: true,  // you should enable clickToSelect, otherwise, you can't select column.
     onSelect: onRowSelect
   };
-  
+  //Funcion que pone color si una denuncia esta activa o no
+  const RowStyleFormat = (row, rowIdx) => {
+    return { backgroundColor: row.DEN_ESTADO==="0" ? '#babfc5' : null };
+  }
+
   return (
     <>
       { spinner ? (<Spinner/>) : null }
@@ -77,6 +88,7 @@ const MyTable = ({ register }) => {
           keyField="DEN_ID_CUSTOM"
           data={ register } 
           selectRow= {selectRowProp} 
+          trStyle={RowStyleFormat}
       >   
           <TableHeaderColumn width='150' dataField='DEN_ID_CUSTOM'>CÓDIGO</TableHeaderColumn>
           <TableHeaderColumn width='210' dataField='DEN_FECHA_RECEPCION'>FECHA DE RECEPCIÓN</TableHeaderColumn>

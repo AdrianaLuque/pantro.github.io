@@ -40,7 +40,8 @@ export default (state, action) => {
         case DISABLE_EDIT_DENUNCIATION:
             return{
                 ...state,
-                selectEdit: false
+                selectEdit: false,
+                statusBtnEdit: false
             };
         case BTN_ADD_DENUNCIATION:
             return {
