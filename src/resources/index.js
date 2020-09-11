@@ -2,9 +2,11 @@
 - VARIABLES GLOBALES -
 **********************/
 //Colores de rociado
-export const COLOR_INSPECCION_POSITIVA = "red";
-export const COLOR_INSPECCION_NEGATIVA = "green";
+export const COLOR_INSPECCION_POSITIVA = "blue";
+export const COLOR_INSPECCION_NEGATIVA = "black";
 export const COLOR_SIN_INSPECCION = "gray";
+export const COLOR_DEFECTO = "#00FFFFFF";
+export const COLOR_ROCIADO_ACTIVO = "green";
 //Fecha en español
 export const es = {
     firstDayOfWeek: 1,

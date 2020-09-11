@@ -6,16 +6,23 @@ import RociadoContext from './RociadoContext';
 import RociadoReducer from './RociadoReducer';
 
 //Importar de type
-import {    BTN_ADD_ROCIADO,
+import {    BTN_ROC,
+            BTN_ADD_ROCIADO,
             ADD_ROCIADO,
-            DISABLED_BTN_ADD_ROCIADO } from '../../types';
+            DISABLED_BTN_ADD_ROCIADO,
+            GET_ROCIADOS } from '../../types';
 
 
 const RociadoState = props => {
 
     const initialState = {
 
-        statusBtnAddRoc:false
+        //Aca debo jalar de la BD los rociados registrados - FUTURO
+        rociados: [],
+        //Boton para que se agrege rociados
+        statusBtnAddRoc:false,
+        //Boton para entrar a rociados, desde la parte de ACTIVIDADES
+        statusBtnRoc:false
     }
 
     //state para llamar al reducer
@@ -23,6 +30,12 @@ const RociadoState = props => {
 
     //Funciones que se va hacer con el dispatch, son para acciones
     
+    const PressBtnRoc = () => {
+        dispatch({
+            type:BTN_ROC
+        });
+
+    }
     const PressBtnAddRoc = () => {
         dispatch({
             type: BTN_ADD_ROCIADO
@@ -33,6 +46,20 @@ const RociadoState = props => {
         dispatch({
             type: DISABLED_BTN_ADD_ROCIADO
         });
+    }
+
+    //Funcion para obtener los rociados registrados en la BD
+    const GetRociados = async () => {
+        try{
+            const resultado = await ClienteAxios.get('/api/rociados');
+
+            dispatch({
+                type:GET_ROCIADOS,
+                payload: resultado.data
+            });
+        }catch (error) {
+             console.log(error);
+        }
     }
 
     // Funcion para agregar rociados
@@ -53,9 +80,13 @@ const RociadoState = props => {
         
         <RociadoContext.Provider
             value = {{
+                rociados: state.rociados,
                 statusBtnAddRoc : state.statusBtnAddRoc,
+                statusBtnRoc : state.statusBtnRoc,
+                PressBtnRoc,
                 PressBtnAddRoc,
                 UnPressBtnAddRoc,
+                GetRociados,
                 AddRociados
             }}
         >

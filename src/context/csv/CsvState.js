@@ -24,7 +24,11 @@ const CsvState = props => {
 
     //Funciones
     const CsvHouses = async (fileCsv) => {
-        
+        //debugger
+        console.log("ESTA ENTRANDO AL CSVSTATE");
+        console.log(fileCsv);
+
+
         if (Object.keys(fileCsv).length !== 0) {
             const arrayFileCsv = fileCsv.split('&');
             for (let i = 0; i < arrayFileCsv.length; i++) {
@@ -33,6 +37,7 @@ const CsvState = props => {
                 
                 try {
                     let results = await d3.csv(pathCsv);
+                    console.log(results[0])
                     
                     //Eliminando viviendas que no tienen GPS
                     results = results.filter(house => house.LATITUDE !== null && house.LATITUDE !== "" && house.LATITUDE !== "NA");

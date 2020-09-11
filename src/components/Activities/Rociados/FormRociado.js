@@ -143,6 +143,9 @@ const FormRociado = (props) => {
         let usuario = user.USU_CUENTA;
         currentRociados.usu_cuenta = usuario;
 
+        //UNICODE
+        currentRociados.roc_unicode = props.unicode;
+
         //cambiando el formato de la fecha
         currentRociados.roc_fecha = DateFull(currentRociados.roc_fecha);
         //debugger
