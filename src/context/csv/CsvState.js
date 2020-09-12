@@ -23,7 +23,7 @@ const CsvState = props => {
     const [state, dispatch] = useReducer(CsvReducer, initialState);
 
     //Funciones
-    const CsvHouses = async (fileCsv) => {
+    const CsvHouses = async (fileCsv, usuApp) => {
         
         if (Object.keys(fileCsv).length !== 0) {
             const arrayFileCsv = fileCsv.split('&');
@@ -34,13 +34,22 @@ const CsvState = props => {
                 try {
                     let results = await d3.csv(pathCsv);
                     
-                    //Eliminando viviendas que no tienen GPS
-                    results = results.filter(house => house.LATITUDE !== null && house.LATITUDE !== "" && house.LATITUDE !== "NA");
-                    
+                    let newResults = [];
+                    results.forEach(house => {
+                      //Eliminando viviendas que no tienen GPS
+                      if(house.LATITUDE !== null && house.LATITUDE !== "" && house.LATITUDE !== "NA"){
+                        //Obtener solo las columna que necesitamos dependiendo del app que toca
+                        if ("vectorpoint"=== usuApp )
+                            newResults.push( (({ UNICODE, LATITUDE, LONGITUDE, color }) => ({ UNICODE, LATITUDE, LONGITUDE, color }))(house) );
+                        else if ("bluepoint"=== usuApp )
+                            newResults.push( (({ UNICODE, LATITUDE, LONGITUDE, group_num, order, color }) => ({ UNICODE, LATITUDE, LONGITUDE, group_num, order, color }))(house) );
+                      }
+                    });
+                                     
                     //Lo hago asi para que me diga si hay algun error al leer cada archivo CSV
                     dispatch({
                         type: CSV_HOUSES,
-                        payload: results
+                        payload: newResults
                     });
                     
                 } catch (error) {

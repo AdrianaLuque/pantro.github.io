@@ -50,7 +50,7 @@ const AuthenticationState = props => {
             await ClienteAxios.post('/api/visitas-app', datos);
             
             //Cargando datos que se necesitaran
-            await CsvHouses(respuesta.data.USU_CATCHMENT_AREA);
+            await CsvHouses(respuesta.data.USU_CATCHMENT_AREA, respuesta.data.USU_APP);
             await GetDenunciations(respuesta.data.USU_MICRORED);
             await CsvHealthPosts();
             await CsvParticipantsInmune();

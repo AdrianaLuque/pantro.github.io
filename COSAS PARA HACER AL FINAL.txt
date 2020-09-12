@@ -1,7 +1,6 @@
-- Decirle a Justin el nuevo formato de bluepoint.
+- Decirle a Justin el nuevo formato de bluepoint (se tiene codigo que yo hice).
 - Cambiar nombre de columnas de DENUNCIAS.
 - Eliminar tabla AUDITOR.
-- Limpiar los CSV, hay columnas que no se utilizan.
 - Ver como mejorar los context en App.js
 
 - # Esto se modifico en a base de datos desde el dia 17feb2020 en VIGILANCIA-INTEGRADA
