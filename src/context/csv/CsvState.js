@@ -33,6 +33,7 @@ const CsvState = props => {
                 
                 try {
                     let results = await d3.csv(pathCsv);
+                    console.log(results[0])
                     
                     let newResults = [];
                     results.forEach(house => {

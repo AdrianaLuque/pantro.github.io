@@ -8,7 +8,7 @@ import AlertContext from '../../context/alert/AlertContext';
 import AuthenticationContext from "../../context/authentication/AuthenticationContext";
 
 const Login = (props) => {
-        
+    
     //Spinner
     const SpinnersContext = useContext(SpinnerContext);
     const { spinner, ShowSpinner, HideSpinner } = SpinnersContext;

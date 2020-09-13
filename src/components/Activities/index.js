@@ -1,27 +1,38 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
 import Header from "../../layouts/Header";
 import InspectionContext from '../../context/inspection/InspectionContext';
+import RociadoContext from '../../context/rociados/RociadoContext';
 
 const Activities = (props) => {
     
-    //Extraer los valores del context
+    //Extraer los valores del context - INSPECCIONES
     const InspectionsContext = useContext(InspectionContext);
     const { PressBtnInspection } = InspectionsContext;
+
+    //Extraer los valores del context - ROCIADOS
+    const RociadosContext = useContext(RociadoContext);
+    const { PressBtnRoc } = RociadosContext;
     
     const GoDenunciations = () => {
         props.history.push('/actividades/denuncias');
     }
     const GoMap = ( btnPress ) => {
-        PressBtnInspection(btnPress);
+        if((btnPress === 'inspPasive') || (btnPress === 'inspActive')){
+            PressBtnInspection(btnPress);
+        }
+        if(btnPress === 'sprayed'){
+            PressBtnRoc();
+        }
+        
         props.history.push('/actividades/mapa');
     }
 
     //Rociados
-    const GoRociados = () => {
-        props.history.push('/actividades/rociados');
-    }
+    //const GoRociados = () => {
+      //  props.history.push('/actividades/rociados');
+    //}
     return (
         <>
             <Header/>

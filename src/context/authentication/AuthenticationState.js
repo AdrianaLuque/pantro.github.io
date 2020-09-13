@@ -12,6 +12,7 @@ import {
 import CsvContext from "../csv/CsvContext";
 import DenunciationContext from "../denunciation/DenunciationContext";
 import InspectionContext from "../inspection/InspectionContext";
+import RociadoContext from "../rociados/RociadoContext";
 import SpinnerContext from "../spinner/SpinnerContext";
 
 const AuthenticationState = props => {
@@ -35,13 +36,16 @@ const AuthenticationState = props => {
     //Obtener el inspecciones
     const InspectionsContext = useContext(InspectionContext);
     const { GetInspections } = InspectionsContext;
+    //Obtener los rociados de la base de datos
+    const RociadosContext = useContext(RociadoContext);
+    const { GetRociados } = RociadosContext;
     //Cambiar estado de spinner
     const SpinnersContext = useContext(SpinnerContext);
     const { HideSpinner } = SpinnersContext;
 
     //Cuando el usuario inicia sesion
     const Login = async datos => {
-
+        debugger;
         try {
             //Comprobando que el username y password sean correctos
             const respuesta = await ClienteAxios.post('/api/acceder', datos);
@@ -55,6 +59,7 @@ const AuthenticationState = props => {
             await CsvHealthPosts();
             await CsvParticipantsInmune();
             await GetInspections();
+            await GetRociados();
             
             dispatch({
                 type: LOGIN_INTO,

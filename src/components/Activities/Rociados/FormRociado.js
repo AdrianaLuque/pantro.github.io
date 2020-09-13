@@ -143,6 +143,9 @@ const FormRociado = (props) => {
         let usuario = user.USU_CUENTA;
         currentRociados.usu_cuenta = usuario;
 
+        //UNICODE
+        currentRociados.roc_unicode = props.unicode;
+
         //cambiando el formato de la fecha
         currentRociados.roc_fecha = DateFull(currentRociados.roc_fecha);
         //debugger
@@ -350,7 +353,7 @@ const FormRociado = (props) => {
                                         id="deltametrina"
                                         checked={roc_nombre_insecticida === "deltametrina"}
                                         onChange={onChange}
-                                        //falta el ref - register
+                                        ref={register({required: true})}
                                     />
                                     <Form.Check
                                         type="radio"
@@ -360,7 +363,7 @@ const FormRociado = (props) => {
                                         id="lambdacialotrina"
                                         checked={roc_nombre_insecticida === "lambdacialotrina"}
                                         onChange={onChange}
-                                        //falta el ref - register
+                                        ref={register({required: true})}
                                     />
                                 </Col>
                                 {errors.roc_nombre_insecticida && <span className='alert-custom'>*Campo Obligatorio</span>}
