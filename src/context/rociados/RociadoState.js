@@ -29,13 +29,15 @@ const RociadoState = props => {
     const [state, dispatch] = useReducer(RociadoReducer,initialState);
 
     //Funciones que se va hacer con el dispatch, son para acciones
-    
+    //Funcion para cuando se presiona Rociados - dentro de Activities
     const PressBtnRoc = () => {
         dispatch({
             type:BTN_ROC
         });
 
     }
+
+    //Funcion para cuando se agrega un rociado a una vivienda
     const PressBtnAddRoc = () => {
         dispatch({
             type: BTN_ADD_ROCIADO
